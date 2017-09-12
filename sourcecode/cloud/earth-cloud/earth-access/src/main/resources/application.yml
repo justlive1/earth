@@ -7,3 +7,13 @@ spring:
 server: 
   port: 18100
 
+
+earth:
+  loginUrl: /login.html
+  antMatchers: 
+    - /
+    - /
+    - /login
+  guideName: guide
+  guidePassword: guide
+  guideRole: USER 
