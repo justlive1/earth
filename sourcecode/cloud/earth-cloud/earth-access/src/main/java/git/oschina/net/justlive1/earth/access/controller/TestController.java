@@ -3,6 +3,7 @@ package git.oschina.net.justlive1.earth.access.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,11 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
 
 	@RequestMapping("/hello")
-	public Map<String, String> hello(HttpSession session) {
+	public Map<String, String> hello(HttpSession session, HttpServletRequest request) {
 
 		Map<String, String> map = new HashMap<>();
 
 		map.put("sessionId", session.getId());
+		
+		String path = request.getServletPath();
+		System.out.println(path);
 
 		return map;
 	}

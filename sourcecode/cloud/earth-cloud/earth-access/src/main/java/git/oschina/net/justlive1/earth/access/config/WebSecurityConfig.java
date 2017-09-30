@@ -25,10 +25,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 			.formLogin()
 			.loginPage(props.getLoginUrl())
+			.defaultSuccessUrl(props.getSuccessUrl())
 			.and()
             .logout()
 			.permitAll();
 		
+		http.csrf().disable();
 	}
 	
 	@Autowired

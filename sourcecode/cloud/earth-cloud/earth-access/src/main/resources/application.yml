@@ -5,14 +5,15 @@ spring:
     port: 6379
     
 server: 
-  port: 18100
+  port: 18101
 
 
 earth:
   loginUrl: /login.html
+  successUrl: /hello
   antMatchers: 
     - /
-    - /
+    - /logout
     - /login
   guideName: guide
   guidePassword: guide
