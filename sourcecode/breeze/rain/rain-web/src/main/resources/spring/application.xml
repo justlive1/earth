@@ -20,6 +20,14 @@
 
 	<context:property-placeholder location="classpath:config/*.properties" ignore-resource-not-found="true" />
 
+	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+		<constructor-arg>
+			<bean class="org.springframework.http.client.SimpleClientHttpRequestFactory">
+				<property name="readTimeout" value="${rest.template.readTimeout}" />
+				<property name="connectTimeout" value="${rest.template.connectTimeout}" />
+			</bean>
+		</constructor-arg>
+	</bean>
 
 	<aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>
 </beans>
