@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:aop="http://www.springframework.org/schema/aop" 
-	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:ehcache="http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans
@@ -18,11 +16,18 @@
         http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring
     	http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring/ehcache-spring.xsd">
 
-	<context:property-placeholder location="classpath:config/*.properties" ignore-resource-not-found="true" />
+	<context:property-placeholder location="classpath:config/*.properties"
+		ignore-resource-not-found="true" />
+
+	<context:component-scan base-package="git.oschina.net.justlive1.breeze.*">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
 
 	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
 		<constructor-arg>
-			<bean class="org.springframework.http.client.SimpleClientHttpRequestFactory">
+			<bean
+				class="org.springframework.http.client.SimpleClientHttpRequestFactory">
 				<property name="readTimeout" value="${rest.template.readTimeout}" />
 				<property name="connectTimeout" value="${rest.template.connectTimeout}" />
 			</bean>
