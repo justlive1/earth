@@ -4,11 +4,11 @@
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>git.oschina.net.justlive1.breeze</groupId>
+		<groupId>git.oschina.net.justlive1.breeze.rain</groupId>
 		<artifactId>rain</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-	<groupId>git.oschina.net.justlive1.breeze.rain.web</groupId>
+
 	<artifactId>rain-web</artifactId>
 	<packaging>war</packaging>
 	<name>rain-web Maven Webapp</name>
@@ -17,7 +17,7 @@
 	<dependencies>
 
 		<dependency>
-			<groupId>git.oschina.net.justlive1.breeze</groupId>
+			<groupId>git.oschina.net.justlive1.breeze.rain</groupId>
 			<artifactId>rain-api</artifactId>
 		</dependency>
 

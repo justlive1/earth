@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>git.oschina.net.justlive1.breeze</groupId>
+		<groupId>git.oschina.net.justlive1.breeze.rain</groupId>
 		<artifactId>rain</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
