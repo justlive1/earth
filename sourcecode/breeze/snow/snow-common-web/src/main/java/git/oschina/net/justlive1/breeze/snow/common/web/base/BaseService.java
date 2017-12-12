@@ -1,5 +1,8 @@
 package git.oschina.net.justlive1.breeze.snow.common.web.base;
 
+import java.util.Map;
+
+import org.springframework.cglib.beans.BeanMap;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -7,6 +10,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import git.oschina.net.justlive1.breeze.snow.common.web.domain.JsonResponse;
@@ -53,6 +58,35 @@ public abstract class BaseService {
 	}
 
 	/**
+	 * 构造表单提交请求体
+	 * 
+	 * @param request
+	 * @return
+	 */
+	protected HttpEntity<?> buildFormEntity(Object request) {
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+		if (request instanceof MultiValueMap) {
+			return new HttpEntity<>(request, headers);
+		}
+
+		final MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+
+		Map<?, ?> map;
+		if (request instanceof Map) {
+			map = (Map<?, ?>) request;
+		} else {
+			map = BeanMap.create(request);
+		}
+
+		map.forEach((k, v) -> params.add(k.toString(), v.toString()));
+
+		return new HttpEntity<MultiValueMap<String, String>>(params, headers);
+	}
+
+	/**
 	 * get方式获取数据并转换类型
 	 * 
 	 * @param url
@@ -85,6 +119,31 @@ public abstract class BaseService {
 	 * @return
 	 */
 	protected <T, E> T postJsonForObject(String url, @Nullable E request, Object... uriVariables) {
+
+		HttpEntity<E> entity = this.buildEntity(request);
+
+		ParameterizedTypeReference<JsonResponse<T>> typeRef = new ParameterizedTypeReference<JsonResponse<T>>() {
+		};
+
+		ResponseEntity<JsonResponse<T>> resp = template.exchange(url, HttpMethod.POST, entity, typeRef, uriVariables);
+
+		this.check(resp);
+
+		return resp.getBody().getData();
+	}
+
+	/**
+	 * form表单 方式获取数据并转换类型
+	 * 
+	 * @param url
+	 *            请求地址
+	 * @param request
+	 *            请求body中的数据（可空）
+	 * @param uriVariables
+	 *            uri中的参数
+	 * @return
+	 */
+	protected <T, E> T formSubmitForObject(String url, @Nullable E request, Object... uriVariables) {
 
 		HttpEntity<E> entity = this.buildEntity(request);
 
