@@ -3,8 +3,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>git.oschina.net.justlive1.breeze.rain</groupId>
-	<artifactId>rain</artifactId>
+	<groupId>git.oschina.net.justlive1.breeze.snow</groupId>
+	<artifactId>snow</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
@@ -16,9 +16,6 @@
 		<java.version>1.8</java.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
-
-		<snow-common-web>0.0.1-SNAPSHOT</snow-common-web>
-
 		<spring.version>5.0.2.RELEASE</spring.version>
 		<aspectj.version>1.8.9</aspectj.version>
 		<assertj.version>2.6.0</assertj.version>
@@ -92,25 +89,6 @@
 
 	<dependencyManagement>
 		<dependencies>
-
-			<!-- self api -->
-			<dependency>
-				<groupId>git.oschina.net.justlive1.breeze.rain</groupId>
-				<artifactId>rain-api</artifactId>
-				<version>${version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>git.oschina.net.justlive1.breeze.rain</groupId>
-				<artifactId>rain-service</artifactId>
-				<version>${version}</version>
-			</dependency>
-
-			<dependency>
-				<groupId>git.oschina.net.justlive1.breeze.snow</groupId>
-				<artifactId>snow-common-web</artifactId>
-				<version>${snow-common-web}</version>
-			</dependency>
 
 
 			<!-- Spring begin -->
@@ -200,10 +178,7 @@
 		</dependencies>
 	</dependencyManagement>
 
-	<!-- <modules> </modules> -->
 	<modules>
-		<module>rain-api</module>
-		<module>rain-service</module>
-		<module>rain-web</module>
+		<module>snow-common-web</module>
 	</modules>
 </project>

@@ -17,6 +17,11 @@
 	<dependencies>
 
 		<dependency>
+			<groupId>git.oschina.net.justlive1.breeze.snow</groupId>
+			<artifactId>snow-common-web</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>git.oschina.net.justlive1.breeze.rain</groupId>
 			<artifactId>rain-api</artifactId>
 		</dependency>
@@ -50,11 +55,6 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
 		</dependency>
 
 		<dependency>

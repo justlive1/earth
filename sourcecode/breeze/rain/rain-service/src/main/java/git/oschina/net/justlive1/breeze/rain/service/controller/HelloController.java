@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import git.oschina.net.justlive1.breeze.rain.api.service.HelloService;
+import git.oschina.net.justlive1.breeze.snow.common.web.domain.JsonResponse;
 
 @RestController
 @RequestMapping("/test")
@@ -15,8 +16,10 @@ public class HelloController {
 	HelloService helloService;
 
 	@GetMapping("/hello")
-	public String hello() {
+	public JsonResponse<String> hello() {
 
-		return helloService.say();
+		String msg = helloService.say();
+
+		return JsonResponse.success(msg);
 	}
 }
