@@ -15,6 +15,9 @@ public class HelloServiceImpl implements HelloService {
 	@Override
 	public List<String> hello() {
 
+		int i = 0;
+		i = 10 / i;
+
 		return Arrays.asList("hello", "world");
 	}
 

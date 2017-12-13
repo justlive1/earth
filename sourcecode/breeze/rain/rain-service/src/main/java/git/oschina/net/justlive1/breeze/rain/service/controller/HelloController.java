@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import git.oschina.net.justlive1.breeze.rain.api.domian.Hello;
 import git.oschina.net.justlive1.breeze.rain.api.service.HelloService;
-import git.oschina.net.justlive1.breeze.snow.common.web.domain.JsonResponse;
+import git.oschina.net.justlive1.breeze.snow.common.web.domain.Response;
 
 @RestController
 @RequestMapping("/test")
@@ -21,26 +21,26 @@ public class HelloController {
 	HelloService helloService;
 
 	@GetMapping("/hello")
-	public JsonResponse<List<String>> hello() {
+	public Response<List<String>> hello() {
 
 		List<String> res = helloService.hello();
 
-		return JsonResponse.success(res);
+		return Response.success(res);
 	}
 
 	@PostMapping("/world")
-	public JsonResponse<List<String>> world(@RequestBody List<String> list) {
+	public Response<List<String>> world(@RequestBody List<String> list) {
 
 		List<String> res = helloService.world(list);
 
-		return JsonResponse.success(res);
+		return Response.success(res);
 	}
 
 	@PostMapping("/helloworld")
-	public JsonResponse<List<String>> helloworld(Hello hello) {
+	public Response<List<String>> helloworld(Hello hello) {
 
 		List<String> res = helloService.helloworld(hello);
 
-		return JsonResponse.success(res);
+		return Response.success(res);
 	}
 }

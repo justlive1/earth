@@ -14,15 +14,17 @@ import lombok.RequiredArgsConstructor;
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class JsonResponse<T> {
+public class Response<T> {
 
+	public static final String SUCCESS = "00000";
+	public static final String FAIL = "-99999";
 	/**
-	 * 是否成功
+	 * 返回结果编码
 	 */
-	private boolean success;
+	private String code;
 
 	/**
-	 * 信息
+	 * 结果描述信息
 	 */
 	private String message;
 
@@ -38,9 +40,9 @@ public class JsonResponse<T> {
 	 * @param data
 	 * @return
 	 */
-	public static <E> JsonResponse<E> success(E data) {
-		JsonResponse<E> resp = new JsonResponse<E>(data);
-		resp.setSuccess(true);
+	public static <E> Response<E> success(E data) {
+		Response<E> resp = new Response<E>(data);
+		resp.setCode(SUCCESS);
 		return resp;
 	}
 
@@ -49,9 +51,19 @@ public class JsonResponse<T> {
 	 * 
 	 * @return
 	 */
-	public static JsonResponse<Void> error(String message) {
-		JsonResponse<Void> resp = new JsonResponse<>();
+	public static Response<Void> error(String message) {
+		Response<Void> resp = new Response<>();
+		resp.setCode(FAIL);
 		resp.setMessage(message);
 		return resp;
+	}
+
+	/**
+	 * 是否成功
+	 * 
+	 * @return
+	 */
+	public boolean isSuccess() {
+		return SUCCESS.equals(code);
 	}
 }

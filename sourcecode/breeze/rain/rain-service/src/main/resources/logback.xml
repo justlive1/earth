@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
 <configuration debug="false">
 
-	<property name="pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS,GMT+8} %X{RequestNo} [%thread] %-5level %logger{128} %method[%L] %msg%n" />
+	<property name="pattern"
+		value="%d{yyyy-MM-dd HH:mm:ss.SSS,GMT+8} %X{RequestNo} [%thread] %-5level %logger{128} %method[%L] %msg%n" />
 
 
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
@@ -10,7 +12,7 @@
 			<pattern>${pattern}</pattern>
 		</layout>
 	</appender>
-	
+
 	<root level="debug">
 		<appender-ref ref="STDOUT" />
 	</root>

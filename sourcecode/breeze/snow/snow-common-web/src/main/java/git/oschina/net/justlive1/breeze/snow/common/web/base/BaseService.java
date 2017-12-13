@@ -14,7 +14,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import git.oschina.net.justlive1.breeze.snow.common.web.domain.JsonResponse;
+import git.oschina.net.justlive1.breeze.snow.common.web.domain.Response;
 
 /**
  * 基础service <br>
@@ -97,10 +97,10 @@ public abstract class BaseService {
 	 */
 	protected <T> T getForObject(String url, Object... uriVariables) {
 
-		ParameterizedTypeReference<JsonResponse<T>> typeRef = new ParameterizedTypeReference<JsonResponse<T>>() {
+		ParameterizedTypeReference<Response<T>> typeRef = new ParameterizedTypeReference<Response<T>>() {
 		};
 
-		ResponseEntity<JsonResponse<T>> resp = template.exchange(url, HttpMethod.GET, null, typeRef, uriVariables);
+		ResponseEntity<Response<T>> resp = template.exchange(url, HttpMethod.GET, null, typeRef, uriVariables);
 
 		this.check(resp);
 
@@ -122,10 +122,10 @@ public abstract class BaseService {
 
 		HttpEntity<E> entity = this.buildEntity(request);
 
-		ParameterizedTypeReference<JsonResponse<T>> typeRef = new ParameterizedTypeReference<JsonResponse<T>>() {
+		ParameterizedTypeReference<Response<T>> typeRef = new ParameterizedTypeReference<Response<T>>() {
 		};
 
-		ResponseEntity<JsonResponse<T>> resp = template.exchange(url, HttpMethod.POST, entity, typeRef, uriVariables);
+		ResponseEntity<Response<T>> resp = template.exchange(url, HttpMethod.POST, entity, typeRef, uriVariables);
 
 		this.check(resp);
 
@@ -147,10 +147,10 @@ public abstract class BaseService {
 
 		HttpEntity<?> entity = this.buildFormEntity(request);
 
-		ParameterizedTypeReference<JsonResponse<T>> typeRef = new ParameterizedTypeReference<JsonResponse<T>>() {
+		ParameterizedTypeReference<Response<T>> typeRef = new ParameterizedTypeReference<Response<T>>() {
 		};
 
-		ResponseEntity<JsonResponse<T>> resp = template.exchange(url, HttpMethod.POST, entity, typeRef, uriVariables);
+		ResponseEntity<Response<T>> resp = template.exchange(url, HttpMethod.POST, entity, typeRef, uriVariables);
 
 		this.check(resp);
 
