@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import git.oschina.net.justlive1.breeze.rain.api.domian.Hello;
 import git.oschina.net.justlive1.breeze.rain.api.service.HelloService;
 import git.oschina.net.justlive1.breeze.snow.common.web.base.BaseService;
 
@@ -32,5 +33,11 @@ public class HelloServiceImpl extends BaseService implements HelloService {
 	public List<String> world(List<String> world) {
 
 		return this.postJsonForObject(serviceUrl + "/test/world", world);
+	}
+
+	@Override
+	public List<String> helloworld(Hello hello) {
+
+		return this.formSubmitForObject(serviceUrl + "/test/helloworld", hello);
 	}
 }

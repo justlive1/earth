@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import git.oschina.net.justlive1.breeze.rain.api.domian.Hello;
 import git.oschina.net.justlive1.breeze.rain.api.service.HelloService;
 import git.oschina.net.justlive1.breeze.snow.common.web.domain.JsonResponse;
 
@@ -31,6 +32,14 @@ public class HelloController {
 	public JsonResponse<List<String>> world(@RequestBody List<String> list) {
 
 		List<String> res = helloService.world(list);
+
+		return JsonResponse.success(res);
+	}
+
+	@PostMapping("/helloworld")
+	public JsonResponse<List<String>> helloworld(Hello hello) {
+
+		List<String> res = helloService.helloworld(hello);
 
 		return JsonResponse.success(res);
 	}

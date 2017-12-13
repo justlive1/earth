@@ -145,7 +145,7 @@ public abstract class BaseService {
 	 */
 	protected <T, E> T formSubmitForObject(String url, @Nullable E request, Object... uriVariables) {
 
-		HttpEntity<E> entity = this.buildEntity(request);
+		HttpEntity<?> entity = this.buildFormEntity(request);
 
 		ParameterizedTypeReference<JsonResponse<T>> typeRef = new ParameterizedTypeReference<JsonResponse<T>>() {
 		};
