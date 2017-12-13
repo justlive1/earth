@@ -10,6 +10,8 @@
 	</parent>
 
 	<artifactId>rain-service</artifactId>
+	<packaging>war</packaging>
+
 	<name>rain-service</name>
 	<url>http://maven.apache.org</url>
 
@@ -23,7 +25,7 @@
 			<groupId>git.oschina.net.justlive1.breeze.snow</groupId>
 			<artifactId>snow-common-web</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>git.oschina.net.justlive1.breeze.rain</groupId>
 			<artifactId>rain-api</artifactId>
