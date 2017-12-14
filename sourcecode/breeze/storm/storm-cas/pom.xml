@@ -1,0 +1,225 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>git.oschina.net.justlive1.breeze.storm</groupId>
+		<artifactId>storm</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>storm-cas</artifactId>
+	<packaging>war</packaging>
+
+	<name>storm-cas Maven Webapp</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<cas.version>5.2.0</cas.version>
+		<springboot.version>1.5.8.RELEASE</springboot.version>
+		<!-- app.server could be -jetty, -undertow, -tomcat, or blank if you plan 
+			to provide appserver -->
+		<app.server>-tomcat</app.server>
+
+		<mainClassName>org.springframework.boot.loader.WarLauncher</mainClassName>
+		<isExecutable>false</isExecutable>
+		<manifestFileToUse>${project.build.directory}/war/work/org.apereo.cas/cas-server-webapp${app.server}/META-INF/MANIFEST.MF</manifestFileToUse>
+
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>sonatype-releases</id>
+			<url>http://oss.sonatype.org/content/repositories/releases/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>sonatype-snapshots</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>shibboleth-releases</id>
+			<url>https://build.shibboleth.net/nexus/content/repositories/releases</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.apereo.cas</groupId>
+			<artifactId>cas-server-webapp${app.server}</artifactId>
+			<version>${cas.version}</version>
+			<type>war</type>
+			<scope>runtime</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.rimerosolutions.maven.plugins</groupId>
+				<artifactId>wrapper-maven-plugin</artifactId>
+				<version>0.0.4</version>
+				<configuration>
+					<verifyDownload>true</verifyDownload>
+					<checksumAlgorithm>MD5</checksumAlgorithm>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>${springboot.version}</version>
+				<configuration>
+					<mainClass>${mainClassName}</mainClass>
+					<addResources>true</addResources>
+					<executable>${isExecutable}</executable>
+					<layout>WAR</layout>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<warName>cas</warName>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+					<recompressZippedFiles>false</recompressZippedFiles>
+					<archive>
+						<compress>false</compress>
+						<manifestFile>${manifestFileToUse}</manifestFile>
+					</archive>
+					<overlays>
+						<overlay>
+							<groupId>org.apereo.cas</groupId>
+							<artifactId>cas-server-webapp${app.server}</artifactId>
+						</overlay>
+					</overlays>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+			</plugin>
+		</plugins>
+		<finalName>storm-cas</finalName>
+	</build>
+
+	<profiles>
+		<profile>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<id>exec</id>
+			<properties>
+				<mainClassName>org.apereo.cas.web.CasWebApplication</mainClassName>
+				<isExecutable>true</isExecutable>
+				<manifestFileToUse></manifestFileToUse>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.soebes.maven.plugins</groupId>
+						<artifactId>echo-maven-plugin</artifactId>
+						<version>0.3.0</version>
+						<executions>
+							<execution>
+								<phase>prepare-package</phase>
+								<goals>
+									<goal>echo</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<echos>
+								<echo>Executable profile to make the generated CAS web
+									application executable.</echo>
+							</echos>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+		<profile>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<id>pgp</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.github.s4u.plugins</groupId>
+						<artifactId>pgpverify-maven-plugin</artifactId>
+						<version>1.1.0</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>check</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<pgpKeyServer>hkp://pool.sks-keyservers.net</pgpKeyServer>
+							<pgpKeysCachePath>${settings.localRepository}/pgpkeys-cache</pgpKeysCachePath>
+							<scope>test</scope>
+							<verifyPomFiles>true</verifyPomFiles>
+							<failNoSignature>false</failNoSignature>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+</project>
