@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:mvc="http://www.springframework.org/schema/mvc" 
-	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans
@@ -22,42 +20,34 @@
 		base-package="git.oschina.net.justlive1.breeze.**.web,git.oschina.net.justlive1.breeze.**.controller"></context:component-scan>
 
 	<!-- i18n -->
-	<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+	<bean id="localeChangeInterceptor"
+		class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
 	</bean>
-	
-	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver" />
-	
+
+	<bean id="localeResolver"
+		class="org.springframework.web.servlet.i18n.CookieLocaleResolver" />
+
 	<!-- jsp -->
-	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
 		<property name="prefix" value="/WEB-INF/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-	
-	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<!-- one of the properties available; the maximum file size in bytes -->
 		<property name="maxUploadSize" value="40960000" />
 	</bean>
 
-	<mvc:annotation-driven>
-		<mvc:message-converters>
-			<bean
-				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-				<property name="prettyPrint" value="true" />
-				<property name="supportedMediaTypes">
-					<list>
-						<value>application/json;charset=UTF-8</value>
-						<value>text/plain;charset=UTF-8</value>
-					</list>
-				</property>
-			</bean>
-		</mvc:message-converters>
-	</mvc:annotation-driven>
-	
-	<mvc:resources location="/js/" mapping="/js/**"/>
-	<mvc:resources location="/images/" mapping="/images/**"/>
-	<mvc:resources location="/css/" mapping="/css/**"/>
-	<mvc:resources location="/files/" mapping="/files/**"/>
+	<mvc:annotation-driven />
+
+	<mvc:resources location="/js/" mapping="/js/**" />
+	<mvc:resources location="/images/" mapping="/images/**" />
+	<mvc:resources location="/css/" mapping="/css/**" />
+	<mvc:resources location="/files/" mapping="/files/**" />
 
 	<aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>
 

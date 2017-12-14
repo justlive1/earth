@@ -1,26 +1,21 @@
 package git.oschina.net.justlive1.breeze.snow.common.web.exception;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
+import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.databind.MapperFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.Maps;
 
-import git.oschina.net.justlive1.breeze.snow.common.web.domain.Response;
+import git.oschina.net.justlive1.breeze.snow.common.web.constant.BaseConstants;
 
 /**
  * CodedException统一处理<br>
@@ -33,22 +28,16 @@ import git.oschina.net.justlive1.breeze.snow.common.web.domain.Response;
  * 
  * @author wubo
  */
-@EnableWebMvc
 @Component("codedExceptionResolver")
 public class CodedExceptionResolver extends SimpleMappingExceptionResolver {
 
-	private static final Logger LOG = LoggerFactory.getLogger(CodedExceptionResolver.class);
-
-	private ObjectMapper objectMapper;
+	private MappingJackson2JsonView jsonView = new MappingJackson2JsonView();
 
 	@Value("${exception.errorPage:/error/coded_error}")
 	private String errorPage;
 
 	@PostConstruct
 	void init() {
-
-		objectMapper = new ObjectMapper().configure(MapperFeature.DEFAULT_VIEW_INCLUSION, false)
-				.setSerializationInclusion(Include.NON_NULL);
 
 		Properties exceptionMappings = new Properties();
 		// 在非ajax方式的情况下，将所有异常转向指定的错误页面
@@ -67,7 +56,7 @@ public class CodedExceptionResolver extends SimpleMappingExceptionResolver {
 		}
 
 		// 包装Response对象
-		final Response<Void> error;
+		final Map<String, String> error;
 		// 确定当前异常是业务异常还是系统故障。为了防止信息丢失，除了明确使用NoStackException，其余的异常都认为是系统故障
 		boolean isFault = true;
 		if (CodedException.class.isInstance(ex)) {
@@ -95,18 +84,8 @@ public class CodedExceptionResolver extends SimpleMappingExceptionResolver {
 			return model;
 
 		} else {// JSON格式返回
-			try {
-				response.setStatus(HttpServletResponse.SC_OK);
-				response.setHeader("ContentType", "application/json");
-				response.setCharacterEncoding("utf-8");
-				PrintWriter writer = response.getWriter();
-				objectMapper.writeValue(writer, error);
-				response.flushBuffer();
-			} catch (IOException e) {
-				LOG.error("", e);
-			}
-			ModelAndView model = new ModelAndView();
-			return model;
+
+			return new ModelAndView(jsonView, error);
 		}
 	}
 
@@ -145,10 +124,10 @@ public class CodedExceptionResolver extends SimpleMappingExceptionResolver {
 	 * @param ex
 	 * @return
 	 */
-	private Response<Void> buildError(CodedException ex) {
-		final Response<Void> err = new Response<>();
-		err.setCode(ex.getErrorCode().toString());
-		err.setMessage(ex.getMessage());
+	private Map<String, String> buildError(CodedException ex) {
+		Map<String, String> err = Maps.newHashMap();
+		err.put(BaseConstants.RESP_CODE_FIELD, ex.getErrorCode().toString());
+		err.put(BaseConstants.RESP_MESSAGE_FIELD, ex.getMessage());
 		return err;
 	}
 
@@ -158,10 +137,10 @@ public class CodedExceptionResolver extends SimpleMappingExceptionResolver {
 	 * @param ex
 	 * @return
 	 */
-	private Response<Void> buildError(Exception ex) {
-		final Response<Void> err = new Response<>();
-		err.setCode(ex.getClass().getSimpleName());
-		err.setMessage(ex.getMessage());
+	private Map<String, String> buildError(Exception ex) {
+		Map<String, String> err = Maps.newHashMap();
+		err.put(BaseConstants.RESP_CODE_FIELD, ex.getClass().getSimpleName());
+		err.put(BaseConstants.RESP_MESSAGE_FIELD, ex.getMessage());
 		return err;
 	}
 }

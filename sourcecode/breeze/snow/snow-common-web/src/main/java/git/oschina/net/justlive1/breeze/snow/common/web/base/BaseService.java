@@ -7,6 +7,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
@@ -15,6 +16,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import git.oschina.net.justlive1.breeze.snow.common.web.domain.Response;
+import git.oschina.net.justlive1.breeze.snow.common.web.exception.Exceptions;
 
 /**
  * 基础service <br>
@@ -162,8 +164,17 @@ public abstract class BaseService {
 	 * 
 	 * @param resp
 	 */
-	protected void check(ResponseEntity<?> resp) {
-		// TODO
+	protected <T> void check(ResponseEntity<Response<T>> resp) {
+
+		if (resp.getStatusCode() != HttpStatus.OK) {
+			throw Exceptions.fail(Response.FAIL, Response.FAIL);
+		}
+
+		Response<T> body = resp.getBody();
+
+		if (!body.isSuccess()) {
+			throw Exceptions.fail(body.getCode(), body.getMessage());
+		}
 	}
 
 }

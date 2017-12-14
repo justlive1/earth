@@ -19,20 +19,7 @@
 	<context:component-scan
 		base-package="git.oschina.net.justlive1.breeze.**.web,git.oschina.net.justlive1.breeze.**.controller"></context:component-scan>
 
-	<mvc:annotation-driven>
-		<mvc:message-converters>
-			<bean
-				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-				<property name="prettyPrint" value="true" />
-				<property name="supportedMediaTypes">
-					<list>
-						<value>application/json;charset=UTF-8</value>
-						<value>text/plain;charset=UTF-8</value>
-					</list>
-				</property>
-			</bean>
-		</mvc:message-converters>
-	</mvc:annotation-driven>
+	<mvc:annotation-driven />
 
 	<aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>
 

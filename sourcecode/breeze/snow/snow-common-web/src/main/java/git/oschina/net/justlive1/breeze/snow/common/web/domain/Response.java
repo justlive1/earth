@@ -2,8 +2,6 @@ package git.oschina.net.justlive1.breeze.snow.common.web.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 /**
  * json返回实体
@@ -13,7 +11,6 @@ import lombok.RequiredArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class Response<T> {
 
 	public static final String SUCCESS = "00000";
@@ -31,7 +28,6 @@ public class Response<T> {
 	/**
 	 * 返回数据
 	 */
-	@NonNull
 	private T data;
 
 	/**
@@ -41,7 +37,8 @@ public class Response<T> {
 	 * @return
 	 */
 	public static <E> Response<E> success(E data) {
-		Response<E> resp = new Response<E>(data);
+		Response<E> resp = new Response<E>();
+		resp.setData(data);
 		resp.setCode(SUCCESS);
 		return resp;
 	}
