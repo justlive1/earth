@@ -106,7 +106,7 @@
         </AsyncLogger>
 
         <!-- All Loggers inherit appenders specified here, unless additivity="false" on the Logger -->
-        <AsyncRoot level="warn">
+        <AsyncRoot level="debug">
             <AppenderRef ref="casFile"/>
             <!-- 
                  For deployment to an application server running as service, 
