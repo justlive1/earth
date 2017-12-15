@@ -132,7 +132,7 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.6</version>
 				<configuration>
-					<warName>cas</warName>
+					<warName>storm-cas</warName>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 					<recompressZippedFiles>false</recompressZippedFiles>
 					<archive>
@@ -143,7 +143,7 @@
 						<overlay>
 							<groupId>org.apereo.cas</groupId>
 							<artifactId>cas-server-webapp${app.server}</artifactId>
-						</overlay>
+						</overlay> 
 					</overlays>
 				</configuration>
 			</plugin>
@@ -157,10 +157,15 @@
 	</build>
 
 	<profiles>
+	
 		<profile>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
+			<id>defualt</id>
+		</profile>
+		
+		<profile>
 			<id>exec</id>
 			<properties>
 				<mainClassName>org.apereo.cas.web.CasWebApplication</mainClassName>
