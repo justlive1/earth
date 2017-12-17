@@ -66,6 +66,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.apereo.cas</groupId>
+			<artifactId>cas-server-support-jdbc</artifactId>
+			<version>${cas.version}</version>
+		</dependency>
+
+		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<scope>provided</scope>
@@ -82,6 +88,12 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-annotations</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
 		</dependency>
 
 		<dependency>
@@ -143,7 +155,7 @@
 						<overlay>
 							<groupId>org.apereo.cas</groupId>
 							<artifactId>cas-server-webapp${app.server}</artifactId>
-						</overlay> 
+						</overlay>
 					</overlays>
 				</configuration>
 			</plugin>
@@ -157,14 +169,14 @@
 	</build>
 
 	<profiles>
-	
+
 		<profile>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<id>defualt</id>
 		</profile>
-		
+
 		<profile>
 			<id>exec</id>
 			<properties>
