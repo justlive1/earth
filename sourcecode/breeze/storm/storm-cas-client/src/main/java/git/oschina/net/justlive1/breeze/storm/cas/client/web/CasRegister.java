@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.FilterRegistration.Dynamic;
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLSession;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
@@ -57,8 +59,9 @@ public class CasRegister implements WebApplicationInitializer {
 		auth.addMappingForUrlPatterns(null, true, ANY_PATH);
 
 		// ticket
-		Dynamic ticket = ctx.addFilter(Cas20ProxyReceivingTicketValidationFilter.class.getName(),
-				Cas20ProxyReceivingTicketValidationFilter.class);
+		Dynamic ticket = ctx.addFilter(
+				Cas20ProxyReceivingTicketValidationFilter4HostnameVerifierAlawysTrue.class.getName(),
+				Cas20ProxyReceivingTicketValidationFilter4HostnameVerifierAlawysTrue.class);
 		ticket.setInitParameters(params);
 		ticket.addMappingForUrlPatterns(null, true, ANY_PATH);
 
@@ -67,4 +70,17 @@ public class CasRegister implements WebApplicationInitializer {
 				.addMappingForUrlPatterns(null, true, ANY_PATH);
 	}
 
+	public static class Cas20ProxyReceivingTicketValidationFilter4HostnameVerifierAlawysTrue
+			extends Cas20ProxyReceivingTicketValidationFilter {
+
+		@Override
+		protected HostnameVerifier getHostnameVerifier() {
+			return new HostnameVerifier() {
+				@Override
+				public boolean verify(String var1, SSLSession var2) {
+					return true;
+				}
+			};
+		}
+	}
 }
