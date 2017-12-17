@@ -87,4 +87,8 @@
 		</dependency>
 	</dependencies>
 
+	<build>
+		<finalName>rain-service</finalName>
+	</build>
+
 </project>

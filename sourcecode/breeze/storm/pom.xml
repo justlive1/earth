@@ -18,6 +18,9 @@
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 
 		<snow-common-web>0.0.1-SNAPSHOT</snow-common-web>
+		<cas.version>5.2.0</cas.version>
+		<cas.client.version>3.4.1</cas.client.version>
+		<springboot.version>1.5.8.RELEASE</springboot.version>
 
 		<spring.version>5.0.2.RELEASE</spring.version>
 		<aspectj.version>1.8.9</aspectj.version>
@@ -188,5 +191,6 @@
 
 	<modules>
 		<module>storm-cas</module>
+		<module>storm-cas-client</module>
 	</modules>
 </project>

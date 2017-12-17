@@ -11,7 +11,7 @@
 
 	<artifactId>rain-web</artifactId>
 	<packaging>war</packaging>
-	
+
 	<name>rain-web Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
@@ -25,6 +25,11 @@
 		<dependency>
 			<groupId>git.oschina.net.justlive1.breeze.rain</groupId>
 			<artifactId>rain-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>git.oschina.net.justlive1.breeze.storm</groupId>
+			<artifactId>storm-cas-client${storm-cas-client}</artifactId>
 		</dependency>
 
 		<dependency>

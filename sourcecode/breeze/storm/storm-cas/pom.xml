@@ -16,8 +16,6 @@
 	<url>http://maven.apache.org</url>
 
 	<properties>
-		<cas.version>5.2.0</cas.version>
-		<springboot.version>1.5.8.RELEASE</springboot.version>
 		<!-- app.server could be -jetty, -undertow, -tomcat, or blank if you plan 
 			to provide appserver -->
 		<app.server>-tomcat</app.server>
@@ -71,34 +69,38 @@
 			<version>${cas.version}</version>
 		</dependency>
 
+		<!-- cas rest ticket start -->
+		<dependency>
+			<groupId>org.apereo.cas</groupId>
+			<artifactId>cas-server-support-rest</artifactId>
+			<version>${cas.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apereo.cas</groupId>
+			<artifactId>cas-server-support-rest-services</artifactId>
+			<version>${cas.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!-- Swagger API -->
+		<dependency>
+			<groupId>org.apereo.cas</groupId>
+			<artifactId>cas-server-documentation-swagger</artifactId>
+			<version>${cas.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-annotations</artifactId>
-		</dependency>
 
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
 		</dependency>
 
 		<dependency>

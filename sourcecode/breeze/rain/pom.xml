@@ -17,7 +17,9 @@
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 
-		<snow-common-web>0.0.1-SNAPSHOT</snow-common-web>
+		<snow-common-web.version>0.0.1-SNAPSHOT</snow-common-web.version>
+		<storm.version>0.0.1-SNAPSHOT</storm.version>
+		<storm-cas-client></storm-cas-client>
 
 		<spring.version>5.0.2.RELEASE</spring.version>
 		<aspectj.version>1.8.9</aspectj.version>
@@ -109,7 +111,13 @@
 			<dependency>
 				<groupId>git.oschina.net.justlive1.breeze.snow</groupId>
 				<artifactId>snow-common-web</artifactId>
-				<version>${snow-common-web}</version>
+				<version>${snow-common-web.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>git.oschina.net.justlive1.breeze.storm</groupId>
+				<artifactId>storm-cas-client${storm-cas-client}</artifactId>
+				<version>${storm.version}</version>
 			</dependency>
 
 
