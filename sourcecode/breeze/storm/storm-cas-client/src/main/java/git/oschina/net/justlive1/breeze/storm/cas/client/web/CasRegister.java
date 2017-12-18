@@ -1,11 +1,17 @@
 package git.oschina.net.justlive1.breeze.storm.cas.client.web;
 
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.FilterRegistration.Dynamic;
 import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
@@ -72,6 +78,30 @@ public class CasRegister implements WebApplicationInitializer {
 
 	public static class Cas20ProxyReceivingTicketValidationFilter4HostnameVerifierAlawysTrue
 			extends Cas20ProxyReceivingTicketValidationFilter {
+
+		static {
+			// Create a trust manager that does not validate certificate chains
+			TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+				public X509Certificate[] getAcceptedIssuers() {
+					return null;
+				}
+
+				public void checkClientTrusted(X509Certificate[] certs, String authType) {
+				}
+
+				public void checkServerTrusted(X509Certificate[] certs, String authType) {
+				}
+			} };
+
+			// Install the all-trusting trust manager
+			try {
+				SSLContext sc = SSLContext.getInstance("TLS");
+				sc.init(null, trustAllCerts, new SecureRandom());
+				HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+			} catch (Exception e) {
+				throw new RuntimeException(e);
+			}
+		}
 
 		@Override
 		protected HostnameVerifier getHostnameVerifier() {
