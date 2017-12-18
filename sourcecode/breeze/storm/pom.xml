@@ -192,5 +192,6 @@
 	<modules>
 		<module>storm-cas</module>
 		<module>storm-cas-client</module>
+		<module>storm-cas-client-shiro</module>
 	</modules>
 </project>
