@@ -1,10 +1,25 @@
 package git.oschina.net.justlive1.breeze.storm.cas.client.security.web;
 
+import org.jasig.cas.client.proxy.ProxyGrantingTicketStorage;
+import org.jasig.cas.client.proxy.ProxyGrantingTicketStorageImpl;
+import org.jasig.cas.client.validation.Cas20ProxyTicketValidator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.cas.ServiceProperties;
+import org.springframework.security.cas.authentication.CasAuthenticationProvider;
+import org.springframework.security.cas.authentication.EhCacheBasedTicketCache;
+import org.springframework.security.cas.web.CasAuthenticationEntryPoint;
+import org.springframework.security.cas.web.CasAuthenticationFilter;
+import org.springframework.security.cas.web.authentication.ServiceAuthenticationDetailsSource;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper;
+import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+
+import net.sf.ehcache.Cache;
 
 /**
  * security配置
@@ -16,32 +31,114 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Value("${security.antMatchers}")
-	String antMatchers;
+	@Value("${security.ignoreMatchers}")
+	String[] ignoreMatchers;
 
-	@Value("${security.loginUrl}")
+	@Value("${cas.server.prefixUrl}")
+	String casServerPrefixUrl;
+
+	@Value("${cas.server.loginUrl}")
 	String loginUrl;
 
-	@Value("${security.successUrl}")
-	String successUrl;
+	@Value("${security.logoutUrl}")
+	String logoutUrl;
+
+	@Value("${security.logoutSuccessUrl}")
+	String logoutSuccessUrl;
+
+	@Value("${security.proxyReceptorUrl}")
+	String proxyReceptorUrl;
+
+	@Value("${security.accessDeniedUrl:/accessDenied}")
+	String accessDeniedUrl;
+
+	@Value("${security.sessionExpireUrl:/expiredWarn}")
+	String sessionExpireUrl;
+
+	@Value("${security.casAuthProviderKey:casAuthProviderKey}")
+	String casAuthProviderKey;
+
+	@Value("${server.name}")
+	String serverName;
+
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+		// 设置不拦截规则
+		web.ignoring().antMatchers(ignoreMatchers);
+	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.authorizeRequests()
-			.antMatchers(antMatchers)
-			.permitAll()
-			.anyRequest()
-			.authenticated()
-			.and()
-			.formLogin()
-			.loginPage(loginUrl)
-			.defaultSuccessUrl(successUrl)
-			.and()
-			.logout()
-			.permitAll();
+		ServiceProperties props = new ServiceProperties();
+		props.setService(serverName);
 
-		http.csrf().disable();
+		// cas切入点
+		CasAuthenticationEntryPoint casPoint = new CasAuthenticationEntryPoint();
+		casPoint.setLoginUrl(loginUrl);
+		casPoint.setServiceProperties(props);
+
+		ProxyGrantingTicketStorage storage = new ProxyGrantingTicketStorageImpl();
+
+		// cas认证过滤器
+		CasAuthenticationFilter filter = new CasAuthenticationFilter();
+		filter.setAuthenticationManager(authenticationManager());
+		filter.setServiceProperties(props);
+		filter.setProxyGrantingTicketStorage(storage);
+		filter.setProxyReceptorUrl(proxyReceptorUrl);
+		filter.setAuthenticationDetailsSource(new ServiceAuthenticationDetailsSource(props));
+		filter.setAuthenticationFailureHandler(new SimpleUrlAuthenticationFailureHandler(accessDeniedUrl));
+
+		// ticket验证
+		Cas20ProxyTicketValidator validator = new Cas20ProxyTicketValidator(casServerPrefixUrl);
+		validator.setAcceptAnyProxy(true);
+		validator.setProxyCallbackUrl(proxyReceptorUrl);
+		validator.setProxyGrantingTicketStorage(storage);
+
+		// cas认证提供器
+		CasAuthenticationProvider casAuthProvider = new CasAuthenticationProvider();
+		casAuthProvider.setServiceProperties(props);
+		casAuthProvider.setKey(casAuthProviderKey);
+		casAuthProvider
+				.setAuthenticationUserDetailsService(new UserDetailsByNameServiceWrapper<>(userDetailsService()));
+		casAuthProvider.setTicketValidator(validator);
+
+		EhCacheBasedTicketCache statelessTicketCache = new EhCacheBasedTicketCache();
+		Cache cache = new Cache(EhCacheBasedTicketCache.class.getName(), 50, true, false, 3600, 900);
+		statelessTicketCache.setCache(cache);
+		casAuthProvider.setStatelessTicketCache(statelessTicketCache);
+
+		DefaultWebSecurityExpressionHandler expressionHandler = new DefaultWebSecurityExpressionHandler();
+
+		// @formatter:off
+		http.csrf()
+				.disable()
+			.httpBasic()
+				.authenticationEntryPoint(casPoint)
+				.and()
+			.addFilter(filter)
+			.authenticationProvider(casAuthProvider)
+			.authorizeRequests()
+				.expressionHandler(expressionHandler)
+				.anyRequest()
+					.authenticated()
+					.and()
+				.exceptionHandling()
+					.accessDeniedPage(accessDeniedUrl)
+					.and()
+				.logout()
+					.logoutUrl(logoutUrl)
+					.logoutSuccessUrl(logoutSuccessUrl)
+					.invalidateHttpSession(true)
+					.permitAll()
+					.and()
+				.sessionManagement()
+					.sessionFixation()
+					.changeSessionId()  
+	                .maximumSessions(1)
+	                .expiredUrl(sessionExpireUrl);
+
+		// @formatter:on
 	}
 
 }

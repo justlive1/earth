@@ -111,20 +111,20 @@
 				<scope>test</scope>
 			</dependency>
 			<!-- Spring end -->
-			
+
 			<!-- security -->
 			<dependency>
 				<groupId>org.springframework.security</groupId>
 				<artifactId>spring-security-config</artifactId>
 				<version>${spring-security.version}</version>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>org.springframework.security</groupId>
 				<artifactId>spring-security-web</artifactId>
 				<version>${spring-security.version}</version>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>org.springframework.security</groupId>
 				<artifactId>spring-security-cas</artifactId>
@@ -199,6 +199,13 @@
 				<artifactId>mysql-connector-java</artifactId>
 				<version>${mysql.version}</version>
 			</dependency>
+
+			<dependency>
+				<groupId>net.sf.ehcache</groupId>
+				<artifactId>ehcache</artifactId>
+				<version>${ehcache.version}</version>
+			</dependency>
+
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
