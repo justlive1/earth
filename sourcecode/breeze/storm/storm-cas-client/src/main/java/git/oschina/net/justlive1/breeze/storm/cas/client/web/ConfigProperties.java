@@ -18,8 +18,8 @@ public class ConfigProperties {
 	@Value("${cas.server.loginUrl:}")
 	public String loginUrl;
 
-	@Value("${server.name:}")
-	public String serverName;
+	@Value("${security.checkService:}")
+	public String checkService;
 
 	@Value("${security.ignoreMatchers:}")
 	public String[] ignoreMatchers;

@@ -45,9 +45,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		ServiceProperties props = new ServiceProperties();
-		props.setService(configProps.serverName);
+		props.setService(configProps.checkService);
 		props.setAuthenticateAllArtifacts(true);
-		props.setSendRenew(true);
 
 		// cas切入点
 		CasAuthenticationEntryPoint casPoint = new CasAuthenticationEntryPoint();
