@@ -3,7 +3,7 @@ package git.oschina.net.justlive1.breeze.storm.cas.client.security.web;
 import org.jasig.cas.client.proxy.ProxyGrantingTicketStorage;
 import org.jasig.cas.client.proxy.ProxyGrantingTicketStorageImpl;
 import org.jasig.cas.client.validation.Cas20ProxyTicketValidator;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.cas.ServiceProperties;
 import org.springframework.security.cas.authentication.CasAuthenticationProvider;
@@ -19,6 +19,7 @@ import org.springframework.security.core.userdetails.UserDetailsByNameServiceWra
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
+import git.oschina.net.justlive1.breeze.storm.cas.client.web.ConfigProperties;
 import net.sf.ehcache.Cache;
 
 /**
@@ -31,51 +32,26 @@ import net.sf.ehcache.Cache;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Value("${security.ignoreMatchers}")
-	String[] ignoreMatchers;
-
-	@Value("${cas.server.prefixUrl}")
-	String casServerPrefixUrl;
-
-	@Value("${cas.server.loginUrl}")
-	String loginUrl;
-
-	@Value("${security.logoutUrl}")
-	String logoutUrl;
-
-	@Value("${security.logoutSuccessUrl}")
-	String logoutSuccessUrl;
-
-	@Value("${security.proxyReceptorUrl}")
-	String proxyReceptorUrl;
-
-	@Value("${security.accessDeniedUrl:/accessDenied}")
-	String accessDeniedUrl;
-
-	@Value("${security.sessionExpireUrl:/expiredWarn}")
-	String sessionExpireUrl;
-
-	@Value("${security.casAuthProviderKey:casAuthProviderKey}")
-	String casAuthProviderKey;
-
-	@Value("${server.name}")
-	String serverName;
+	@Autowired
+	ConfigProperties configProps;
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		// 设置不拦截规则
-		web.ignoring().antMatchers(ignoreMatchers);
+		web.ignoring().antMatchers(configProps.ignoreMatchers);
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
 		ServiceProperties props = new ServiceProperties();
-		props.setService(serverName);
+		props.setService(configProps.serverName);
+		props.setAuthenticateAllArtifacts(true);
+		props.setSendRenew(true);
 
 		// cas切入点
 		CasAuthenticationEntryPoint casPoint = new CasAuthenticationEntryPoint();
-		casPoint.setLoginUrl(loginUrl);
+		casPoint.setLoginUrl(configProps.loginUrl);
 		casPoint.setServiceProperties(props);
 
 		ProxyGrantingTicketStorage storage = new ProxyGrantingTicketStorageImpl();
@@ -85,20 +61,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		filter.setAuthenticationManager(authenticationManager());
 		filter.setServiceProperties(props);
 		filter.setProxyGrantingTicketStorage(storage);
-		filter.setProxyReceptorUrl(proxyReceptorUrl);
+		filter.setProxyReceptorUrl(configProps.proxyReceptorUrl);
 		filter.setAuthenticationDetailsSource(new ServiceAuthenticationDetailsSource(props));
-		filter.setAuthenticationFailureHandler(new SimpleUrlAuthenticationFailureHandler(accessDeniedUrl));
+		filter.setAuthenticationFailureHandler(new SimpleUrlAuthenticationFailureHandler(configProps.accessDeniedUrl));
 
 		// ticket验证
-		Cas20ProxyTicketValidator validator = new Cas20ProxyTicketValidator(casServerPrefixUrl);
+		Cas20ProxyTicketValidator validator = new Cas20ProxyTicketValidator(configProps.casServerPrefixUrl);
 		validator.setAcceptAnyProxy(true);
-		validator.setProxyCallbackUrl(proxyReceptorUrl);
+		validator.setProxyCallbackUrl(configProps.proxyReceptorUrl);
 		validator.setProxyGrantingTicketStorage(storage);
 
 		// cas认证提供器
 		CasAuthenticationProvider casAuthProvider = new CasAuthenticationProvider();
 		casAuthProvider.setServiceProperties(props);
-		casAuthProvider.setKey(casAuthProviderKey);
+		casAuthProvider.setKey(configProps.casAuthProviderKey);
 		casAuthProvider
 				.setAuthenticationUserDetailsService(new UserDetailsByNameServiceWrapper<>(userDetailsService()));
 		casAuthProvider.setTicketValidator(validator);
@@ -124,11 +100,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 					.authenticated()
 					.and()
 				.exceptionHandling()
-					.accessDeniedPage(accessDeniedUrl)
+					.accessDeniedPage(configProps.accessDeniedUrl)
 					.and()
 				.logout()
-					.logoutUrl(logoutUrl)
-					.logoutSuccessUrl(logoutSuccessUrl)
+					.logoutUrl(configProps.logoutUrl)
+					.logoutSuccessUrl(configProps.logoutSuccessUrl)
 					.invalidateHttpSession(true)
 					.permitAll()
 					.and()
@@ -136,7 +112,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 					.sessionFixation()
 					.changeSessionId()  
 	                .maximumSessions(1)
-	                .expiredUrl(sessionExpireUrl);
+	                .expiredUrl(configProps.sessionExpireUrl);
 
 		// @formatter:on
 	}
