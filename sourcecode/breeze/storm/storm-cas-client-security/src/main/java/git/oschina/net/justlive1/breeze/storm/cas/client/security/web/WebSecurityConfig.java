@@ -11,11 +11,13 @@ import org.springframework.security.cas.authentication.EhCacheBasedTicketCache;
 import org.springframework.security.cas.web.CasAuthenticationEntryPoint;
 import org.springframework.security.cas.web.CasAuthenticationFilter;
 import org.springframework.security.cas.web.authentication.ServiceAuthenticationDetailsSource;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
@@ -35,12 +37,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	ConfigProperties configProps;
 
+	@Autowired(required = false)
+	UserDetailsService userDetailsService;
+
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		// 设置不拦截规则
 		web.ignoring().antMatchers(configProps.ignoreMatchers);
 	}
 
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+
+		auth.inMemoryAuthentication().withUser("yanglu").password("96e79218965eb72c92a549dd5a330112")
+				.authorities("ROLE_USER");
+
+	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -101,6 +113,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 					.and()
 				.exceptionHandling()
 					.accessDeniedPage(configProps.accessDeniedUrl)
+					.and()
+				.formLogin()
+					.loginProcessingUrl(configProps.casServerPrefixUrl)
+					.loginPage(configProps.loginUrl)
+					.defaultSuccessUrl(configProps.defaultSuccessUrl)
+					.failureUrl(configProps.failureUrl)
+					.usernameParameter(configProps.securityUserName)
+					.passwordParameter(configProps.securityPassword)
+					.permitAll()
 					.and()
 				.logout()
 					.logoutUrl(configProps.logoutUrl)

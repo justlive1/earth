@@ -39,6 +39,21 @@ public class ConfigProperties {
 	@Value("${security.checkService:}")
 	public String checkService;
 
+	@Value("${security.username:username}")
+	public String securityUserName;
+
+	@Value("${security.password:password}")
+	public String securityPassword;
+	
+	@Value("${security.loginPage:/login}")
+	public String securityLoginPage;
+	
+	@Value("${security.defaultSuccessUrl:/}")
+	public String defaultSuccessUrl;
+
+	@Value("${security.authenticationFailureUrl:/login?error}")
+	public String failureUrl;
+
 	@Value("${security.logoutUrl:}")
 	public String logoutUrl;
 
