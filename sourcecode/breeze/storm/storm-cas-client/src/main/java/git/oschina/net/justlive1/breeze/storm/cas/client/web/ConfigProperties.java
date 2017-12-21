@@ -6,11 +6,29 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ConfigProperties {
 
+	public static final String SERVER_NAME = "server.name";
+	public static final String SERVER_NAME_FIELD = "serverName";
+
+	public static final String CAS_SERVER_URL_PREFIX = "cas.server.prefixUrl";
+	public static final String CAS_SERVER_LOGINURL = "cas.server.loginUrl";
+	public static final String CAS_SERVER_URL_PREFIX_FIELD = "casServerUrlPrefix";
+	public static final String CAS_SERVER_LOGINURL_FIELD = "casServerLoginUrl";
+
+	public static final String IGNORES_URLS = "app.ignoreMatchers";
+	public static final String IGNORES_URLS_FIELD = "ignorePattern";
+
+	public static final String ANY_PATH = "/*";
+
+	public static final String SPRING_SECURITY_FILTER_CHAIN = "springSecurityFilterChain";
+
 	@Value("${app.host:}")
-	private String appHost;
+	public String appHost;
 
 	@Value("${app.name:}")
-	private String appName;
+	public String appName;
+
+	@Value("${app.ignoreMatchers:}")
+	public String[] ignoreMatchers;
 
 	@Value("${cas.server.prefixUrl:}")
 	public String casServerPrefixUrl;
@@ -20,9 +38,6 @@ public class ConfigProperties {
 
 	@Value("${security.checkService:}")
 	public String checkService;
-
-	@Value("${security.ignoreMatchers:}")
-	public String[] ignoreMatchers;
 
 	@Value("${security.logoutUrl:}")
 	public String logoutUrl;

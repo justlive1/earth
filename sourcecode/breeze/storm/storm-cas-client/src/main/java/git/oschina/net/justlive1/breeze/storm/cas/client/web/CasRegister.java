@@ -1,27 +1,40 @@
 package git.oschina.net.justlive1.breeze.storm.cas.client.web;
 
+import static git.oschina.net.justlive1.breeze.storm.cas.client.web.ConfigProperties.ANY_PATH;
+import static git.oschina.net.justlive1.breeze.storm.cas.client.web.ConfigProperties.CAS_SERVER_LOGINURL;
+import static git.oschina.net.justlive1.breeze.storm.cas.client.web.ConfigProperties.CAS_SERVER_LOGINURL_FIELD;
+import static git.oschina.net.justlive1.breeze.storm.cas.client.web.ConfigProperties.CAS_SERVER_URL_PREFIX;
+import static git.oschina.net.justlive1.breeze.storm.cas.client.web.ConfigProperties.CAS_SERVER_URL_PREFIX_FIELD;
+import static git.oschina.net.justlive1.breeze.storm.cas.client.web.ConfigProperties.IGNORES_URLS;
+import static git.oschina.net.justlive1.breeze.storm.cas.client.web.ConfigProperties.IGNORES_URLS_FIELD;
+import static git.oschina.net.justlive1.breeze.storm.cas.client.web.ConfigProperties.SERVER_NAME;
+import static git.oschina.net.justlive1.breeze.storm.cas.client.web.ConfigProperties.SERVER_NAME_FIELD;
+
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.FilterRegistration.Dynamic;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
+import javax.servlet.FilterRegistration.Dynamic;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
 import org.jasig.cas.client.authentication.AuthenticationFilter;
+import org.jasig.cas.client.configuration.ConfigurationKeys;
 import org.jasig.cas.client.session.SingleSignOutFilter;
 import org.jasig.cas.client.session.SingleSignOutHttpSessionListener;
 import org.jasig.cas.client.util.AssertionThreadLocalFilter;
 import org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter;
 import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.util.WebUtils;
 
+import git.oschina.net.justlive1.breeze.storm.cas.client.util.MultipleAntPathMatcher;
 import git.oschina.net.justlive1.breeze.storm.cas.client.util.PropertiesWrapper;
 
 /**
@@ -32,16 +45,10 @@ import git.oschina.net.justlive1.breeze.storm.cas.client.util.PropertiesWrapper;
  */
 public class CasRegister implements WebApplicationInitializer {
 
-	private static final String SERVER_NAME = "server.name";
-	private static final String CAS_SERVER_URL_PREFIX = "cas.server.prefixUrl";
-	private static final String CAS_SERVER_LOGINURL = "cas.server.loginUrl";
-	private static final String SERVER_NAME_FIELD = "serverName";
-	private static final String CAS_SERVER_URL_PREFIX_FIELD = "casServerUrlPrefix";
-	private static final String CAS_SERVER_LOGINURL_FIELD = "casServerLoginUrl";
-	private static final String ANY_PATH = "/*";
-
 	@Override
 	public void onStartup(ServletContext ctx) throws ServletException {
+
+		WebUtils.setWebAppRootSystemProperty(ctx);
 
 		PropertiesWrapper props = new PropertiesWrapper("classpath*:config/*.properties");
 
@@ -49,6 +56,8 @@ public class CasRegister implements WebApplicationInitializer {
 		params.put(CAS_SERVER_URL_PREFIX_FIELD, props.getProperty(CAS_SERVER_URL_PREFIX));
 		params.put(CAS_SERVER_LOGINURL_FIELD, props.getProperty(CAS_SERVER_LOGINURL));
 		params.put(SERVER_NAME_FIELD, props.getProperty(SERVER_NAME));
+		params.put(IGNORES_URLS_FIELD, props.getProperty(IGNORES_URLS));
+		params.put(ConfigurationKeys.IGNORE_URL_PATTERN_TYPE.getName(), MultipleAntPathMatcher.class.getName());
 
 		// 单点退出
 		ctx.addListener(SingleSignOutHttpSessionListener.class);
@@ -113,4 +122,5 @@ public class CasRegister implements WebApplicationInitializer {
 			};
 		}
 	}
+
 }

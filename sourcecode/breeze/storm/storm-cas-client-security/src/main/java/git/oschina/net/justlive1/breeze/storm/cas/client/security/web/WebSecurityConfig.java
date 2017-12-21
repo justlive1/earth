@@ -41,6 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		web.ignoring().antMatchers(configProps.ignoreMatchers);
 	}
 
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
