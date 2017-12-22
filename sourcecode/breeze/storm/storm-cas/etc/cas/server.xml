@@ -61,7 +61,7 @@
 			type="RSA" /> </SSLHostConfig> </Connector> -->
 
 		<Connector SSLEnabled="true" keystoreFile="/etc/cas/server.keystore"
-			keystorePass="changeit" maxThreads="150" port="8443"
+			keystorePass="justlive1" maxThreads="150" port="8443"
 			protocol="org.apache.coyote.http11.Http11NioProtocol">
 		</Connector>
 		<!-- Define a SSL/TLS HTTP/1.1 Connector on port 8443 with HTTP/2 This 
