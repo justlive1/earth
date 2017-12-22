@@ -15,8 +15,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import git.oschina.net.justlive1.breeze.snow.common.web.domain.Response;
-import git.oschina.net.justlive1.breeze.snow.common.web.exception.Exceptions;
+import git.oschina.net.justlive1.breeze.snow.common.base.domain.Response;
+import git.oschina.net.justlive1.breeze.snow.common.base.exception.Exceptions;
 
 /**
  * 基础service <br>

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import git.oschina.net.justlive1.breeze.rain.api.domian.Hello;
 import git.oschina.net.justlive1.breeze.rain.api.service.HelloService;
-import git.oschina.net.justlive1.breeze.snow.common.web.domain.Response;
+import git.oschina.net.justlive1.breeze.snow.common.base.domain.Response;
 
 @RestController
 @RequestMapping("/test")

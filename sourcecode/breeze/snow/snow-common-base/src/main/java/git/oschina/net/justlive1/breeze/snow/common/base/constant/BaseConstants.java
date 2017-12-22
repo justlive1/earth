@@ -1,4 +1,4 @@
-package git.oschina.net.justlive1.breeze.snow.common.web.constant;
+package git.oschina.net.justlive1.breeze.snow.common.base.constant;
 
 /**
  * 基本常量

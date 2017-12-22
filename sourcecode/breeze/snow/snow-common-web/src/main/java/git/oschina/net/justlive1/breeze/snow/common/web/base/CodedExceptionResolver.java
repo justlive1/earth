@@ -1,4 +1,4 @@
-package git.oschina.net.justlive1.breeze.snow.common.web.exception;
+package git.oschina.net.justlive1.breeze.snow.common.web.base;
 
 import java.util.Map;
 import java.util.Properties;
@@ -15,7 +15,9 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import com.google.common.collect.Maps;
 
-import git.oschina.net.justlive1.breeze.snow.common.web.constant.BaseConstants;
+import git.oschina.net.justlive1.breeze.snow.common.base.constant.BaseConstants;
+import git.oschina.net.justlive1.breeze.snow.common.base.exception.CodedException;
+import git.oschina.net.justlive1.breeze.snow.common.base.exception.NoStackCodedException;
 
 /**
  * CodedException统一处理<br>

@@ -91,6 +91,18 @@
 	<dependencyManagement>
 		<dependencies>
 
+			<!-- self api -->
+			<dependency>
+				<groupId>git.oschina.net.justlive1.breeze.snow</groupId>
+				<artifactId>snow-common-base</artifactId>
+				<version>${version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>git.oschina.net.justlive1.breeze.snow</groupId>
+				<artifactId>snow-common-web</artifactId>
+				<version>${version}</version>
+			</dependency>
 
 			<!-- Spring begin -->
 			<dependency>
@@ -174,7 +186,7 @@
 				<artifactId>guava</artifactId>
 				<version>${guava.version}</version>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
@@ -187,5 +199,6 @@
 
 	<modules>
 		<module>snow-common-web</module>
+		<module>snow-common-base</module>
 	</modules>
 </project>

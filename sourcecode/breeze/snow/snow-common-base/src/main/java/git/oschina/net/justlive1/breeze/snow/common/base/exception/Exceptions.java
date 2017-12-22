@@ -1,4 +1,4 @@
-package git.oschina.net.justlive1.breeze.snow.common.web.exception;
+package git.oschina.net.justlive1.breeze.snow.common.base.exception;
 
 /**
  * 用于创建CodedException<br>

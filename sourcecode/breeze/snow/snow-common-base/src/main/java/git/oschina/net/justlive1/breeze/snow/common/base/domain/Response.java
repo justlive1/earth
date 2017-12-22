@@ -1,4 +1,4 @@
-package git.oschina.net.justlive1.breeze.snow.common.web.domain;
+package git.oschina.net.justlive1.breeze.snow.common.base.domain;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
