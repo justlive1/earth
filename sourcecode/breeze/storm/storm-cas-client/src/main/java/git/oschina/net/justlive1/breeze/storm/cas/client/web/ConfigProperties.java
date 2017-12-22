@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ConfigProperties {
 
+	public static final String DEFAULT_CONFIG_PATH = "classpath*:config/*.properties";
+	
 	public static final String SERVER_NAME = "server.name";
 	public static final String SERVER_NAME_FIELD = "serverName";
 

@@ -5,22 +5,15 @@ import static git.oschina.net.justlive1.breeze.storm.cas.client.web.ConfigProper
 import static git.oschina.net.justlive1.breeze.storm.cas.client.web.ConfigProperties.CAS_SERVER_LOGINURL_FIELD;
 import static git.oschina.net.justlive1.breeze.storm.cas.client.web.ConfigProperties.CAS_SERVER_URL_PREFIX;
 import static git.oschina.net.justlive1.breeze.storm.cas.client.web.ConfigProperties.CAS_SERVER_URL_PREFIX_FIELD;
+import static git.oschina.net.justlive1.breeze.storm.cas.client.web.ConfigProperties.DEFAULT_CONFIG_PATH;
 import static git.oschina.net.justlive1.breeze.storm.cas.client.web.ConfigProperties.IGNORES_URLS;
 import static git.oschina.net.justlive1.breeze.storm.cas.client.web.ConfigProperties.IGNORES_URLS_FIELD;
 import static git.oschina.net.justlive1.breeze.storm.cas.client.web.ConfigProperties.SERVER_NAME;
 import static git.oschina.net.justlive1.breeze.storm.cas.client.web.ConfigProperties.SERVER_NAME_FIELD;
 
-import java.security.SecureRandom;
-import java.security.cert.X509Certificate;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.X509TrustManager;
 import javax.servlet.FilterRegistration.Dynamic;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -30,10 +23,10 @@ import org.jasig.cas.client.configuration.ConfigurationKeys;
 import org.jasig.cas.client.session.SingleSignOutFilter;
 import org.jasig.cas.client.session.SingleSignOutHttpSessionListener;
 import org.jasig.cas.client.util.AssertionThreadLocalFilter;
-import org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.util.WebUtils;
 
+import git.oschina.net.justlive1.breeze.storm.cas.client.util.Cas20ProxyReceivingTicketValidationFilter4Http;
 import git.oschina.net.justlive1.breeze.storm.cas.client.util.MultipleAntPathMatcher;
 import git.oschina.net.justlive1.breeze.storm.cas.client.util.PropertiesWrapper;
 
@@ -50,7 +43,7 @@ public class CasRegister implements WebApplicationInitializer {
 
 		WebUtils.setWebAppRootSystemProperty(ctx);
 
-		PropertiesWrapper props = new PropertiesWrapper("classpath*:config/*.properties");
+		PropertiesWrapper props = new PropertiesWrapper(DEFAULT_CONFIG_PATH);
 
 		Map<String, String> params = new HashMap<>();
 		params.put(CAS_SERVER_URL_PREFIX_FIELD, props.getProperty(CAS_SERVER_URL_PREFIX));
@@ -74,9 +67,8 @@ public class CasRegister implements WebApplicationInitializer {
 		auth.addMappingForUrlPatterns(null, true, ANY_PATH);
 
 		// ticket
-		Dynamic ticket = ctx.addFilter(
-				Cas20ProxyReceivingTicketValidationFilter4HostnameVerifierAlawysTrue.class.getName(),
-				Cas20ProxyReceivingTicketValidationFilter4HostnameVerifierAlawysTrue.class);
+		Dynamic ticket = ctx.addFilter(Cas20ProxyReceivingTicketValidationFilter4Http.class.getName(),
+				Cas20ProxyReceivingTicketValidationFilter4Http.class);
 		ticket.setInitParameters(params);
 		ticket.addMappingForUrlPatterns(null, true, ANY_PATH);
 
@@ -84,43 +76,4 @@ public class CasRegister implements WebApplicationInitializer {
 		ctx.addFilter(AssertionThreadLocalFilter.class.getName(), AssertionThreadLocalFilter.class)
 				.addMappingForUrlPatterns(null, true, ANY_PATH);
 	}
-
-	public static class Cas20ProxyReceivingTicketValidationFilter4HostnameVerifierAlawysTrue
-			extends Cas20ProxyReceivingTicketValidationFilter {
-
-		static {
-			// Create a trust manager that does not validate certificate chains
-			TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
-				public X509Certificate[] getAcceptedIssuers() {
-					return null;
-				}
-
-				public void checkClientTrusted(X509Certificate[] certs, String authType) {
-				}
-
-				public void checkServerTrusted(X509Certificate[] certs, String authType) {
-				}
-			} };
-
-			// Install the all-trusting trust manager
-			try {
-				SSLContext sc = SSLContext.getInstance("TLS");
-				sc.init(null, trustAllCerts, new SecureRandom());
-				HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-			} catch (Exception e) {
-				throw new RuntimeException(e);
-			}
-		}
-
-		@Override
-		protected HostnameVerifier getHostnameVerifier() {
-			return new HostnameVerifier() {
-				@Override
-				public boolean verify(String var1, SSLSession var2) {
-					return true;
-				}
-			};
-		}
-	}
-
 }
