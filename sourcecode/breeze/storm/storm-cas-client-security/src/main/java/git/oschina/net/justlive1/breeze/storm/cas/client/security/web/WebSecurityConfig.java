@@ -19,8 +19,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 
+import git.oschina.net.justlive1.breeze.storm.cas.client.security.auth.CustomAuthenticationFailureHandler;
+import git.oschina.net.justlive1.breeze.storm.cas.client.security.auth.CustomAuthenticationSuccessHandler;
 import git.oschina.net.justlive1.breeze.storm.cas.client.web.ConfigProperties;
 import net.sf.ehcache.Cache;
 
@@ -39,6 +42,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired(required = false)
 	UserDetailsService userDetailsService;
+
+	@Autowired(required = false)
+	CustomAuthenticationSuccessHandler authenticationSuccessHandler;
+
+	@Autowired(required = false)
+	CustomAuthenticationFailureHandler authenticationFailureHandler;
 
 	@Override
 	public void configure(WebSecurity web) throws Exception {
@@ -75,7 +84,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		filter.setProxyGrantingTicketStorage(storage);
 		filter.setProxyReceptorUrl(configProps.proxyReceptorUrl);
 		filter.setAuthenticationDetailsSource(new ServiceAuthenticationDetailsSource(props));
-		filter.setAuthenticationFailureHandler(new SimpleUrlAuthenticationFailureHandler(configProps.accessDeniedUrl));
+		AuthenticationFailureHandler failureHandler = authenticationFailureHandler;
+		if (failureHandler == null) {
+			failureHandler = new SimpleUrlAuthenticationFailureHandler(configProps.accessDeniedUrl);
+		}
+		filter.setAuthenticationFailureHandler(failureHandler);
 
 		// ticket验证
 		Cas20ProxyTicketValidator validator = new Cas20ProxyTicketValidator(configProps.casServerPrefixUrl);
