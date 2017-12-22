@@ -94,6 +94,12 @@
         <AsyncLogger name="org.ldaptive" level="warn" />
         <AsyncLogger name="com.hazelcast" level="warn" />
         <AsyncLogger name="org.apereo.spring" level="warn" />
+        
+        <AsyncLogger name="springfox.documentation" level="error" />
+        <AsyncLogger name="org.hibernate.validator" level="error" />
+        <AsyncLogger name="org.reflections.Reflections" level="error" />
+        
+        
 
         <!-- Log perf stats only to perfStats.log -->
         <AsyncLogger name="perfStatsLogger" level="info" additivity="false" includeLocation="true">
