@@ -1,4 +1,4 @@
-package git.oschina.net.justlive1.breeze.storm.cas.client.util;
+package git.oschina.net.justlive1.breeze.snow.common.web.util;
 
 import java.io.IOException;
 import java.util.Properties;

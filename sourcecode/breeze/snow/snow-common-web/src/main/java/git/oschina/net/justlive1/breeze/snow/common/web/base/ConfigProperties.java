@@ -1,4 +1,4 @@
-package git.oschina.net.justlive1.breeze.storm.cas.client.web;
+package git.oschina.net.justlive1.breeze.snow.common.web.base;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 public class ConfigProperties {
 
 	public static final String DEFAULT_CONFIG_PATH = "classpath*:config/*.properties";
-	
+
 	public static final String SERVER_NAME = "server.name";
 	public static final String SERVER_NAME_FIELD = "serverName";
 
@@ -20,8 +20,6 @@ public class ConfigProperties {
 	public static final String IGNORES_URLS_FIELD = "ignorePattern";
 
 	public static final String ANY_PATH = "/*";
-
-	public static final String SPRING_SECURITY_FILTER_CHAIN = "springSecurityFilterChain";
 
 	@Value("${app.host:}")
 	public String appHost;
@@ -41,15 +39,18 @@ public class ConfigProperties {
 	@Value("${security.checkService:}")
 	public String checkService;
 
+	@Value("${security.filterProcessesUrl:/j_spring_cas_security_check}")
+	public String securityFilterProcessesUrl;
+
 	@Value("${security.username:username}")
 	public String securityUserName;
 
 	@Value("${security.password:password}")
 	public String securityPassword;
-	
+
 	@Value("${security.loginPage:/login}")
 	public String securityLoginPage;
-	
+
 	@Value("${security.defaultSuccessUrl:/}")
 	public String defaultSuccessUrl;
 

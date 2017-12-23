@@ -17,7 +17,24 @@
 * 支持构建 [Spring Boot](https://projects.spring.io/spring-boot) 和 [Spring Cloud](http://projects.spring.io/spring-cloud/).
 
 ## 开发
-
+	//TODO 功能点
+		storm
+			服务注册
+			配置中心
+			监控预警
+			分布式
+			负载均衡
+		storm-cas
+			登录验证码
+			密码管理
+			service-manager
+		storm-cas-client
+			退出登录接口
+			获取当前登录用户
+		storm-cas-client-security
+			整合cas和security
+		storm-cas-client-shiro
+			整合cas和shiro
 
 ## 部署
 [Release](https://gitee.com/justlive1/earth/releases)

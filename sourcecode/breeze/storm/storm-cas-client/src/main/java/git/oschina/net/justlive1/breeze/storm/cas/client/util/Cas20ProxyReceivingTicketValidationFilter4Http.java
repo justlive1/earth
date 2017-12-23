@@ -11,6 +11,8 @@ import javax.net.ssl.X509TrustManager;
 
 import org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter;
 
+import git.oschina.net.justlive1.breeze.snow.common.web.util.HostnameVerifierAlwaysTrue;
+
 public class Cas20ProxyReceivingTicketValidationFilter4Http extends Cas20ProxyReceivingTicketValidationFilter {
 
 	private static final HostnameVerifier VERIFIER = new HostnameVerifierAlwaysTrue();

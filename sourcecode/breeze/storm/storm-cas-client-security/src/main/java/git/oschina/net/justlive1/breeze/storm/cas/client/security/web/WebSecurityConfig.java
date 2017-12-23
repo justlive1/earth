@@ -20,11 +20,13 @@ import org.springframework.security.core.userdetails.UserDetailsByNameServiceWra
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
+import git.oschina.net.justlive1.breeze.snow.common.web.base.ConfigProperties;
 import git.oschina.net.justlive1.breeze.storm.cas.client.security.auth.CustomAuthenticationFailureHandler;
 import git.oschina.net.justlive1.breeze.storm.cas.client.security.auth.CustomAuthenticationSuccessHandler;
-import git.oschina.net.justlive1.breeze.storm.cas.client.web.ConfigProperties;
 import net.sf.ehcache.Cache;
 
 /**
@@ -58,8 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-		auth.inMemoryAuthentication().withUser("yanglu").password("96e79218965eb72c92a549dd5a330112")
-				.authorities("ROLE_USER");
+		auth.inMemoryAuthentication().withUser("yanglu").password("96e79218965eb72c92a549dd5a330112").roles("USER");
 
 	}
 
@@ -82,12 +83,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		filter.setAuthenticationManager(authenticationManager());
 		filter.setServiceProperties(props);
 		filter.setProxyGrantingTicketStorage(storage);
+		filter.setFilterProcessesUrl(configProps.securityFilterProcessesUrl);
 		filter.setProxyReceptorUrl(configProps.proxyReceptorUrl);
 		filter.setAuthenticationDetailsSource(new ServiceAuthenticationDetailsSource(props));
 		AuthenticationFailureHandler failureHandler = authenticationFailureHandler;
 		if (failureHandler == null) {
 			failureHandler = new SimpleUrlAuthenticationFailureHandler(configProps.accessDeniedUrl);
 		}
+
+		AuthenticationSuccessHandler successHandler = authenticationSuccessHandler;
+		if (successHandler == null) {
+			successHandler = new SimpleUrlAuthenticationSuccessHandler(configProps.defaultSuccessUrl);
+		}
+
 		filter.setAuthenticationFailureHandler(failureHandler);
 
 		// ticket验证
@@ -127,15 +135,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.exceptionHandling()
 					.accessDeniedPage(configProps.accessDeniedUrl)
 					.and()
-				.formLogin()
-					.loginProcessingUrl(configProps.casServerPrefixUrl)
-					.loginPage(configProps.loginUrl)
-					.defaultSuccessUrl(configProps.defaultSuccessUrl)
-					.failureUrl(configProps.failureUrl)
-					.usernameParameter(configProps.securityUserName)
-					.passwordParameter(configProps.securityPassword)
-					.permitAll()
-					.and()
+//				.formLogin()
+//					.usernameParameter(configProps.securityUserName)
+//					.passwordParameter(configProps.securityPassword)
+//					.loginProcessingUrl(configProps.casServerPrefixUrl)
+//					.loginPage(configProps.loginUrl)
+//					.successHandler(successHandler)
+//					.failureHandler(failureHandler)
+//					.permitAll()
+//					.and()
 				.logout()
 					.logoutUrl(configProps.logoutUrl)
 					.logoutSuccessUrl(configProps.logoutSuccessUrl)

@@ -1,15 +1,15 @@
 package git.oschina.net.justlive1.breeze.storm.cas.client.web;
 
-import static git.oschina.net.justlive1.breeze.storm.cas.client.web.ConfigProperties.ANY_PATH;
-import static git.oschina.net.justlive1.breeze.storm.cas.client.web.ConfigProperties.CAS_SERVER_LOGINURL;
-import static git.oschina.net.justlive1.breeze.storm.cas.client.web.ConfigProperties.CAS_SERVER_LOGINURL_FIELD;
-import static git.oschina.net.justlive1.breeze.storm.cas.client.web.ConfigProperties.CAS_SERVER_URL_PREFIX;
-import static git.oschina.net.justlive1.breeze.storm.cas.client.web.ConfigProperties.CAS_SERVER_URL_PREFIX_FIELD;
-import static git.oschina.net.justlive1.breeze.storm.cas.client.web.ConfigProperties.DEFAULT_CONFIG_PATH;
-import static git.oschina.net.justlive1.breeze.storm.cas.client.web.ConfigProperties.IGNORES_URLS;
-import static git.oschina.net.justlive1.breeze.storm.cas.client.web.ConfigProperties.IGNORES_URLS_FIELD;
-import static git.oschina.net.justlive1.breeze.storm.cas.client.web.ConfigProperties.SERVER_NAME;
-import static git.oschina.net.justlive1.breeze.storm.cas.client.web.ConfigProperties.SERVER_NAME_FIELD;
+import static git.oschina.net.justlive1.breeze.snow.common.web.base.ConfigProperties.ANY_PATH;
+import static git.oschina.net.justlive1.breeze.snow.common.web.base.ConfigProperties.CAS_SERVER_LOGINURL;
+import static git.oschina.net.justlive1.breeze.snow.common.web.base.ConfigProperties.CAS_SERVER_LOGINURL_FIELD;
+import static git.oschina.net.justlive1.breeze.snow.common.web.base.ConfigProperties.CAS_SERVER_URL_PREFIX;
+import static git.oschina.net.justlive1.breeze.snow.common.web.base.ConfigProperties.CAS_SERVER_URL_PREFIX_FIELD;
+import static git.oschina.net.justlive1.breeze.snow.common.web.base.ConfigProperties.DEFAULT_CONFIG_PATH;
+import static git.oschina.net.justlive1.breeze.snow.common.web.base.ConfigProperties.IGNORES_URLS;
+import static git.oschina.net.justlive1.breeze.snow.common.web.base.ConfigProperties.IGNORES_URLS_FIELD;
+import static git.oschina.net.justlive1.breeze.snow.common.web.base.ConfigProperties.SERVER_NAME;
+import static git.oschina.net.justlive1.breeze.snow.common.web.base.ConfigProperties.SERVER_NAME_FIELD;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,9 +26,9 @@ import org.jasig.cas.client.util.AssertionThreadLocalFilter;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.util.WebUtils;
 
+import git.oschina.net.justlive1.breeze.snow.common.web.util.PropertiesWrapper;
 import git.oschina.net.justlive1.breeze.storm.cas.client.util.Cas20ProxyReceivingTicketValidationFilter4Http;
 import git.oschina.net.justlive1.breeze.storm.cas.client.util.MultipleAntPathMatcher;
-import git.oschina.net.justlive1.breeze.storm.cas.client.util.PropertiesWrapper;
 
 /**
  * 注册filter和listener

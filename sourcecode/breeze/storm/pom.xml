@@ -17,7 +17,7 @@
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 
-		<snow-common-web>0.0.1-SNAPSHOT</snow-common-web>
+		<snow-common-web.version>0.0.1-SNAPSHOT</snow-common-web.version>
 		<cas.version>5.2.0</cas.version>
 		<cas.client.version>3.4.1</cas.client.version>
 		<springboot.version>1.5.8.RELEASE</springboot.version>
@@ -97,10 +97,22 @@
 	<dependencyManagement>
 		<dependencies>
 
+			<dependency>
+				<groupId>git.oschina.net.justlive1.breeze.snow</groupId>
+				<artifactId>snow-common-web</artifactId>
+				<version>${snow-common-web.version}</version>
+			</dependency>
+
 			<!-- Spring begin -->
 			<dependency>
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-webmvc</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jdbc</artifactId>
 				<version>${spring.version}</version>
 			</dependency>
 
