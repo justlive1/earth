@@ -25,14 +25,20 @@
 			分布式
 			负载均衡
 		storm-cas
+		    单点登录    		-ok
+		    https/http  		-ok
+		    jdbc认证    		-ok
 			登录验证码
 			密码管理
 			service-manager
 		storm-cas-client
+		    cas认证跳转 		-ok
 			退出登录接口
 			获取当前登录用户
 		storm-cas-client-security
-			整合cas和security
+			整合cas和security  	-ok
+			cas认证跳转 		-ok
+			security权限
 		storm-cas-client-shiro
 			整合cas和shiro
 
