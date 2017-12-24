@@ -140,5 +140,6 @@
 
 	<modules>
 		<module>cloud-registry</module>
+		<module>cloud-config</module>
 	</modules>
 </project>

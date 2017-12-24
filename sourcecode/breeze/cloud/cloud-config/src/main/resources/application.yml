@@ -1,0 +1,29 @@
+server:
+  port: 18000
+  
+
+spring:
+  application:
+    name: cloud-config
+  profiles:
+    active: native
+    
+  cloud:
+    config:
+      server:
+        native:
+          searchLocations: classpath:/config-repo
+        git:
+          uri: https://gitee.com/justlive1/earth.git
+          searchPaths: config-repo
+          
+  
+    
+management:
+  security:
+    enabled: false
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:18888/eureka/
