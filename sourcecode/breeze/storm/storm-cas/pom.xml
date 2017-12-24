@@ -56,6 +56,11 @@
 	<dependencies>
 
 		<dependency>
+			<groupId>git.oschina.net.justlive1.breeze.snow</groupId>
+			<artifactId>snow-common-base</artifactId>
+		</dependency>
+
+		<dependency>
 			<groupId>org.apereo.cas</groupId>
 			<artifactId>cas-server-webapp${app.server}</artifactId>
 			<version>${cas.version}</version>
@@ -90,13 +95,8 @@
 		</dependency>
 
 		<!-- Swagger API -->
-		<!-- 
-		<dependency>
-			<groupId>org.apereo.cas</groupId>
-			<artifactId>cas-server-documentation-swagger</artifactId>
-			<version>${cas.version}</version>
-		</dependency>
-		 -->
+		<!-- <dependency> <groupId>org.apereo.cas</groupId> <artifactId>cas-server-documentation-swagger</artifactId> 
+			<version>${cas.version}</version> </dependency> -->
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -165,6 +165,15 @@
 						<overlay>
 							<groupId>org.apereo.cas</groupId>
 							<artifactId>cas-server-webapp${app.server}</artifactId>
+							<!--原有的服务不再初始化进去-->
+                            <excludes>
+                                <exclude>WEB-INF/classes/services/*</exclude>
+                                <exclude>WEB-INF/classes/application.*</exclude>
+                                <exclude>WEB-INF/classes/bootstrap.properties</exclude>
+                                <exclude>**/user-details.properties</exclude>
+                                <exclude>**/truststore.jks</exclude>
+                                <exclude>**/*.md</exclude>
+                            </excludes>
 						</overlay>
 					</overlays>
 				</configuration>

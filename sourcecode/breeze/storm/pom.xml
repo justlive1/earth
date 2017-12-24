@@ -8,7 +8,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>rain</name>
+	<name>storm</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -97,6 +97,12 @@
 	<dependencyManagement>
 		<dependencies>
 
+			<dependency>
+				<groupId>git.oschina.net.justlive1.breeze.snow</groupId>
+				<artifactId>snow-common-base</artifactId>
+				<version>${snow-common-web.version}</version>
+			</dependency>
+			
 			<dependency>
 				<groupId>git.oschina.net.justlive1.breeze.snow</groupId>
 				<artifactId>snow-common-web</artifactId>

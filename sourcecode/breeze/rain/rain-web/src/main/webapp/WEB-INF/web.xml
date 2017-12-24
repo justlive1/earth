@@ -7,6 +7,11 @@
 	<display-name>rain-web</display-name>
 
 	<context-param>
+		<param-name>spring.profiles.active</param-name>
+		<param-value>mock,dev</param-value>
+	</context-param>
+
+	<context-param>
 		<param-name>webAppRootKey</param-name>
 		<param-value>rain-web.root</param-value>
 	</context-param>

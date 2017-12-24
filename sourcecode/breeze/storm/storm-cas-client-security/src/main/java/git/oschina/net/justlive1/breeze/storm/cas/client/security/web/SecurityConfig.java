@@ -8,12 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.cas.ServiceProperties;
 import org.springframework.security.cas.authentication.CasAuthenticationProvider;
 import org.springframework.security.cas.authentication.EhCacheBasedTicketCache;
 import org.springframework.security.cas.web.CasAuthenticationEntryPoint;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
 import git.oschina.net.justlive1.breeze.snow.common.web.base.ConfigProperties;
@@ -67,13 +69,13 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	public CasAuthenticationProvider casAuthenticationProvider(ServiceProperties props, TicketValidator validator) {
+	public CasAuthenticationProvider casAuthenticationProvider(ServiceProperties props, TicketValidator validator,
+			UserDetailsService userDetailsService) {
 
 		CasAuthenticationProvider provider = new CasAuthenticationProvider();
 		provider.setServiceProperties(props);
 		provider.setTicketValidator(validator);
-		provider.setUserDetailsService(s -> new User("casuser", "notused", true, true, true, true,
-				AuthorityUtils.createAuthorityList("ROLE_ADMIN")));
+		provider.setUserDetailsService(userDetailsService);
 		provider.setKey(configProps.casAuthProviderKey);
 		EhCacheBasedTicketCache statelessTicketCache = new EhCacheBasedTicketCache();
 		Cache cache = new Cache(EhCacheBasedTicketCache.class.getName(), 50, true, false, 3600, 900);
@@ -82,4 +84,10 @@ public class SecurityConfig {
 		return provider;
 	}
 
+	@Bean
+	@Profile("mock")
+	UserDetailsService userDetailsService() {
+		return s -> new User("casuser", "notused", true, true, true, true,
+				AuthorityUtils.createAuthorityList("ROLE_ADMIN"));
+	}
 }
