@@ -1,0 +1,12 @@
+server:
+  port: 18888
+eureka:
+  server:
+    enableSelfPreservation: true
+  instance:
+    hostname: 127.0.0.1
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/

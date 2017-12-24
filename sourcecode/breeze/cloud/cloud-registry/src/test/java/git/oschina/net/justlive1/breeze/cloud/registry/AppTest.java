@@ -1,4 +1,4 @@
-package git.oschina.net.justlive1.earth.access;
+package git.oschina.net.justlive1.breeze.cloud.registry;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -31,5 +31,4 @@ public class AppTest extends TestCase {
 	public void testApp() {
 		assertTrue(true);
 	}
-
 }

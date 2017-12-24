@@ -32,6 +32,7 @@
 			登录验证码
 			密码管理
 			service-manager
+			webflow
 		storm-cas-client
 			cas认证跳转 		-ok
 			退出登录接口
