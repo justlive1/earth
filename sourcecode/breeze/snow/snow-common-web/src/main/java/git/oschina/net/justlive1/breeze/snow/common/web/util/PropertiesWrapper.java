@@ -48,4 +48,12 @@ public class PropertiesWrapper {
 		return HELPER.replacePlaceholders(value, props);
 	}
 
+	public String getProperty(String key, String defaultValue) {
+		String value = props.getProperty(key, defaultValue);
+		if (value == null) {
+			return value;
+		}
+		return HELPER.replacePlaceholders(value, props);
+	}
+
 }

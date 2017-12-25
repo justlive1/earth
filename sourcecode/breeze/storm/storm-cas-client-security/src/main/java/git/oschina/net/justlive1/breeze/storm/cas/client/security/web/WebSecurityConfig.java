@@ -80,13 +80,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.logout()
 					.logoutUrl(configProps.logoutUrl)
 					.logoutSuccessUrl(configProps.logoutSuccessUrl)
-					.invalidateHttpSession(true)
+					.invalidateHttpSession(configProps.logoutSessionInvalidate)
 					.permitAll()
 					.and()
 				.sessionManagement()
 					.sessionFixation()
 					.changeSessionId()  
-	                .maximumSessions(1)
+	                .maximumSessions(configProps.sessionMaximum)
 	                .expiredUrl(configProps.sessionExpireUrl);
 
 		// @formatter:on

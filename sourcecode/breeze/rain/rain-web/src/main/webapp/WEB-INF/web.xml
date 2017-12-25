@@ -8,7 +8,7 @@
 
 	<context-param>
 		<param-name>spring.profiles.active</param-name>
-		<param-value>mock,dev</param-value>
+		<param-value>jdbc,dev</param-value>
 	</context-param>
 
 	<context-param>

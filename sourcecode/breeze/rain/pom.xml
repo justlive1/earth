@@ -199,6 +199,13 @@
 			</dependency>
 
 			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<scope>runtime</scope>
+				<version>${mysql.version}</version>
+			</dependency>
+
+			<dependency>
 				<groupId>junit</groupId>
 				<artifactId>junit</artifactId>
 				<version>${junit.version}</version>

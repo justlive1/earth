@@ -27,52 +27,70 @@ public class ConfigProperties {
 	@Value("${app.name:}")
 	public String appName;
 
-	@Value("${app.ignoreMatchers:}")
+	@Value("${app.ignoreMatchers:/static/**,/webjars/**}")
 	public String[] ignoreMatchers;
 
 	@Value("${cas.server.prefixUrl:}")
 	public String casServerPrefixUrl;
 
 	@Value("${cas.server.loginUrl:}")
-	public String loginUrl;
+	public String casLoginUrl;
 
-	@Value("${security.checkService:}")
-	public String checkService;
+	@Value("${cas.server.logoutUrl:}")
+	public String casLogoutUrl;
 
-	@Value("${security.filterProcessesUrl:/j_spring_cas_security_check}")
-	public String securityFilterProcessesUrl;
+	@Value("${security.auth.dataSource.driver:}")
+	public String authDataSourceDriver;
 
-	@Value("${security.username:username}")
-	public String securityUserName;
+	@Value("${security.auth.dataSource.url:}")
+	public String authDataSourceUrl;
 
-	@Value("${security.password:password}")
-	public String securityPassword;
+	@Value("${security.auth.dataSource.username:}")
+	public String authDataSourceUsername;
 
-	@Value("${security.loginPage:/login}")
-	public String securityLoginPage;
+	@Value("${security.auth.dataSource.password:}")
+	public String authDataSourcePassword;
 
-	@Value("${security.defaultSuccessUrl:/}")
-	public String defaultSuccessUrl;
+	@Value("${security.auth.usersByUsernameQuery:select username,password,enabled from users where username = ?}")
+	public String usersByUsernameQuery;
 
-	@Value("${security.authenticationFailureUrl:/login?error}")
-	public String failureUrl;
+	@Value("${security.auth.authoritiesByUsernameQuery:select username,authority from authorities where username = ?}")
+	public String authoritiesByUsernameQuery;
 
-	@Value("${security.logoutUrl:}")
-	public String logoutUrl;
+	@Value("${security.auth.groupAuthoritiesByUsernameQuery:select g.id, g.group_name, ga.authority from groups g, group_members gm, group_authorities ga where gm.username = ? and g.id = ga.group_id and g.id = gm.group_id}")
+	public String groupAuthoritiesByUsernameQuery;
 
-	@Value("${security.logoutSuccessUrl:}")
-	public String logoutSuccessUrl;
-
-	@Value("${security.proxyReceptorUrl:}")
-	public String proxyReceptorUrl;
-
-	@Value("${security.accessDeniedUrl:/accessDenied}")
+	@Value("${security.cas.accessDeniedUrl:/accessDenied}")
 	public String accessDeniedUrl;
 
-	@Value("${security.sessionExpireUrl:/expiredWarn}")
+	@Value("${security.cas.authProviderKey:casAuthProviderKey}")
+	public String casAuthProviderKey;
+
+	@Value("${security.cas.defaultSuccessUrl:/}")
+	public String defaultSuccessUrl;
+
+	@Value("${security.cas.filterProcessesUrl:/login/cas}")
+	public String securityFilterProcessesUrl;
+
+	@Value("${security.cas.proxyReceptorUrl:/j_spring_cas_security_proxyreceptor}")
+	public String proxyReceptorUrl;
+
+	@Value("${security.cas.service:}")
+	public String casService;
+
+	@Value("${security.logout.invalidateSession:true}")
+	public boolean logoutSessionInvalidate;
+
+	@Value("${security.logout.url:/logout/cas}")
+	public String logoutUrl;
+
+	@Value("${security.logout.successUrl:}")
+	public String logoutSuccessUrl;
+
+	@Value("${security.session.expireUrl:/expiredWarn}")
 	public String sessionExpireUrl;
 
-	@Value("${security.casAuthProviderKey:casAuthProviderKey}")
-	public String casAuthProviderKey;
+	@Value("${security.session.maximum:1}")
+	public int sessionMaximum;
 
 }
