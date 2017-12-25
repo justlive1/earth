@@ -24,6 +24,8 @@ management:
     enabled: false
 
 eureka:
+  instance:
+    preferIpAddress: true
   client:
     serviceUrl:
       defaultZone: http://127.0.0.1:18888/eureka/
