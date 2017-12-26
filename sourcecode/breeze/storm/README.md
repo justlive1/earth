@@ -40,6 +40,7 @@
 		storm-cas-client-security
 			整合cas和security  	-ok
 			cas认证跳转 		-ok
+			单点退出存在问题
 			security权限
 		storm-cas-client-shiro
 			整合cas和shiro
