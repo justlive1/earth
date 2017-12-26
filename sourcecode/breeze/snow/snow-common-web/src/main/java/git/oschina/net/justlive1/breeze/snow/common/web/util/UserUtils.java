@@ -2,9 +2,12 @@ package git.oschina.net.justlive1.breeze.snow.common.web.util;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Map;
 
 import org.springframework.util.ClassUtils;
 import org.springframework.util.ReflectionUtils;
+
+import com.google.common.collect.Maps;
 
 import git.oschina.net.justlive1.breeze.snow.common.base.util.ReflectUtils;
 
@@ -19,20 +22,7 @@ public class UserUtils {
 	private static final String CAS_USERUTILS_CLASS = "git.oschina.net.justlive1.breeze.storm.cas.client.util.CasUserUtils";
 	private static final String SECURITY_USERUTILS_CLASS = "git.oschina.net.justlive1.breeze.storm.cas.client.security.util.SercurityUserUtils";
 
-	private static final Method LOGIN_USERNAME_METHOD;
-	private static final String LOGIN_USERNAME_METHOD_NAME = "loginUserName";
-
-	static {
-
-		Class<?> clazz = null;
-		if (ClassUtils.isPresent(CAS_USERUTILS_CLASS, UserUtils.class.getClassLoader())) {
-			clazz = ReflectUtils.forName(CAS_USERUTILS_CLASS);
-		} else if (ClassUtils.isPresent(SECURITY_USERUTILS_CLASS, UserUtils.class.getClassLoader())) {
-			clazz = ReflectUtils.forName(SECURITY_USERUTILS_CLASS);
-		}
-		// else NullPointerException
-		LOGIN_USERNAME_METHOD = ReflectionUtils.findMethod(clazz, LOGIN_USERNAME_METHOD_NAME);
-	}
+	private static final Map<String, Method> CACHE_MAP = Maps.newHashMap();
 
 	/**
 	 * 获取当前登陆用户名
@@ -41,7 +31,30 @@ public class UserUtils {
 	 */
 	public static String loginUserName() {
 
-		return invoke(LOGIN_USERNAME_METHOD, null);
+		return invoke();
+	}
+
+	private static String invoke() {
+
+		String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
+		Method method = CACHE_MAP.get(methodName);
+		if (method == null) {
+
+			Class<?> clazz = null;
+			if (ClassUtils.isPresent(CAS_USERUTILS_CLASS, UserUtils.class.getClassLoader())) {
+				clazz = ReflectUtils.forName(CAS_USERUTILS_CLASS);
+			} else if (ClassUtils.isPresent(SECURITY_USERUTILS_CLASS, UserUtils.class.getClassLoader())) {
+				clazz = ReflectUtils.forName(SECURITY_USERUTILS_CLASS);
+			}
+
+			if (clazz == null) {
+				return null;
+			}
+
+			method = ReflectionUtils.findMethod(clazz, methodName);
+			CACHE_MAP.put(methodName, method);
+		}
+		return invoke(method, null);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -52,4 +65,5 @@ public class UserUtils {
 			throw new RuntimeException(e);
 		}
 	}
+
 }
