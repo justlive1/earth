@@ -21,11 +21,9 @@
 	<dependencies>
 
 		<dependency>
-			<groupId>git.oschina.net.justlive1.breeze.storm</groupId>
-			<artifactId>storm-cas-client</artifactId>
-			<version>${version}</version>
+			<groupId>git.oschina.net.justlive1.breeze.snow</groupId>
+			<artifactId>snow-common-web</artifactId>
 		</dependency>
-
 
 		<dependency>
 			<groupId>junit</groupId>

@@ -68,11 +68,77 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		DefaultWebSecurityExpressionHandler expressionHandler = new DefaultWebSecurityExpressionHandler();
+		// @formatter:off
+		
+		http.csrf()
+				.disable()
+			.authorizeRequests()
+				.expressionHandler(expressionHandler())
+				.and()
+			.exceptionHandling()
+				.accessDeniedPage(configProps.accessDeniedUrl)
+				.and()
+			.httpBasic()
+				.authenticationEntryPoint(authenticationEntryPoint)
+				.and()
+			.addFilter(casAuthenticationFilter())
+			.addFilterBefore(singleSignOutFilter(), CasAuthenticationFilter.class)
+			.authorizeRequests()
+				.anyRequest()
+				.authenticated()
+				.and()
+			.logout()
+				.logoutUrl(configProps.logoutUrl)
+				.logoutSuccessUrl(configProps.logoutSuccessUrl)
+				.invalidateHttpSession(configProps.logoutSessionInvalidate)
+				.permitAll()
+				.and()
+			.sessionManagement()
+				.sessionFixation()
+				.changeSessionId()  
+                .maximumSessions(configProps.sessionMaximum)
+                .expiredUrl(configProps.sessionExpireUrl);
+
+		// @formatter:on
+	}
+
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+
+		auth.authenticationProvider(authenticationProvider);
+	}
+
+	@Override
+	protected AuthenticationManager authenticationManager() throws Exception {
+
+		return new ProviderManager(Arrays.asList(authenticationProvider));
+	}
+
+	DefaultWebSecurityExpressionHandler expressionHandler() {
+
+		return new DefaultWebSecurityExpressionHandler();
+	}
+
+	/**
+	 * 单点登出过滤器
+	 * 
+	 * @return
+	 */
+	SingleSignOutFilter singleSignOutFilter() {
 
 		SingleSignOutFilter singleSignOutFilter = new SingleSignOutFilter();
 		singleSignOutFilter.setIgnoreInitConfiguration(true);
 		singleSignOutFilter.setCasServerUrlPrefix(configProps.casServerPrefixUrl);
+		return singleSignOutFilter;
+	}
+
+	/**
+	 * cas认证过滤器
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+	CasAuthenticationFilter casAuthenticationFilter() throws Exception {
 
 		CasAuthenticationFilter filter = new CasAuthenticationFilter();
 		filter.setServiceProperties(props);
@@ -97,50 +163,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			successHandler = handler;
 		}
 		filter.setAuthenticationSuccessHandler(successHandler);
-		
-		
-		// @formatter:off
-		
-		http.csrf()
-				.disable()
-			.authorizeRequests()
-				.expressionHandler(expressionHandler)
-				.and()
-			.exceptionHandling()
-				.accessDeniedPage(configProps.accessDeniedUrl)
-				.and()
-			.httpBasic()
-				.authenticationEntryPoint(authenticationEntryPoint)
-				.and()
-			.addFilter(filter)
-			.addFilterBefore(singleSignOutFilter, CasAuthenticationFilter.class)
-			.authorizeRequests()
-				.anyRequest()
-				.authenticated()
-				.and()
-			.logout()
-				.logoutUrl(configProps.logoutUrl)
-				.logoutSuccessUrl(configProps.logoutSuccessUrl)
-				.invalidateHttpSession(configProps.logoutSessionInvalidate)
-				.permitAll()
-				.and()
-			.sessionManagement()
-				.sessionFixation()
-				.changeSessionId()  
-                .maximumSessions(configProps.sessionMaximum)
-                .expiredUrl(configProps.sessionExpireUrl);
 
-		// @formatter:on
+		return filter;
 	}
-
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.authenticationProvider(authenticationProvider);
-	}
-
-	@Override
-	protected AuthenticationManager authenticationManager() throws Exception {
-		return new ProviderManager(Arrays.asList(authenticationProvider));
-	}
-
 }

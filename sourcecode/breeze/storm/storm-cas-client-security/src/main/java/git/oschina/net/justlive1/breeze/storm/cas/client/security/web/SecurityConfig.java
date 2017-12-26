@@ -2,8 +2,11 @@ package git.oschina.net.justlive1.breeze.storm.cas.client.security.web;
 
 import java.sql.Driver;
 
+import javax.servlet.http.HttpSessionEvent;
+
 import org.jasig.cas.client.proxy.ProxyGrantingTicketStorage;
 import org.jasig.cas.client.proxy.ProxyGrantingTicketStorageImpl;
+import org.jasig.cas.client.session.SingleSignOutHttpSessionListener;
 import org.jasig.cas.client.validation.Cas20ProxyTicketValidator;
 import org.jasig.cas.client.validation.TicketValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
+import org.springframework.context.event.EventListener;
 import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.security.cas.ServiceProperties;
 import org.springframework.security.cas.authentication.CasAuthenticationProvider;
@@ -39,6 +43,11 @@ public class SecurityConfig extends TrustAllManager {
 	@Autowired
 	ConfigProperties configProps;
 
+	/**
+	 * cas 地址
+	 * 
+	 * @return
+	 */
 	@Bean
 	public ServiceProperties serviceProperties() {
 		ServiceProperties serviceProperties = new ServiceProperties();
@@ -48,6 +57,12 @@ public class SecurityConfig extends TrustAllManager {
 		return serviceProperties;
 	}
 
+	/**
+	 * cas认证切入点，声明cas服务端登录地址
+	 * 
+	 * @param props
+	 * @return
+	 */
 	@Bean
 	@Primary
 	public AuthenticationEntryPoint authenticationEntryPoint(ServiceProperties props) {
@@ -58,11 +73,22 @@ public class SecurityConfig extends TrustAllManager {
 		return entryPoint;
 	}
 
+	/**
+	 * PGT
+	 * 
+	 * @return
+	 */
 	@Bean
 	ProxyGrantingTicketStorage storage() {
 		return new ProxyGrantingTicketStorageImpl();
 	}
 
+	/**
+	 * 票据验证
+	 * 
+	 * @param storage
+	 * @return
+	 */
 	@Bean
 	public TicketValidator ticketValidator(ProxyGrantingTicketStorage storage) {
 
@@ -74,6 +100,14 @@ public class SecurityConfig extends TrustAllManager {
 		return validator;
 	}
 
+	/**
+	 * cas认证提供器，定义客户端的验证方式
+	 * 
+	 * @param props
+	 * @param validator
+	 * @param userDetailsService
+	 * @return
+	 */
 	@Bean
 	public CasAuthenticationProvider casAuthenticationProvider(ServiceProperties props, TicketValidator validator,
 			UserDetailsService userDetailsService) {
@@ -90,12 +124,22 @@ public class SecurityConfig extends TrustAllManager {
 		return provider;
 	}
 
+	/**
+	 * 获取用户信息（mock）
+	 * 
+	 * @return
+	 */
 	@Bean
 	@Profile("mock")
 	UserDetailsService userDetailsService() {
 		return name -> new User(name, name, true, true, true, true, AuthorityUtils.createAuthorityList("ROLE_ADMIN"));
 	}
 
+	/**
+	 * 获取用户信息（jdbc）
+	 * 
+	 * @return
+	 */
 	@Bean
 	@Profile("jdbc")
 	UserDetailsService JdbcUserDetailsService() {
@@ -122,4 +166,14 @@ public class SecurityConfig extends TrustAllManager {
 		return jdbcDao;
 	}
 
+	/**
+	 * 单点登出监听
+	 * 
+	 * @param event
+	 * @return
+	 */
+	@EventListener
+	public SingleSignOutHttpSessionListener singleSignOutHttpSessionListener(HttpSessionEvent event) {
+		return new SingleSignOutHttpSessionListener();
+	}
 }
