@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
@@ -32,6 +34,10 @@ import git.oschina.net.justlive1.breeze.snow.common.base.exception.NoStackCodedE
  */
 @Component("codedExceptionResolver")
 public class CodedExceptionResolver extends SimpleMappingExceptionResolver {
+
+	private static final String APPLICATION_ALL = "application/*";
+	private static final String HEAD_X_REQUESTED_WITH = "X-Requested-With";
+	private static final String HEAD_XMLHTTPREQUEST = "XMLHttpRequest";
 
 	private MappingJackson2JsonView jsonView = new MappingJackson2JsonView();
 
@@ -99,21 +105,21 @@ public class CodedExceptionResolver extends SimpleMappingExceptionResolver {
 	 */
 	protected boolean isJsonResponseSupported(HttpServletRequest request) {
 		// 检查是否有Accept头
-		final String accept = request.getHeader("Accept");
+		final String accept = request.getHeader(HttpHeaders.ACCEPT);
 		// 对于没有定义Accept头的非标准HTTP协议请求，缺省认为客户端支持json数据
 		if (accept == null) {
 			return true;
 		}
 
 		// 当客户端是通过ajax方式发送的请求，则缺省认为支持json返回
-		final String ajax = request.getHeader("X-Requested-With");
-		if (ajax != null && ajax.indexOf("XMLHttpRequest") >= 0) {
+		final String ajax = request.getHeader(HEAD_X_REQUESTED_WITH);
+		if (ajax != null && ajax.indexOf(HEAD_XMLHTTPREQUEST) >= 0) {
 			return true;
 		}
 
 		// 客户端声明支持JSon
-		if (accept.indexOf("*/*") >= 0 || accept.indexOf("application/*") >= 0
-				|| accept.indexOf("application/json") >= 0) {
+		if (accept.indexOf(MediaType.ALL_VALUE) >= 0 || accept.indexOf(APPLICATION_ALL) >= 0
+				|| accept.indexOf(MediaType.APPLICATION_JSON_VALUE) >= 0) {
 			return true;
 		}
 
@@ -145,4 +151,5 @@ public class CodedExceptionResolver extends SimpleMappingExceptionResolver {
 		err.put(BaseConstants.RESP_MESSAGE_FIELD, ex.getMessage());
 		return err;
 	}
+
 }
