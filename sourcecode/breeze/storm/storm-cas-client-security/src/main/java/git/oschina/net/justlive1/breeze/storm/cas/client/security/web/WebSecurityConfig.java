@@ -3,8 +3,8 @@ package git.oschina.net.justlive1.breeze.storm.cas.client.security.web;
 import java.util.Arrays;
 
 import org.jasig.cas.client.proxy.ProxyGrantingTicketStorage;
+import org.jasig.cas.client.session.SingleSignOutFilter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -21,8 +21,8 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
-import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 
 import git.oschina.net.justlive1.breeze.snow.common.web.base.ConfigProperties;
 import git.oschina.net.justlive1.breeze.storm.cas.client.security.auth.CustomAuthenticationFailureHandler;
@@ -53,6 +53,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	AuthenticationProvider authenticationProvider;
 
+	@Autowired
+	ServiceProperties props;
+
+	@Autowired
+	ProxyGrantingTicketStorage storage;
+
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		// 设置不拦截规则
@@ -64,47 +70,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		DefaultWebSecurityExpressionHandler expressionHandler = new DefaultWebSecurityExpressionHandler();
 
-		// @formatter:off
-		
-		http.csrf()
-				.disable()
-				.authorizeRequests()
-					.expressionHandler(expressionHandler)
-					.and()
-				.exceptionHandling()
-					.accessDeniedPage(configProps.accessDeniedUrl)
-					.and()
-				.httpBasic()
-					.authenticationEntryPoint(authenticationEntryPoint)
-					.and()
-				.logout()
-					.logoutUrl(configProps.logoutUrl)
-					.logoutSuccessUrl(configProps.logoutSuccessUrl)
-					.invalidateHttpSession(configProps.logoutSessionInvalidate)
-					.permitAll()
-					.and()
-				.sessionManagement()
-					.sessionFixation()
-					.changeSessionId()  
-	                .maximumSessions(configProps.sessionMaximum)
-	                .expiredUrl(configProps.sessionExpireUrl);
-
-		// @formatter:on
-	}
-
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.authenticationProvider(authenticationProvider);
-	}
-
-	@Override
-	protected AuthenticationManager authenticationManager() throws Exception {
-		return new ProviderManager(Arrays.asList(authenticationProvider));
-	}
-
-	@Bean
-	public CasAuthenticationFilter casAuthenticationFilter(ServiceProperties props, ProxyGrantingTicketStorage storage)
-			throws Exception {
+		SingleSignOutFilter singleSignOutFilter = new SingleSignOutFilter();
+		singleSignOutFilter.setIgnoreInitConfiguration(true);
+		singleSignOutFilter.setCasServerUrlPrefix(configProps.casServerPrefixUrl);
 
 		CasAuthenticationFilter filter = new CasAuthenticationFilter();
 		filter.setServiceProperties(props);
@@ -119,13 +87,60 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		if (failureHandler == null) {
 			failureHandler = new SimpleUrlAuthenticationFailureHandler(configProps.accessDeniedUrl);
 		}
+		filter.setAuthenticationFailureHandler(failureHandler);
 
 		AuthenticationSuccessHandler successHandler = authenticationSuccessHandler;
 		if (successHandler == null) {
-			successHandler = new SimpleUrlAuthenticationSuccessHandler(configProps.defaultSuccessUrl);
-		}
-		filter.setAuthenticationFailureHandler(failureHandler);
 
-		return filter;
+			SavedRequestAwareAuthenticationSuccessHandler handler = new SavedRequestAwareAuthenticationSuccessHandler();
+			handler.setDefaultTargetUrl(configProps.defaultSuccessUrl);
+			successHandler = handler;
+		}
+		filter.setAuthenticationSuccessHandler(successHandler);
+		
+		
+		// @formatter:off
+		
+		http.csrf()
+				.disable()
+			.authorizeRequests()
+				.expressionHandler(expressionHandler)
+				.and()
+			.exceptionHandling()
+				.accessDeniedPage(configProps.accessDeniedUrl)
+				.and()
+			.httpBasic()
+				.authenticationEntryPoint(authenticationEntryPoint)
+				.and()
+			.addFilter(filter)
+			.addFilterBefore(singleSignOutFilter, CasAuthenticationFilter.class)
+			.authorizeRequests()
+				.anyRequest()
+				.authenticated()
+				.and()
+			.logout()
+				.logoutUrl(configProps.logoutUrl)
+				.logoutSuccessUrl(configProps.logoutSuccessUrl)
+				.invalidateHttpSession(configProps.logoutSessionInvalidate)
+				.permitAll()
+				.and()
+			.sessionManagement()
+				.sessionFixation()
+				.changeSessionId()  
+                .maximumSessions(configProps.sessionMaximum)
+                .expiredUrl(configProps.sessionExpireUrl);
+
+		// @formatter:on
 	}
+
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.authenticationProvider(authenticationProvider);
+	}
+
+	@Override
+	protected AuthenticationManager authenticationManager() throws Exception {
+		return new ProviderManager(Arrays.asList(authenticationProvider));
+	}
+
 }

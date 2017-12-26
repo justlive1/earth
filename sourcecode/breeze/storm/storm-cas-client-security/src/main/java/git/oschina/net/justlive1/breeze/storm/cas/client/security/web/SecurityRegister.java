@@ -5,6 +5,7 @@ import static git.oschina.net.justlive1.breeze.snow.common.web.base.ConfigProper
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
+import org.jasig.cas.client.session.SingleSignOutHttpSessionListener;
 import org.springframework.security.config.BeanIds;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.filter.DelegatingFilterProxy;
@@ -17,6 +18,8 @@ public class SecurityRegister implements WebApplicationInitializer {
 
 		WebUtils.setWebAppRootSystemProperty(ctx);
 
+		ctx.addListener(SingleSignOutHttpSessionListener.class);
+		
 		ctx.addFilter(BeanIds.SPRING_SECURITY_FILTER_CHAIN, DelegatingFilterProxy.class).addMappingForUrlPatterns(null,
 				true, ANY_PATH);
 	}

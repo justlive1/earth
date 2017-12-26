@@ -54,8 +54,14 @@ public class ConfigProperties {
 	@Value("${security.auth.usersByUsernameQuery:select username,password,enabled from users where username = ?}")
 	public String usersByUsernameQuery;
 
+	@Value("${security.auth.authoritiesEnabled:true}")
+	public boolean authoritiesEnabled;
+
 	@Value("${security.auth.authoritiesByUsernameQuery:select username,authority from authorities where username = ?}")
 	public String authoritiesByUsernameQuery;
+
+	@Value("${security.auth.groupAuthoritiesEnabled:false}")
+	public boolean groupAuthoritiesEnabled;
 
 	@Value("${security.auth.groupAuthoritiesByUsernameQuery:select g.id, g.group_name, ga.authority from groups g, group_members gm, group_authorities ga where gm.username = ? and g.id = ga.group_id and g.id = gm.group_id}")
 	public String groupAuthoritiesByUsernameQuery;

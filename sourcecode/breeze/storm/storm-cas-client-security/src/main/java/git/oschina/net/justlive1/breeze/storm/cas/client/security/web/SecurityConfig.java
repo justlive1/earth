@@ -21,9 +21,9 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.util.StringUtils;
 
 import git.oschina.net.justlive1.breeze.snow.common.base.util.DataSourceUtils;
+import git.oschina.net.justlive1.breeze.snow.common.base.util.TrustAllManager;
 import git.oschina.net.justlive1.breeze.snow.common.web.base.ConfigProperties;
 import net.sf.ehcache.Cache;
 
@@ -34,7 +34,7 @@ import net.sf.ehcache.Cache;
  *
  */
 @Configuration
-public class SecurityConfig {
+public class SecurityConfig extends TrustAllManager {
 
 	@Autowired
 	ConfigProperties configProps;
@@ -109,15 +109,13 @@ public class SecurityConfig {
 		jdbcDao.setDataSource(dataSource);
 		jdbcDao.setUsersByUsernameQuery(configProps.usersByUsernameQuery);
 
-		if (StringUtils.hasText(configProps.groupAuthoritiesByUsernameQuery)) {
-			jdbcDao.setEnableAuthorities(true);
+		jdbcDao.setEnableAuthorities(configProps.authoritiesEnabled);
+		if (configProps.authoritiesEnabled) {
 			jdbcDao.setAuthoritiesByUsernameQuery(configProps.authoritiesByUsernameQuery);
-		} else {
-			jdbcDao.setEnableAuthorities(false);
 		}
 
-		if (StringUtils.hasText(configProps.groupAuthoritiesByUsernameQuery)) {
-			jdbcDao.setEnableGroups(true);
+		jdbcDao.setEnableGroups(configProps.groupAuthoritiesEnabled);
+		if (configProps.groupAuthoritiesEnabled) {
 			jdbcDao.setGroupAuthoritiesByUsernameQuery(configProps.groupAuthoritiesByUsernameQuery);
 		}
 
