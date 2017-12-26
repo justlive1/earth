@@ -19,7 +19,7 @@
 
 		<snow-common-web.version>0.0.1-SNAPSHOT</snow-common-web.version>
 		<storm.version>0.0.1-SNAPSHOT</storm.version>
-		<storm-cas-client>-security</storm-cas-client>
+		<storm-cas-client></storm-cas-client>
 
 		<spring.version>5.0.2.RELEASE</spring.version>
 		<aspectj.version>1.8.9</aspectj.version>

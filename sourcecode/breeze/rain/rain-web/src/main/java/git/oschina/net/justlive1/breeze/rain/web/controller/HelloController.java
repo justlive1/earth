@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import git.oschina.net.justlive1.breeze.rain.api.domian.Hello;
 import git.oschina.net.justlive1.breeze.rain.api.service.HelloService;
 import git.oschina.net.justlive1.breeze.snow.common.base.domain.Response;
-import git.oschina.net.justlive1.breeze.storm.cas.client.security.util.SercurityUserUtils;
+import git.oschina.net.justlive1.breeze.snow.common.web.util.UserUtils;
 
 @RestController
 @RequestMapping("/test")
@@ -23,7 +23,7 @@ public class HelloController {
 	@GetMapping("/hello")
 	public Response<List<String>> hello() {
 
-		System.out.println(SercurityUserUtils.loginUserName());
+		System.out.println(UserUtils.loginUserName());
 
 		List<String> list = helloService.hello();
 
