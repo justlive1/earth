@@ -8,7 +8,7 @@ import org.jasig.cas.client.proxy.ProxyGrantingTicketStorage;
 import org.jasig.cas.client.proxy.ProxyGrantingTicketStorageImpl;
 import org.jasig.cas.client.session.SingleSignOutHttpSessionListener;
 import org.jasig.cas.client.validation.Cas20ProxyTicketValidator;
-import org.jasig.cas.client.validation.Cas20ServiceTicketValidator;
+import org.jasig.cas.client.validation.Cas30ServiceTicketValidator;
 import org.jasig.cas.client.validation.TicketValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -27,8 +27,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
-import git.oschina.net.justlive1.breeze.snow.common.base.util.ReflectUtils;
 import git.oschina.net.justlive1.breeze.snow.common.base.util.AbstractTrustAllManager;
+import git.oschina.net.justlive1.breeze.snow.common.base.util.ReflectUtils;
 import git.oschina.net.justlive1.breeze.snow.common.web.base.ConfigProperties;
 import net.sf.ehcache.Cache;
 
@@ -103,7 +103,7 @@ public class SecurityConfig extends AbstractTrustAllManager {
 			return validator;
 		}
 
-		return new Cas20ServiceTicketValidator(configProps.casServerPrefixUrl);
+		return new Cas30ServiceTicketValidator(configProps.casServerPrefixUrl);
 	}
 
 	/**
