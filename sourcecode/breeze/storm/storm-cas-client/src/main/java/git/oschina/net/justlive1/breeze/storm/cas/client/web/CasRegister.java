@@ -45,7 +45,7 @@ public class CasRegister implements WebApplicationInitializer {
 
 		PropertiesWrapper props = new PropertiesWrapper(DEFAULT_CONFIG_PATH);
 
-		Map<String, String> params = new HashMap<>();
+		Map<String, String> params = new HashMap<>(5);
 		params.put(CAS_SERVER_URL_PREFIX_FIELD, props.getProperty(CAS_SERVER_URL_PREFIX));
 		params.put(CAS_SERVER_LOGINURL_FIELD, props.getProperty(CAS_SERVER_LOGINURL));
 		params.put(SERVER_NAME_FIELD, props.getProperty(SERVER_NAME));

@@ -13,6 +13,12 @@ import git.oschina.net.justlive1.breeze.rain.api.domian.Hello;
 import git.oschina.net.justlive1.breeze.rain.api.service.HelloService;
 import git.oschina.net.justlive1.breeze.snow.common.base.domain.Response;
 
+/**
+ * demo
+ * 
+ * @author wubo
+ *
+ */
 @RestController
 @RequestMapping("/test")
 public class HelloController {

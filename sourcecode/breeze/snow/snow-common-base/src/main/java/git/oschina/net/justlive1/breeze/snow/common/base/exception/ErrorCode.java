@@ -4,6 +4,12 @@ import java.io.Serializable;
 
 import lombok.Data;
 
+/**
+ * 异常包装类
+ * 
+ * @author wubo
+ *
+ */
 @Data
 public class ErrorCode implements Serializable {
 

@@ -4,6 +4,12 @@ import org.jasig.cas.client.authentication.UrlPatternMatcherStrategy;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.StringUtils;
 
+/**
+ * 多重url路径matcher
+ * 
+ * @author wubo
+ *
+ */
 public class MultipleAntPathMatcher implements UrlPatternMatcherStrategy {
 
 	static final String SEPARATOR = ",";

@@ -6,6 +6,12 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.config.server.EnableConfigServer;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * 程序入口
+ * 
+ * @author wubo
+ *
+ */
 @Configuration
 @EnableAutoConfiguration
 @EnableDiscoveryClient

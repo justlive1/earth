@@ -10,6 +10,12 @@ import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.util.WebUtils;
 
+/**
+ * security拦截器自动加载
+ * 
+ * @author wubo
+ *
+ */
 public class SecurityRegister implements WebApplicationInitializer {
 
 	@Override

@@ -9,6 +9,12 @@ import org.springframework.util.StringUtils;
 import git.oschina.net.justlive1.breeze.rain.api.domian.Hello;
 import git.oschina.net.justlive1.breeze.rain.api.service.HelloService;
 
+/**
+ * demo
+ * 
+ * @author wubo
+ *
+ */
 @Service
 public class HelloServiceImpl implements HelloService {
 

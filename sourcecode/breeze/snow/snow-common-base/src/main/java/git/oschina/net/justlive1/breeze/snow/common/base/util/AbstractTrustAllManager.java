@@ -14,18 +14,21 @@ import javax.net.ssl.X509TrustManager;
  * @author wubo
  *
  */
-public abstract class TrustAllManager {
+public abstract class AbstractTrustAllManager {
 
 	static {
 		// Create a trust manager that does not validate certificate chains
 		TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+			@Override
 			public X509Certificate[] getAcceptedIssuers() {
 				return null;
 			}
 
+			@Override
 			public void checkClientTrusted(X509Certificate[] certs, String authType) {
 			}
 
+			@Override
 			public void checkServerTrusted(X509Certificate[] certs, String authType) {
 			}
 		} };

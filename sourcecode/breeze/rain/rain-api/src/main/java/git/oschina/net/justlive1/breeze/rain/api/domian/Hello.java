@@ -1,5 +1,11 @@
 package git.oschina.net.justlive1.breeze.rain.api.domian;
 
+/**
+ * demo
+ * 
+ * @author wubo
+ *
+ */
 public class Hello {
 
 	private String msg;

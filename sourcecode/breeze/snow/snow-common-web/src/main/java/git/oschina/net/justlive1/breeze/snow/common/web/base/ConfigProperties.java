@@ -3,6 +3,12 @@ package git.oschina.net.justlive1.breeze.snow.common.web.base;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * 配置属性类
+ * 
+ * @author wubo
+ *
+ */
 @Configuration
 public class ConfigProperties {
 

@@ -247,7 +247,7 @@ public class ReflectUtils {
 			return (T) new java.sql.Timestamp(System.currentTimeMillis());
 		}
 		if (clazz == java.util.Map.class) {
-			return (T) new HashMap<>();
+			return (T) new HashMap<>(16);
 		}
 		try {
 			return clazz.newInstance();
@@ -299,8 +299,9 @@ public class ReflectUtils {
 	public static Field[] getInheritanceDeclaredFields(Class<?> clazz) {
 		Collection<Field> fds = new ArrayList<Field>();
 		while (true) {
-			if (clazz.isPrimitive() || clazz.equals(Object.class))
+			if (clazz.isPrimitive() || clazz.equals(Object.class)) {
 				break;
+			}
 			Collections.addAll(fds, clazz.getDeclaredFields());
 			clazz = clazz.getSuperclass();
 		}

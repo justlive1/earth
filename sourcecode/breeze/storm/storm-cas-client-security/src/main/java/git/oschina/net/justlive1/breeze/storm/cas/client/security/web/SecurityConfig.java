@@ -28,7 +28,7 @@ import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
 import git.oschina.net.justlive1.breeze.snow.common.base.util.ReflectUtils;
-import git.oschina.net.justlive1.breeze.snow.common.base.util.TrustAllManager;
+import git.oschina.net.justlive1.breeze.snow.common.base.util.AbstractTrustAllManager;
 import git.oschina.net.justlive1.breeze.snow.common.web.base.ConfigProperties;
 import net.sf.ehcache.Cache;
 
@@ -39,7 +39,7 @@ import net.sf.ehcache.Cache;
  *
  */
 @Configuration
-public class SecurityConfig extends TrustAllManager {
+public class SecurityConfig extends AbstractTrustAllManager {
 
 	@Autowired
 	ConfigProperties configProps;
@@ -148,7 +148,7 @@ public class SecurityConfig extends TrustAllManager {
 	 */
 	@Bean
 	@Profile("jdbc")
-	UserDetailsService JdbcUserDetailsService() {
+	UserDetailsService jdbcUserDetailsService() {
 
 		Driver driver = ReflectUtils.fromName(configProps.authDataSourceDriver);
 		SimpleDriverDataSource dataSource = new SimpleDriverDataSource(driver, configProps.authDataSourceUrl,
