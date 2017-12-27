@@ -8,6 +8,7 @@ import org.jasig.cas.client.proxy.ProxyGrantingTicketStorage;
 import org.jasig.cas.client.proxy.ProxyGrantingTicketStorageImpl;
 import org.jasig.cas.client.session.SingleSignOutHttpSessionListener;
 import org.jasig.cas.client.validation.Cas20ProxyTicketValidator;
+import org.jasig.cas.client.validation.Cas20ServiceTicketValidator;
 import org.jasig.cas.client.validation.TicketValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -92,12 +93,17 @@ public class SecurityConfig extends TrustAllManager {
 	@Bean
 	public TicketValidator ticketValidator(ProxyGrantingTicketStorage storage) {
 
-		Cas20ProxyTicketValidator validator = new Cas20ProxyTicketValidator(configProps.casServerPrefixUrl);
-		validator.setAcceptAnyProxy(true);
-		validator.setProxyCallbackUrl(configProps.proxyReceptorUrl);
-		validator.setProxyGrantingTicketStorage(storage);
+		if (configProps.useProxyReceptor) {
 
-		return validator;
+			Cas20ProxyTicketValidator validator = new Cas20ProxyTicketValidator(configProps.casServerPrefixUrl);
+			validator.setAcceptAnyProxy(true);
+			validator.setProxyCallbackUrl(configProps.appHost + ConfigProperties.URL_PATH_SEPARATOR
+					+ configProps.appName + configProps.proxyReceptorUrl);
+			validator.setProxyGrantingTicketStorage(storage);
+			return validator;
+		}
+
+		return new Cas20ServiceTicketValidator(configProps.casServerPrefixUrl);
 	}
 
 	/**

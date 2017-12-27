@@ -59,6 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	ProxyGrantingTicketStorage storage;
 
+
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 		// 设置不拦截规则
@@ -100,6 +101,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .expiredUrl(configProps.sessionExpireUrl);
 
 		// @formatter:on
+
 	}
 
 	@Override
@@ -143,11 +145,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		CasAuthenticationFilter filter = new CasAuthenticationFilter();
 		filter.setServiceProperties(props);
 		filter.setAuthenticationManager(authenticationManager());
-		filter.setServiceProperties(props);
-		filter.setProxyGrantingTicketStorage(storage);
+
 		filter.setFilterProcessesUrl(configProps.securityFilterProcessesUrl);
-		filter.setProxyReceptorUrl(configProps.proxyReceptorUrl);
 		filter.setAuthenticationDetailsSource(new ServiceAuthenticationDetailsSource(props));
+
+		if (configProps.useProxyReceptor) {
+			filter.setProxyGrantingTicketStorage(storage);
+			filter.setProxyReceptorUrl(configProps.proxyReceptorUrl);
+		}
 
 		AuthenticationFailureHandler failureHandler = authenticationFailureHandler;
 		if (failureHandler == null) {
@@ -166,4 +171,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		return filter;
 	}
+
 }

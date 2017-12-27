@@ -20,6 +20,7 @@ public class ConfigProperties {
 	public static final String IGNORES_URLS_FIELD = "ignorePattern";
 
 	public static final String ANY_PATH = "/*";
+	public static final String URL_PATH_SEPARATOR = "/";
 
 	@Value("${app.host:}")
 	public String appHost;
@@ -78,7 +79,10 @@ public class ConfigProperties {
 	@Value("${security.cas.filterProcessesUrl:/login/cas}")
 	public String securityFilterProcessesUrl;
 
-	@Value("${security.cas.proxyReceptorUrl:/j_spring_cas_security_proxyreceptor}")
+	@Value("${security.cas.useProxyReceptor:false}")
+	public boolean useProxyReceptor;
+
+	@Value("${security.cas.proxyReceptorUrl:/proxyreceptor}")
 	public String proxyReceptorUrl;
 
 	@Value("${security.cas.service:}")
