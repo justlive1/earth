@@ -6,7 +6,7 @@ server.port=8443
 
 server.ssl.keyStore=/etc/cas/server.keystore
 server.ssl.keyStorePassword=justlive1
-server.ssl.keyAlias=storm.cas.com
+server.ssl.keyAlias=cas.earth.com
 #server.ssl.ciphers=
 #server.ssl.clientAuth=
 server.ssl.enabled=true
