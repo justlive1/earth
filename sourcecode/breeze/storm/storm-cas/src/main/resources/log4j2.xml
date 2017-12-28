@@ -66,9 +66,7 @@
         <AsyncLogger name="org.apache" level="warn" />
         <AsyncLogger name="org.apache.http" level="error" />
         <AsyncLogger name="org.springframework" level="warn" />
-        <AsyncLogger name="org.springframework.cloud.server" level="warn" />
-        <AsyncLogger name="org.springframework.cloud.client" level="warn" />
-        <AsyncLogger name="org.springframework.cloud.bus" level="warn" />
+        <AsyncLogger name="org.springframework.cloud" level="debug" />
         <AsyncLogger name="org.springframework.aop" level="warn" />
         <AsyncLogger name="org.springframework.boot" level="warn" />
         <AsyncLogger name="org.springframework.boot.actuate.autoconfigure" level="warn" />
