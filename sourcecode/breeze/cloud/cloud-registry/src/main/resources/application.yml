@@ -1,6 +1,9 @@
 server:
   port: 18888
 
+logging:
+  file: registry.log
+  
 earth:
   registry:
     path: /registry

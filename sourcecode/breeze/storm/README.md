@@ -28,6 +28,7 @@
 			单点登录    		-ok
 			https/http  		-ok
 			jdbc认证    		-ok
+			tickets(1)
 			在线用户统计
 			登录验证码
 			密码管理
@@ -44,6 +45,8 @@
 			security权限
 		storm-cas-client-shiro
 			整合cas和shiro
+	
+	(1) Runtime memory is used as the persistence storage for retrieving and managing tickets. Tickets that are issued during runtime will be LOST upon container restarts. This MAY impact SSO functionality.
 
 ## 部署
 [Release](https://gitee.com/justlive1/earth/releases)

@@ -30,6 +30,11 @@ public class RegistryApplication {
 	@Value("${earth.registry.path:/eureka}")
 	String registryPath;
 
+	@RequestMapping("/index")
+	public ModelAndView index() {
+		return new ModelAndView("forward:/");
+	}
+
 	@RequestMapping("${earth.registry.path}/**")
 	public ModelAndView registry(HttpServletRequest request) {
 		return new ModelAndView("forward:/eureka" + request.getRequestURI().replaceFirst(registryPath, ""));
