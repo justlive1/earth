@@ -12,7 +12,7 @@ spring:
     config:
       server:
         native:
-          searchLocations: classpath:/config-repo
+          searchLocations: classpath:/config-repo,classpath:/config-repo/{application}
         git:
           uri: https://gitee.com/justlive1/earth.git
           searchPaths: config-repo
