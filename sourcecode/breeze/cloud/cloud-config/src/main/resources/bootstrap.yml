@@ -13,16 +13,22 @@ spring:
       server:
         native:
           searchLocations: classpath:/config-repo,classpath:/config-repo/{application}
+          order: 1
         git:
           uri: https://gitee.com/justlive1/earth.git
           searchPaths: config-repo
+          basedir: /opt/earth/conifg-repo/
+          forcePull: true
+          order: 2
+        encrypt:
+          enabled: true
           
 encrypt:
   keyStore:
     location: classpath:/configServer.jks
     password: letmein
     alias: config.earth.com
-    secret: justlive1  
+    secret: justlive1
     
 management:
   security:

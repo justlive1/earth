@@ -15,7 +15,7 @@ cas.authn.jdbc.query[0].batchSize=1
 cas.authn.jdbc.query[0].user=root
 cas.authn.jdbc.query[0].ddlAuto=validate
 cas.authn.jdbc.query[0].maxAgeDays=180
-cas.authn.jdbc.query[0].password=!@#$qwer
+cas.authn.jdbc.query[0].password={cipher}AQAlEfhlQJIuBwYikUVmjc25tw4OgWpLUg85p8AP9iqfX9mD6s7IhLsT5puntPcWkNlfbvQMdl5uinLskk+/KeOLBzF8Lq8kLTMO77YcMe2xYVjR4tPfs0/DSmDl4azishpDm44clojm2Txjdf9pJ7FTw7gI1ILBM14bdu0hr2BmijXuevnHesCD/aRMZCxsLBm8328f7GC+5trJE90uqmjA6nz0bUtFDSogHDHWBoqMqZQktQ5tYl07xiDEE/o9f9qJqnguTCCRWxpwgaIHz27b1wbveKier3CIoK8/2jVMjcCK1AtC9q/onII5Nf5Nktvd2/RM7pTKMIZ4AADSFwtGpUf012nYo5XDNrpMYZR9hKjJF3S0XNTOY/OMuyqG84Q=
 cas.authn.jdbc.query[0].autocommit=false
 cas.authn.jdbc.query[0].driverClass=com.mysql.jdbc.Driver
 cas.authn.jdbc.query[0].idleTimeout=5000
