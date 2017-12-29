@@ -37,6 +37,7 @@ management:
 eureka:
   instance:
     preferIpAddress: true
+    instanceId: ${spring.cloud.client.ipAddress}:${server.port}
   client:
     serviceUrl:
       defaultZone: http://127.0.0.1:18888/registry/

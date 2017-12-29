@@ -28,8 +28,8 @@
 			远程仓库配置	-ok
 			jdbc配置
 			health
-			security
-			加密解密
+			security	-ok
+			加密解密		-ok
 			plain text
 			嵌入式
 			cloud bus
