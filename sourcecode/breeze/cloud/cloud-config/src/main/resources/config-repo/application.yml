@@ -3,4 +3,4 @@ eureka:
     preferIpAddress: true
   client:
     serviceUrl:
-      defaultZone: http://registry.earth.com:18888/eureka
+      defaultZone: http://registry.earth.com:18888/registry

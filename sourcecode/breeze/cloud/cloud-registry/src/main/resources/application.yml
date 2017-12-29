@@ -1,5 +1,10 @@
 server:
   port: 18888
+
+earth:
+  registry:
+    path: /registry
+
 eureka:
   server:
     enableSelfPreservation: true
@@ -9,4 +14,4 @@ eureka:
     registerWithEureka: false
     fetchRegistry: false
     serviceUrl:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      defaultZone: http://${eureka.instance.hostname}:${server.port}${earth.registry.path:/eureka}/
