@@ -17,7 +17,12 @@ spring:
           uri: https://gitee.com/justlive1/earth.git
           searchPaths: config-repo
           
-  
+encrypt:
+  keyStore:
+    location: classpath:/configServer.jks
+    password: letmein
+    alias: config.earth.com
+    secret: justlive1  
     
 management:
   security:
