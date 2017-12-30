@@ -9,7 +9,7 @@
         -->
         <Property name="cas.log.dir" >logs</Property>
         <!-- To see more CAS specific logging, adjust this property to info or debug or run server with -Dcas.log.leve=debug -->
-        <Property name="cas.log.level" >warn</Property>
+        <Property name="cas.log.level" >debug</Property>
     </Properties>
     <Appenders>
         <Console name="console" target="SYSTEM_OUT">

@@ -17,7 +17,7 @@
 * 支持构建 [Spring Boot](https://projects.spring.io/spring-boot) 和 [Spring Cloud](http://projects.spring.io/spring-cloud/).
 
 ## 开发
-	//TODO 功能点
+	// Features 
 		storm
 			服务注册
 			配置中心
@@ -28,7 +28,7 @@
 			单点登录    		-ok
 			https/http  		-ok
 			jdbc认证    		-ok
-			tickets(1)
+			tickets
 			在线用户统计
 			登录验证码
 			密码管理
@@ -46,7 +46,16 @@
 		storm-cas-client-shiro
 			整合cas和shiro
 	
-	(1) Runtime memory is used as the persistence storage for retrieving and managing tickets. Tickets that are issued during runtime will be LOST upon container restarts. This MAY impact SSO functionality.
+	// Bugs
+		* storm-cas 开启ssl https使用内置tomcat时，配置的http端口无效，配置有误还是不支持？
+	
+	// Warinings
+		* Runtime memory is used as the persistence storage for retrieving and managing tickets. Tickets that are issued during runtime will be LOST upon container restarts. This MAY impact SSO functionality.
+		* List of authorized users for admin pages security is not defined. Allowing access for all authenticated users
+		* Secret key for encryption is not defined for [Ticket-granting Cookie]
+		* Secret key for signing is not defined for [Ticket-granting Cookie]
+		* Secret key for signing is not defined under [cas.webflow.crypto.signing.key]
+		* Secret key for encryption is not defined under [cas.webflow.crypto.encryption.key].
 
 ## 部署
 [Release](https://gitee.com/justlive1/earth/releases)
