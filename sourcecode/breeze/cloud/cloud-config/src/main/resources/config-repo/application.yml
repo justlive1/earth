@@ -1,7 +1,7 @@
 eureka:
   instance:
     preferIpAddress: true
-    instanceId: ${spring.cloud.client.ipAddress}:${server.port}
+    instanceId: ${spring.cloud.client.ipAddress}:${register.port:${server.port}}
   client:
     serviceUrl:
       defaultZone: http://registry.earth.com:18888/registry

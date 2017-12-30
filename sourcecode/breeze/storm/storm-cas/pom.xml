@@ -12,8 +12,8 @@
 	<artifactId>storm-cas</artifactId>
 	<packaging>war</packaging>
 
-	<name>storm-cas Maven Webapp</name>
-	<url>http://maven.apache.org</url>
+	<name>storm-cas</name>
+	<url>https://gitee.com/justlive1/earth</url>
 
 	<properties>
 		<!-- app.server could be -jetty, -undertow, -tomcat, or blank if you plan 

@@ -16,7 +16,7 @@
 	</parent>
 
 	<name>cloud</name>
-	<url>http://maven.apache.org</url>
+	<url>https://gitee.com/justlive1/earth</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -141,5 +141,6 @@
 	<modules>
 		<module>cloud-registry</module>
 		<module>cloud-config</module>
+		<module>cloud-registry-client</module>
 	</modules>
 </project>

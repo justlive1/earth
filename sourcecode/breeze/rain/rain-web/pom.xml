@@ -12,8 +12,8 @@
 	<artifactId>rain-web</artifactId>
 	<packaging>war</packaging>
 
-	<name>rain-web Maven Webapp</name>
-	<url>http://maven.apache.org</url>
+	<name>rain-web</name>
+	<url>https://gitee.com/justlive1/earth</url>
 
 	<dependencies>
 

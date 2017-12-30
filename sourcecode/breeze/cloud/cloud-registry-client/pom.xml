@@ -4,32 +4,22 @@
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>git.oschina.net.justlive1.breeze.snow</groupId>
-		<artifactId>snow</artifactId>
+		<groupId>git.oschina.net.justlive1.breeze.cloud</groupId>
+		<artifactId>cloud</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>snow-common-base</artifactId>
+	<artifactId>cloud-registry-client</artifactId>
 	<packaging>jar</packaging>
 
-	<name>snow-common-base</name>
+	<name>cloud-registry-client</name>
 	<url>https://gitee.com/justlive1/earth</url>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<dependencies>
-
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-		</dependency>
-		
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
