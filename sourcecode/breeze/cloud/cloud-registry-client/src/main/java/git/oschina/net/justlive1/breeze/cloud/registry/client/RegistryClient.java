@@ -10,6 +10,11 @@ package git.oschina.net.justlive1.breeze.cloud.registry.client;
 public interface RegistryClient {
 
 	/**
+	 * 命名空间
+	 */
+	String NAMESPACE = "earth.registry";
+
+	/**
 	 * 注册服务
 	 */
 	void register();
