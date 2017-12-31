@@ -1,5 +1,6 @@
 package git.oschina.net.justlive1.breeze.cloud.registry.client;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ public abstract class BaseRegistryClient implements RegistryClient {
 	 */
 	protected abstract void doRegister();
 
+	@PostConstruct
 	@Override
 	public void register() {
 		if (client == null) {

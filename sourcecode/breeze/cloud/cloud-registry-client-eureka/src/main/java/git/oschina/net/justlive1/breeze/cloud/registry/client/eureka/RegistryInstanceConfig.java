@@ -16,8 +16,15 @@ public class RegistryInstanceConfig extends MyDataCenterInstanceConfig {
 		super(RegistryClient.NAMESPACE);
 	}
 
+	public String getVipAddress() {
+
+		return configInstance.getStringProperty(RegistryClient.VIP_ADDRESS, super.getIpAddress()).get();
+	}
+
 	@Override
-	public String getIpAddress() {
-		return configInstance.getStringProperty(RegistryClient.NAMESPACE + "vipAddress", super.getIpAddress()).get();
+	public String getHostName(boolean refresh) {
+
+		return configInstance.getBooleanProperty(RegistryClient.PREFER_IP_ADDRESS, Boolean.FALSE).get() ? getIpAddress()
+				: super.getHostName(refresh);
 	}
 }

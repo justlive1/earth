@@ -15,6 +15,16 @@ public interface RegistryClient {
 	String NAMESPACE = "earth.registry";
 
 	/**
+	 * 是否使用ip替代hostname
+	 */
+	String PREFER_IP_ADDRESS = NAMESPACE + ".preferIpAddress";
+
+	/**
+	 * virtual hostname
+	 */
+	String VIP_ADDRESS = NAMESPACE + ".vipAddress";
+
+	/**
 	 * 注册服务
 	 */
 	void register();

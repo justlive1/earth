@@ -3,10 +3,10 @@ package git.oschina.net.justlive1.breeze.cloud.registry.client.eureka;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Singleton;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.netflix.eureka.EurekaDiscoveryClient;
 import org.springframework.stereotype.Component;
 
 import com.netflix.appinfo.ApplicationInfoManager;
@@ -36,16 +36,15 @@ public class EurekaRegistryClient extends BaseRegistryClient {
 	@Value("${earth.registry.configPath:config/application.properties}")
 	private String configPath;
 
-	@PostConstruct
-	void init() throws IOException {
-
-		// 加载配置信息
-		ConfigurationManager.loadPropertiesFromResources(configPath);
-		this.register();
-	}
-
 	@Override
 	protected void doRegister() {
+
+		// 加载配置信息
+		try {
+			ConfigurationManager.loadPropertiesFromResources(configPath);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 
 		RegistryInstanceConfig instanceConfig = new RegistryInstanceConfig();
 		InstanceInfo instanceInfo = new EurekaConfigBasedInstanceInfoProvider(instanceConfig).get();
@@ -64,6 +63,22 @@ public class EurekaRegistryClient extends BaseRegistryClient {
 		log.info("Done sleeping, now changing status to UP");
 		applicationInfoManager.setInstanceStatus(InstanceInfo.InstanceStatus.UP);
 
+		this.client = new EurekaDiscoveryClient(instanceConfig, eurekaClient);
+
+		InstanceInfo nextServerInfo = null;
+		while (nextServerInfo == null) {
+			try {
+				nextServerInfo = eurekaClient.getNextServerFromEureka(instanceConfig.getVipAddress(), false);
+			} catch (Throwable e) {
+
+				log.info("Waiting ... verifying service registration with eureka ...");
+				try {
+					TimeUnit.SECONDS.sleep(5);
+				} catch (InterruptedException e1) {
+					// Nothing
+				}
+			}
+		}
 		log.info("Service Registed ..");
 	}
 
