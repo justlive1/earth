@@ -108,6 +108,19 @@
 	<dependencyManagement>
 		<dependencies>
 
+			<!-- self -->
+			<dependency>
+				<groupId>git.oschina.net.justlive1.breeze.cloud</groupId>
+				<artifactId>cloud-registry-client</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>git.oschina.net.justlive1.breeze.cloud</groupId>
+				<artifactId>cloud-registry-client-eureka</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
@@ -142,5 +155,6 @@
 		<module>cloud-registry</module>
 		<module>cloud-config</module>
 		<module>cloud-registry-client</module>
+		<module>cloud-registry-client-eureka</module>
 	</modules>
 </project>

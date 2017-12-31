@@ -8,6 +8,10 @@ earth:
   registry:
     path: /registry
 
+spring:
+  application:
+    name: registry
+
 eureka:
   server:
     enableSelfPreservation: true

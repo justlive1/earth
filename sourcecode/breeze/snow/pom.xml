@@ -95,13 +95,13 @@
 			<dependency>
 				<groupId>git.oschina.net.justlive1.breeze.snow</groupId>
 				<artifactId>snow-common-base</artifactId>
-				<version>${version}</version>
+				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>git.oschina.net.justlive1.breeze.snow</groupId>
 				<artifactId>snow-common-web</artifactId>
-				<version>${version}</version>
+				<version>${project.version}</version>
 			</dependency>
 
 			<!-- Spring begin -->

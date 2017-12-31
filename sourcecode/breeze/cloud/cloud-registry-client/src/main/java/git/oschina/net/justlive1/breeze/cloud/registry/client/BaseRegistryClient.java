@@ -1,6 +1,6 @@
 package git.oschina.net.justlive1.breeze.cloud.registry.client;
 
-import javax.annotation.concurrent.ThreadSafe;
+import javax.annotation.PreDestroy;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
@@ -11,11 +11,10 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
  * @author wubo
  *
  */
-@ThreadSafe
 public abstract class BaseRegistryClient implements RegistryClient {
 
-	private static final int REGISTED = -1;
 	private static final int NON_REGISTED = 0;
+	private static final int REGISTED = -1;
 	private static final int STARTED = -1;
 	private static final int STOPED = -2;
 
@@ -25,7 +24,7 @@ public abstract class BaseRegistryClient implements RegistryClient {
 	@Autowired(required = false)
 	protected DiscoveryClient client;
 
-	protected volatile int autoRegister = 0;
+	protected volatile int autoRegister = NON_REGISTED;
 
 	/**
 	 * 注册服务处理
@@ -34,7 +33,6 @@ public abstract class BaseRegistryClient implements RegistryClient {
 
 	@Override
 	public void register() {
-
 		if (client == null) {
 			if (autoRegister == NON_REGISTED) {
 				autoRegister = REGISTED;
@@ -66,6 +64,7 @@ public abstract class BaseRegistryClient implements RegistryClient {
 	 */
 	protected abstract void doShutdown();
 
+	@PreDestroy
 	@Override
 	public void shutdown() {
 

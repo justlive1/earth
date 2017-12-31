@@ -20,6 +20,8 @@
 		<snow-common-web.version>0.0.1-SNAPSHOT</snow-common-web.version>
 		<storm.version>0.0.1-SNAPSHOT</storm.version>
 		<storm-cas-client>-security</storm-cas-client>
+		<cloud.version>0.0.1-SNAPSHOT</cloud.version>
+		<cloud-registry-client>-eureka</cloud-registry-client>
 
 		<spring.version>5.0.2.RELEASE</spring.version>
 		<aspectj.version>1.8.9</aspectj.version>
@@ -99,13 +101,13 @@
 			<dependency>
 				<groupId>git.oschina.net.justlive1.breeze.rain</groupId>
 				<artifactId>rain-api</artifactId>
-				<version>${version}</version>
+				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>git.oschina.net.justlive1.breeze.rain</groupId>
 				<artifactId>rain-service</artifactId>
-				<version>${version}</version>
+				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
@@ -118,6 +120,12 @@
 				<groupId>git.oschina.net.justlive1.breeze.storm</groupId>
 				<artifactId>storm-cas-client${storm-cas-client}</artifactId>
 				<version>${storm.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>git.oschina.net.justlive1.breeze.cloud</groupId>
+				<artifactId>cloud-registry-client${cloud-registry-client}</artifactId>
+				<version>${cloud.version}</version>
 			</dependency>
 
 
