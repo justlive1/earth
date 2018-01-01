@@ -23,6 +23,8 @@
 			监控预警
 			分布式
 			负载均衡
+			docker
+			webHooks
 		
 		cloud-config
 			native配置	-ok
