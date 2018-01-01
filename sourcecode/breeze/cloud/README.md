@@ -23,6 +23,7 @@
 			监控预警
 			分布式
 			负载均衡
+		
 		cloud-config
 			native配置	-ok
 			远程仓库配置	-ok
@@ -34,10 +35,18 @@
 			嵌入式
 			cloud bus
 			client
+		
 		cloud-registry
 			发现服务
 			client
-			
+		
+		cloud-registry-client
+			注册服务client的抽象
+		
+		cloud-registry-client-eureka
+			基于eureka的服务注册client
+			注册服务		-ok
+			rest loadbalance
 			
 
 ## 部署

@@ -19,11 +19,12 @@
 ## 开发
 	// Features 
 		storm
-			服务注册
-			配置中心
+			服务注册			-ok
+			配置中心			-ok
 			监控预警
 			分布式
 			负载均衡
+		
 		storm-cas
 			单点登录    		-ok
 			https/http  		-ok
@@ -34,20 +35,26 @@
 			密码管理
 			service-manager
 			webflow
+		
 		storm-cas-client
 			cas认证跳转 		-ok
 			退出登录接口
-			获取当前登录用户
+			获取当前登录用户		-ok
+		
 		storm-cas-client-security
 			整合cas和security  	-ok
 			cas认证跳转 		-ok
-			单点退出存在问题
-			security权限
+			单点退出			-ok
+			security角色权限
+		
 		storm-cas-client-shiro
 			整合cas和shiro
+			cas认证跳转
+			单点退出
+			权限认证
 	
 	// Bugs
-		* storm-cas 开启ssl https使用内置tomcat时，配置的http端口无效，配置有误还是不支持？
+		* storm-cas 开启ssl https使用内置tomcat时，配置的http端口无效，配置有误还是不支持？ -Fixed
 	
 	// Warinings
 		* Runtime memory is used as the persistence storage for retrieving and managing tickets. Tickets that are issued during runtime will be LOST upon container restarts. This MAY impact SSO functionality.
