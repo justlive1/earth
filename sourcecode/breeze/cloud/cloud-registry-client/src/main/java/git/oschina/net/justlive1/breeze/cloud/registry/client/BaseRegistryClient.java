@@ -1,10 +1,14 @@
 package git.oschina.net.justlive1.breeze.cloud.registry.client;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
+import org.springframework.cloud.client.discovery.composite.CompositeDiscoveryClient;
+import org.springframework.cloud.client.discovery.simple.SimpleDiscoveryClient;
 
 /**
  * 服务注册客户端抽象类
@@ -28,6 +32,39 @@ public abstract class BaseRegistryClient implements RegistryClient {
 	protected volatile int autoRegister = NON_REGISTED;
 
 	/**
+	 * 非springcloud项目client为null<br>
+	 * springcloud项目自动注册服务中心client不为null<br>
+	 * 默认排除SimpleDiscoveryClient客户端<br>
+	 * 特殊处理@Override此方法
+	 * 
+	 * @return
+	 */
+	protected boolean needRegister() {
+
+		if (client == null || SimpleDiscoveryClient.class.isInstance(client)) {
+			return true;
+		}
+
+		if (CompositeDiscoveryClient.class.isInstance(client)) {
+
+			List<DiscoveryClient> clients = ((CompositeDiscoveryClient) client).getDiscoveryClients();
+			if (clients == null || clients.isEmpty()) {
+				return true;
+			}
+
+			int count = 0;
+			for (DiscoveryClient c : clients) {
+				if (!SimpleDiscoveryClient.class.isInstance(c)) {
+					count++;
+				}
+			}
+			return count == 0;
+		}
+
+		return false;
+	}
+
+	/**
 	 * 注册服务处理
 	 */
 	protected abstract void doRegister();
@@ -35,7 +72,7 @@ public abstract class BaseRegistryClient implements RegistryClient {
 	@PostConstruct
 	@Override
 	public void register() {
-		if (client == null) {
+		if (needRegister()) {
 			if (autoRegister == NON_REGISTED) {
 				autoRegister = REGISTED;
 				doRegister();
