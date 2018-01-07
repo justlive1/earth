@@ -25,6 +25,11 @@ public interface RegistryClient {
 	String VIP_ADDRESS = NAMESPACE + ".vipAddress";
 
 	/**
+	 * 是否开启
+	 */
+	String ENABLED = NAMESPACE + ".enabled";
+
+	/**
 	 * 注册服务
 	 */
 	void register();

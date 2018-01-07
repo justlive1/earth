@@ -47,6 +47,11 @@ public class EurekaRegistryClient extends BaseRegistryClient {
 		}
 
 		RegistryInstanceConfig instanceConfig = new RegistryInstanceConfig();
+
+		if (!instanceConfig.isEnabled()) {
+			return;
+		}
+
 		InstanceInfo instanceInfo = new EurekaConfigBasedInstanceInfoProvider(instanceConfig).get();
 		applicationInfoManager = new ApplicationInfoManager(instanceConfig, instanceInfo);
 		eurekaClient = new DiscoveryClient(applicationInfoManager, new RegistryClientConfig());

@@ -21,6 +21,11 @@ public class RegistryInstanceConfig extends MyDataCenterInstanceConfig {
 		return configInstance.getStringProperty(RegistryClient.VIP_ADDRESS, super.getIpAddress()).get();
 	}
 
+	public boolean isEnabled() {
+
+		return configInstance.getBooleanProperty(RegistryClient.ENABLED, true).get();
+	}
+
 	@Override
 	public String getHostName(boolean refresh) {
 
