@@ -23,4 +23,9 @@ public interface BaseConstants {
 	 */
 	String RESP_MESSAGE_FIELD = "message";
 
+	/**
+	 * Email校验正则
+	 */
+	String REGEX_EMAIL = "\\w+@\\w+\\.[a-z]+(\\.[a-z]+)?";
+
 }
