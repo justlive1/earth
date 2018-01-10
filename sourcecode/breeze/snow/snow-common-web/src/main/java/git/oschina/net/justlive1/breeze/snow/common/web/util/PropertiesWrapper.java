@@ -3,10 +3,10 @@ package git.oschina.net.justlive1.breeze.snow.common.web.util;
 import java.io.IOException;
 import java.util.Properties;
 
-import org.springframework.beans.factory.config.PlaceholderConfigurerSupport;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-import org.springframework.util.PropertyPlaceholderHelper;
+
+import git.oschina.net.justlive1.breeze.snow.common.base.util.PlaceHolderHelper;
 
 /**
  * properties包装类<br>
@@ -17,9 +17,8 @@ import org.springframework.util.PropertyPlaceholderHelper;
  */
 public class PropertiesWrapper {
 
-	private static final PropertyPlaceholderHelper HELPER = new PropertyPlaceholderHelper(
-			PlaceholderConfigurerSupport.DEFAULT_PLACEHOLDER_PREFIX,
-			PlaceholderConfigurerSupport.DEFAULT_PLACEHOLDER_SUFFIX);
+	private static final PlaceHolderHelper HELPER = new PlaceHolderHelper(PlaceHolderHelper.DEFAULT_PLACEHOLDER_PREFIX,
+			PlaceHolderHelper.DEFAULT_PLACEHOLDER_SUFFIX, PlaceHolderHelper.DEFAULT_VALUE_SEPARATOR, true);
 
 	private Properties props;
 

@@ -28,4 +28,13 @@ public interface BaseConstants {
 	 */
 	String REGEX_EMAIL = "\\w+@\\w+\\.[a-z]+(\\.[a-z]+)?";
 
+	/**
+	 * 身份证校验正则
+	 */
+	String REGEX_IDCARD = "[1-9]\\d{13,16}[a-zA-Z0-9]{1}";
+	
+	/**
+	 * 二代身份证校验正则
+	 */
+	String REGEX_IDCARD2ND = "";
 }
