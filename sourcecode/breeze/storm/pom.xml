@@ -24,6 +24,7 @@
 
 		<spring.version>5.0.2.RELEASE</spring.version>
 		<spring-security.version>5.0.0.RELEASE</spring-security.version>
+		<shiro.version>1.4.0</shiro.version>
 		<aspectj.version>1.8.9</aspectj.version>
 		<assertj.version>2.6.0</assertj.version>
 		<caffeine.version>2.3.5</caffeine.version>
@@ -232,6 +233,24 @@
 				<scope>test</scope>
 			</dependency>
 
+			<!-- shiro start -->
+			<dependency>
+			    <groupId>org.apache.shiro</groupId>
+			    <artifactId>shiro-ehcache</artifactId>
+			    <version>${shiro.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.apache.shiro</groupId>
+			    <artifactId>shiro-spring</artifactId>
+			    <version>${shiro.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.apache.shiro</groupId>
+			    <artifactId>shiro-cas</artifactId>
+			    <version>${shiro.version}</version>
+			</dependency>
+			<!-- shiro end -->
+			
 		</dependencies>
 	</dependencyManagement>
 
