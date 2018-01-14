@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>git.oschina.net.justlive1.breeze.snow</groupId>
+	<groupId>net.oschina.git.justlive1.breeze.snow</groupId>
 	<artifactId>snow</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
@@ -93,13 +93,13 @@
 
 			<!-- self api -->
 			<dependency>
-				<groupId>git.oschina.net.justlive1.breeze.snow</groupId>
+				<groupId>net.oschina.git.justlive1.breeze.snow</groupId>
 				<artifactId>snow-common-base</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>git.oschina.net.justlive1.breeze.snow</groupId>
+				<groupId>net.oschina.git.justlive1.breeze.snow</groupId>
 				<artifactId>snow-common-web</artifactId>
 				<version>${project.version}</version>
 			</dependency>

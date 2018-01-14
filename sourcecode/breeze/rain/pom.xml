@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>git.oschina.net.justlive1.breeze.rain</groupId>
+	<groupId>net.oschina.git.justlive1.breeze.rain</groupId>
 	<artifactId>rain</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
@@ -99,31 +99,31 @@
 
 			<!-- self api -->
 			<dependency>
-				<groupId>git.oschina.net.justlive1.breeze.rain</groupId>
+				<groupId>net.oschina.git.justlive1.breeze.rain</groupId>
 				<artifactId>rain-api</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>git.oschina.net.justlive1.breeze.rain</groupId>
+				<groupId>net.oschina.git.justlive1.breeze.rain</groupId>
 				<artifactId>rain-service</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>git.oschina.net.justlive1.breeze.snow</groupId>
+				<groupId>net.oschina.git.justlive1.breeze.snow</groupId>
 				<artifactId>snow-common-web</artifactId>
 				<version>${snow-common-web.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>git.oschina.net.justlive1.breeze.storm</groupId>
+				<groupId>net.oschina.git.justlive1.breeze.storm</groupId>
 				<artifactId>storm-cas-client${storm-cas-client}</artifactId>
 				<version>${storm.version}</version>
 			</dependency>
 			
 			<dependency>
-				<groupId>git.oschina.net.justlive1.breeze.cloud</groupId>
+				<groupId>net.oschina.git.justlive1.breeze.cloud</groupId>
 				<artifactId>cloud-registry-client${cloud-registry-client}</artifactId>
 				<version>${cloud.version}</version>
 			</dependency>

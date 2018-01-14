@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>git.oschina.net.justlive1.breeze.cloud</groupId>
+	<groupId>net.oschina.git.justlive1.breeze.cloud</groupId>
 	<artifactId>cloud</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
@@ -110,13 +110,13 @@
 
 			<!-- self -->
 			<dependency>
-				<groupId>git.oschina.net.justlive1.breeze.cloud</groupId>
+				<groupId>net.oschina.git.justlive1.breeze.cloud</groupId>
 				<artifactId>cloud-registry-client</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			
 			<dependency>
-				<groupId>git.oschina.net.justlive1.breeze.cloud</groupId>
+				<groupId>net.oschina.git.justlive1.breeze.cloud</groupId>
 				<artifactId>cloud-registry-client-eureka</artifactId>
 				<version>${project.version}</version>
 			</dependency>
