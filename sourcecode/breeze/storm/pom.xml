@@ -104,7 +104,7 @@
 				<artifactId>snow-common-base</artifactId>
 				<version>${snow-common-web.version}</version>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>net.oschina.git.justlive1.breeze.snow</groupId>
 				<artifactId>snow-common-web</artifactId>
@@ -235,28 +235,28 @@
 
 			<!-- shiro start -->
 			<dependency>
-			    <groupId>org.apache.shiro</groupId>
-			    <artifactId>shiro-ehcache</artifactId>
-			    <version>${shiro.version}</version>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-ehcache</artifactId>
+				<version>${shiro.version}</version>
 			</dependency>
 			<dependency>
-			    <groupId>org.apache.shiro</groupId>
-			    <artifactId>shiro-spring</artifactId>
-			    <version>${shiro.version}</version>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-spring</artifactId>
+				<version>${shiro.version}</version>
 			</dependency>
 			<dependency>
-			    <groupId>org.apache.shiro</groupId>
-			    <artifactId>shiro-cas</artifactId>
-			    <version>${shiro.version}</version>
-			    <exclusions>
-			    	<exclusion>
-			    		<groupId>javax.servlet</groupId>
-			    		<artifactId>servlet-api</artifactId>
-			    	</exclusion>
-			    </exclusions>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-cas</artifactId>
+				<version>${shiro.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>javax.servlet</groupId>
+						<artifactId>servlet-api</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 			<!-- shiro end -->
-			
+
 		</dependencies>
 	</dependencyManagement>
 
@@ -265,5 +265,6 @@
 		<module>storm-cas-client</module>
 		<module>storm-cas-client-shiro</module>
 		<module>storm-cas-client-security</module>
+		<module>storm-cas-management</module>
 	</modules>
 </project>
