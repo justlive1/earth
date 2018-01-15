@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  net.oschina.git.justlive1.breeze.storm.cas.management.CasManagementConfig
