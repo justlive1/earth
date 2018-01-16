@@ -110,7 +110,7 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.6</version>
 				<configuration>
-					<warName>storm-cas-management</warName>
+					<warName>cas-management</warName>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 					<recompressZippedFiles>false</recompressZippedFiles>
 					<archive>
@@ -131,7 +131,7 @@
 				<version>3.3</version>
 			</plugin>
 		</plugins>
-		<finalName>storm-cas-management</finalName>
+		<finalName>cas-management</finalName>
 	</build>
 
 	<profiles>
