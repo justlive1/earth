@@ -1,7 +1,7 @@
 /**
  * 
  */
-package git.oschina.net.justlive1.breeze.storm.cas.client.shiro.entity;
+package net.oschina.git.justlive1.breeze.storm.cas.client.shiro.entity;
 
 import javax.annotation.PostConstruct;
 
