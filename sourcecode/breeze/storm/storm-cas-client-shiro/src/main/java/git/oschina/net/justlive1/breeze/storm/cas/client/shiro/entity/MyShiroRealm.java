@@ -13,6 +13,9 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.cas.CasRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import net.oschina.git.justlive1.breeze.snow.common.web.base.ConfigProperties;
 
 /**
  * @author liuwenlai
@@ -21,11 +24,13 @@ import org.apache.shiro.subject.PrincipalCollection;
 @SuppressWarnings("deprecation")
 public class MyShiroRealm extends CasRealm {
 
+	@Autowired
+	ConfigProperties configProps;
+
 	@PostConstruct
 	public void initProperty() {
-		// TODO
-		setCasServerUrlPrefix("");
-		setCasService("");
+		setCasServerUrlPrefix(configProps.casServerPrefixUrl);
+		setCasService(configProps.casService);
 	}
 
 	/**
