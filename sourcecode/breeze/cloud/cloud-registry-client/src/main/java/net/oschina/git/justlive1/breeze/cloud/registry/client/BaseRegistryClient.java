@@ -29,6 +29,9 @@ public abstract class BaseRegistryClient implements RegistryClient {
 	@Autowired(required = false)
 	protected DiscoveryClient client;
 
+	@Autowired(required = false)
+	protected RegistryHandler handler;
+
 	protected volatile int autoRegister = NON_REGISTED;
 
 	/**
@@ -40,6 +43,10 @@ public abstract class BaseRegistryClient implements RegistryClient {
 	 * @return
 	 */
 	protected boolean needRegister() {
+
+		if (handler != null) {
+			return handler.needRegister();
+		}
 
 		if (client == null || SimpleDiscoveryClient.class.isInstance(client)) {
 			return true;
