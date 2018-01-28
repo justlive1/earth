@@ -33,6 +33,7 @@
 		<spring-security.version>5.0.0.RELEASE</spring-security.version>
 		<spring-session.version>1.3.1.RELEASE</spring-session.version>
 		<spring-cloud.version>Edgware.RELEASE</spring-cloud.version>
+		<spring-boot-admin.version>1.5.7</spring-boot-admin.version>
 
 		<aspectj.version>1.8.9</aspectj.version>
 		<assertj.version>2.6.0</assertj.version>
@@ -114,7 +115,7 @@
 				<artifactId>cloud-registry-client</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>net.oschina.git.justlive1.breeze.cloud</groupId>
 				<artifactId>cloud-registry-client-eureka</artifactId>
@@ -136,6 +137,17 @@
 			</dependency>
 
 			<dependency>
+				<groupId>de.codecentric</groupId>
+				<artifactId>spring-boot-admin-server</artifactId>
+				<version>${spring-boot-admin.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>de.codecentric</groupId>
+				<artifactId>spring-boot-admin-server-ui</artifactId>
+				<version>${spring-boot-admin.version}</version>
+			</dependency>
+			
+			<dependency>
 				<groupId>org.springframework.session</groupId>
 				<artifactId>spring-session</artifactId>
 				<version>${spring-session.version}</version>
@@ -156,5 +168,6 @@
 		<module>cloud-config</module>
 		<module>cloud-registry-client</module>
 		<module>cloud-registry-client-eureka</module>
+		<module>cloud-admin-server</module>
 	</modules>
 </project>
