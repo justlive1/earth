@@ -1,5 +1,5 @@
 server:
-  port: 18888
+  port: 12000
 
 logging:
   file: registry.log

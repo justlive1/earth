@@ -1,8 +1,9 @@
 server:
-  port: 18000
+  port: 11000
 
 logging:
   file: config.log
+  level.: debug
 
 spring:
   application:
@@ -25,6 +26,10 @@ spring:
         encrypt:
           enabled: true
           
+  boot:
+    admin:
+      url: http://localhost:${server.port}
+          
 encrypt:
   keyStore:
     location: classpath:/configServer.jks
@@ -42,4 +47,7 @@ eureka:
     instanceId: ${spring.cloud.client.ipAddress}:${server.port}
   client:
     serviceUrl:
-      defaultZone: http://127.0.0.1:18888/registry/
+      defaultZone: http://registry.earth.com:12000/registry/
+      
+info:
+  version: '@project.version@'

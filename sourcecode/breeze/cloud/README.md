@@ -26,7 +26,13 @@
 			docker
 			webHooks
 		
-		cloud-config
+		cloud-admin-server(10000)
+			springboot服务管理
+			
+		cloud-admin-client
+			springboot服务管理客户端
+		
+		cloud-config(11000)
 			native配置	-ok
 			远程仓库配置	-ok
 			jdbc配置
@@ -38,7 +44,7 @@
 			cloud bus
 			client
 		
-		cloud-registry
+		cloud-registry(12000)
 			发现服务
 			client
 		

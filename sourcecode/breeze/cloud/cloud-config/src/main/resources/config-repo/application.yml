@@ -7,4 +7,4 @@ eureka:
     healthcheck:
       enabled: true
     serviceUrl:
-      defaultZone: http://registry.earth.com:18888/registry
+      defaultZone: http://registry.earth.com:12000/registry
