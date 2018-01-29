@@ -136,6 +136,7 @@
 				<version>${mybatis-springboot-start.version}</version>
 			</dependency>
 
+			<!-- admin -->
 			<dependency>
 				<groupId>de.codecentric</groupId>
 				<artifactId>spring-boot-admin-server</artifactId>
@@ -144,6 +145,12 @@
 			<dependency>
 				<groupId>de.codecentric</groupId>
 				<artifactId>spring-boot-admin-server-ui</artifactId>
+				<version>${spring-boot-admin.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>de.codecentric</groupId>
+				<artifactId>spring-boot-admin-starter-client</artifactId>
 				<version>${spring-boot-admin.version}</version>
 			</dependency>
 			
@@ -164,10 +171,11 @@
 	</dependencyManagement>
 
 	<modules>
-		<module>cloud-registry</module>
+		<module>cloud-admin-server</module>
+		<module>cloud-admin-client</module>
 		<module>cloud-config</module>
+		<module>cloud-registry</module>
 		<module>cloud-registry-client</module>
 		<module>cloud-registry-client-eureka</module>
-		<module>cloud-admin-server</module>
 	</modules>
 </project>
