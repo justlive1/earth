@@ -20,11 +20,6 @@
 	<dependencies>
 
 		<dependency>
-			<groupId>net.oschina.git.justlive1.breeze.cloud</groupId>
-			<artifactId>cloud-admin-client</artifactId>
-		</dependency>
-
-		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-config-server</artifactId>
 		</dependency>
@@ -47,6 +42,7 @@
 
 	</dependencies>
 
+
 	<build>
 		<plugins>
 			<plugin>
@@ -56,6 +52,7 @@
 					<execution>
 						<goals>
 							<goal>repackage</goal>
+							<goal>build-info</goal>
 						</goals>
 					</execution>
 				</executions>

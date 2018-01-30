@@ -3,7 +3,7 @@ server:
 
 logging:
   file: config.log
-  level.: debug
+  level.: info
 
 spring:
   application:
@@ -26,10 +26,6 @@ spring:
         encrypt:
           enabled: true
           
-  boot:
-    admin:
-      url: http://localhost:${server.port}
-          
 encrypt:
   keyStore:
     location: classpath:/configServer.jks
@@ -49,5 +45,3 @@ eureka:
     serviceUrl:
       defaultZone: http://registry.earth.com:12000/registry/
       
-info:
-  version: '@project.version@'
