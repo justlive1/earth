@@ -10,13 +10,13 @@ import org.jasig.cas.client.util.AssertionHolder;
  */
 public class CasUserUtils {
 
-	/**
-	 * 获取当前登陆用户名
-	 * 
-	 * @return
-	 */
-	public static String loginUserName() {
+    /**
+     * 获取当前登陆用户名
+     * 
+     * @return
+     */
+    public static String loginUserName() {
 
-		return AssertionHolder.getAssertion().getPrincipal().getName();
-	}
+        return AssertionHolder.getAssertion().getPrincipal().getName();
+    }
 }

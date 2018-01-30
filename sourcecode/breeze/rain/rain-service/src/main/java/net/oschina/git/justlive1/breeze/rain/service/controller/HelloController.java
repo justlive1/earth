@@ -23,30 +23,30 @@ import net.oschina.git.justlive1.breeze.snow.common.base.domain.Response;
 @RequestMapping("/test")
 public class HelloController {
 
-	@Autowired
-	HelloService helloService;
+    @Autowired
+    HelloService helloService;
 
-	@GetMapping("/hello")
-	public Response<List<String>> hello() {
+    @GetMapping("/hello")
+    public Response<List<String>> hello() {
 
-		List<String> res = helloService.hello();
+        List<String> res = helloService.hello();
 
-		return Response.success(res);
-	}
+        return Response.success(res);
+    }
 
-	@PostMapping("/world")
-	public Response<List<String>> world(@RequestBody List<String> list) {
+    @PostMapping("/world")
+    public Response<List<String>> world(@RequestBody List<String> list) {
 
-		List<String> res = helloService.world(list);
+        List<String> res = helloService.world(list);
 
-		return Response.success(res);
-	}
+        return Response.success(res);
+    }
 
-	@PostMapping("/helloworld")
-	public Response<List<String>> helloworld(Hello hello) {
+    @PostMapping("/helloworld")
+    public Response<List<String>> helloworld(Hello hello) {
 
-		List<String> res = helloService.helloworld(hello);
+        List<String> res = helloService.helloworld(hello);
 
-		return Response.success(res);
-	}
+        return Response.success(res);
+    }
 }

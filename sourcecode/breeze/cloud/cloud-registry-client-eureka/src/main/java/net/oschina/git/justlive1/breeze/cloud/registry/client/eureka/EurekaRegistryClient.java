@@ -30,74 +30,74 @@ import net.oschina.git.justlive1.breeze.cloud.registry.client.BaseRegistryClient
 @Component
 public class EurekaRegistryClient extends BaseRegistryClient {
 
-	private ApplicationInfoManager applicationInfoManager;
-	private EurekaClient eurekaClient;
+    private ApplicationInfoManager applicationInfoManager;
+    private EurekaClient eurekaClient;
 
-	@Value("${earth.registry.configPath:config/application.properties}")
-	private String configPath;
+    @Value("${earth.registry.configPath:config/application.properties}")
+    private String configPath;
 
-	@Override
-	protected void doRegister() {
+    @Override
+    protected void doRegister() {
 
-		// 加载配置信息
-		try {
-			ConfigurationManager.loadPropertiesFromResources(configPath);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+        // 加载配置信息
+        try {
+            ConfigurationManager.loadPropertiesFromResources(configPath);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
-		RegistryInstanceConfig instanceConfig = new RegistryInstanceConfig();
+        RegistryInstanceConfig instanceConfig = new RegistryInstanceConfig();
 
-		if (!instanceConfig.isEnabled()) {
-			return;
-		}
+        if (!instanceConfig.isEnabled()) {
+            return;
+        }
 
-		InstanceInfo instanceInfo = new EurekaConfigBasedInstanceInfoProvider(instanceConfig).get();
-		applicationInfoManager = new ApplicationInfoManager(instanceConfig, instanceInfo);
-		eurekaClient = new DiscoveryClient(applicationInfoManager, new RegistryClientConfig());
+        InstanceInfo instanceInfo = new EurekaConfigBasedInstanceInfoProvider(instanceConfig).get();
+        applicationInfoManager = new ApplicationInfoManager(instanceConfig, instanceInfo);
+        eurekaClient = new DiscoveryClient(applicationInfoManager, new RegistryClientConfig());
 
-		log.info("Registering service to eureka with STARTING status");
-		applicationInfoManager.setInstanceStatus(InstanceInfo.InstanceStatus.STARTING);
+        log.info("Registering service to eureka with STARTING status");
+        applicationInfoManager.setInstanceStatus(InstanceInfo.InstanceStatus.STARTING);
 
-		try {
-			TimeUnit.SECONDS.sleep(2);
-		} catch (InterruptedException e) {
-			// Nothing
-		}
+        try {
+            TimeUnit.SECONDS.sleep(2);
+        } catch (InterruptedException e) {
+            // Nothing
+        }
 
-		log.info("Done sleeping, now changing status to UP");
-		applicationInfoManager.setInstanceStatus(InstanceInfo.InstanceStatus.UP);
+        log.info("Done sleeping, now changing status to UP");
+        applicationInfoManager.setInstanceStatus(InstanceInfo.InstanceStatus.UP);
 
-		this.client = new EurekaDiscoveryClient(instanceConfig, eurekaClient);
+        this.client = new EurekaDiscoveryClient(instanceConfig, eurekaClient);
 
-		InstanceInfo nextServerInfo = null;
-		while (nextServerInfo == null) {
-			try {
-				nextServerInfo = eurekaClient.getNextServerFromEureka(instanceConfig.getVipAddress(), false);
-			} catch (Throwable e) {
+        InstanceInfo nextServerInfo = null;
+        while (nextServerInfo == null) {
+            try {
+                nextServerInfo = eurekaClient.getNextServerFromEureka(instanceConfig.getVipAddress(), false);
+            } catch (Throwable e) {
 
-				log.info("Waiting ... verifying service registration with eureka ...");
-				try {
-					TimeUnit.SECONDS.sleep(5);
-				} catch (InterruptedException e1) {
-					// Nothing
-				}
-			}
-		}
-		log.info("Service Registed ..");
-	}
+                log.info("Waiting ... verifying service registration with eureka ...");
+                try {
+                    TimeUnit.SECONDS.sleep(5);
+                } catch (InterruptedException e1) {
+                    // Nothing
+                }
+            }
+        }
+        log.info("Service Registed ..");
+    }
 
-	@Override
-	protected void doStart() {
+    @Override
+    protected void doStart() {
 
-	}
+    }
 
-	@Override
-	protected void doShutdown() {
-		if (eurekaClient != null) {
-			log.info("Shutting down client.");
-			eurekaClient.shutdown();
-		}
-	}
+    @Override
+    protected void doShutdown() {
+        if (eurekaClient != null) {
+            log.info("Shutting down client.");
+            eurekaClient.shutdown();
+        }
+    }
 
 }

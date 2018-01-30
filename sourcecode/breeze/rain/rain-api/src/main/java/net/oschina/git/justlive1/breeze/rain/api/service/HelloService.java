@@ -12,26 +12,26 @@ import net.oschina.git.justlive1.breeze.rain.api.domian.Hello;
  */
 public interface HelloService {
 
-	/**
-	 * 无参数接口demo
-	 * 
-	 * @return
-	 */
-	List<String> hello();
+    /**
+     * 无参数接口demo
+     * 
+     * @return
+     */
+    List<String> hello();
 
-	/**
-	 * list入参
-	 * 
-	 * @param world
-	 * @return
-	 */
-	List<String> world(List<String> world);
+    /**
+     * list入参
+     * 
+     * @param world
+     * @return
+     */
+    List<String> world(List<String> world);
 
-	/**
-	 * 对象入参
-	 * 
-	 * @param hello
-	 * @return
-	 */
-	List<String> helloworld(Hello hello);
+    /**
+     * 对象入参
+     * 
+     * @param hello
+     * @return
+     */
+    List<String> helloworld(Hello hello);
 }

@@ -11,8 +11,8 @@ import javax.net.ssl.SSLSession;
  */
 public class HostnameVerifierAlwaysTrue extends AbstractTrustAllManager implements HostnameVerifier {
 
-	@Override
-	public boolean verify(String hostname, SSLSession session) {
-		return false;
-	}
+    @Override
+    public boolean verify(String hostname, SSLSession session) {
+        return false;
+    }
 }

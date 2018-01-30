@@ -8,27 +8,27 @@ import junit.framework.TestSuite;
  * Unit test for simple App.
  */
 public class SpringBootAdminApplicationTest extends TestCase {
-	/**
-	 * Create the test case
-	 *
-	 * @param testName
-	 *            name of the test case
-	 */
-	public SpringBootAdminApplicationTest(String testName) {
-		super(testName);
-	}
+    /**
+     * Create the test case
+     *
+     * @param testName
+     *            name of the test case
+     */
+    public SpringBootAdminApplicationTest(String testName) {
+        super(testName);
+    }
 
-	/**
-	 * @return the suite of tests being tested
-	 */
-	public static Test suite() {
-		return new TestSuite(SpringBootAdminApplicationTest.class);
-	}
+    /**
+     * @return the suite of tests being tested
+     */
+    public static Test suite() {
+        return new TestSuite(SpringBootAdminApplicationTest.class);
+    }
 
-	/**
-	 * Rigourous Test :-)
-	 */
-	public void testApp() {
-		assertTrue(true);
-	}
+    /**
+     * Rigourous Test :-)
+     */
+    public void testApp() {
+        assertTrue(true);
+    }
 }

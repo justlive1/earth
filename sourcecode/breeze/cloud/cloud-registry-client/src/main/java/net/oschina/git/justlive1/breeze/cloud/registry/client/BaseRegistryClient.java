@@ -18,105 +18,105 @@ import org.springframework.cloud.client.discovery.simple.SimpleDiscoveryClient;
  */
 public abstract class BaseRegistryClient implements RegistryClient {
 
-	private static final int NON_REGISTED = 0;
-	private static final int REGISTED = -1;
-	private static final int STARTED = -1;
-	private static final int STOPED = -2;
+    private static final int NON_REGISTED = 0;
+    private static final int REGISTED = -1;
+    private static final int STARTED = -1;
+    private static final int STOPED = -2;
 
-	/**
-	 * 使用了@EnableDiscoveryClient会自动配置
-	 */
-	@Autowired(required = false)
-	protected DiscoveryClient client;
+    /**
+     * 使用了@EnableDiscoveryClient会自动配置
+     */
+    @Autowired(required = false)
+    protected DiscoveryClient client;
 
-	@Autowired(required = false)
-	protected RegistryHandler handler;
+    @Autowired(required = false)
+    protected RegistryHandler handler;
 
-	protected volatile int autoRegister = NON_REGISTED;
+    protected volatile int autoRegister = NON_REGISTED;
 
-	/**
-	 * 非springcloud项目client为null<br>
-	 * springcloud项目自动注册服务中心client不为null<br>
-	 * 默认排除SimpleDiscoveryClient客户端<br>
-	 * 特殊处理@Override此方法
-	 * 
-	 * @return
-	 */
-	protected boolean needRegister() {
+    /**
+     * 非springcloud项目client为null<br>
+     * springcloud项目自动注册服务中心client不为null<br>
+     * 默认排除SimpleDiscoveryClient客户端<br>
+     * 特殊处理@Override此方法
+     * 
+     * @return
+     */
+    protected boolean needRegister() {
 
-		if (handler != null) {
-			return handler.needRegister();
-		}
+        if (handler != null) {
+            return handler.needRegister();
+        }
 
-		if (client == null || SimpleDiscoveryClient.class.isInstance(client)) {
-			return true;
-		}
+        if (client == null || SimpleDiscoveryClient.class.isInstance(client)) {
+            return true;
+        }
 
-		if (CompositeDiscoveryClient.class.isInstance(client)) {
+        if (CompositeDiscoveryClient.class.isInstance(client)) {
 
-			List<DiscoveryClient> clients = ((CompositeDiscoveryClient) client).getDiscoveryClients();
-			if (clients == null || clients.isEmpty()) {
-				return true;
-			}
+            List<DiscoveryClient> clients = ((CompositeDiscoveryClient) client).getDiscoveryClients();
+            if (clients == null || clients.isEmpty()) {
+                return true;
+            }
 
-			int count = 0;
-			for (DiscoveryClient c : clients) {
-				if (!SimpleDiscoveryClient.class.isInstance(c)) {
-					count++;
-				}
-			}
-			return count == 0;
-		}
+            int count = 0;
+            for (DiscoveryClient c : clients) {
+                if (!SimpleDiscoveryClient.class.isInstance(c)) {
+                    count++;
+                }
+            }
+            return count == 0;
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	/**
-	 * 注册服务处理
-	 */
-	protected abstract void doRegister();
+    /**
+     * 注册服务处理
+     */
+    protected abstract void doRegister();
 
-	@PostConstruct
-	@Override
-	public void register() {
-		if (needRegister()) {
-			if (autoRegister == NON_REGISTED) {
-				autoRegister = REGISTED;
-				doRegister();
-			}
-		} else {
-			if (autoRegister == NON_REGISTED) {
-				autoRegister = REGISTED;
-			}
-		}
-	}
+    @PostConstruct
+    @Override
+    public void register() {
+        if (needRegister()) {
+            if (autoRegister == NON_REGISTED) {
+                autoRegister = REGISTED;
+                doRegister();
+            }
+        } else {
+            if (autoRegister == NON_REGISTED) {
+                autoRegister = REGISTED;
+            }
+        }
+    }
 
-	/**
-	 * 运行服务
-	 */
-	protected abstract void doStart();
+    /**
+     * 运行服务
+     */
+    protected abstract void doStart();
 
-	@Override
-	public void start() {
+    @Override
+    public void start() {
 
-		if (autoRegister == REGISTED) {
-			autoRegister = STARTED;
-			doStart();
-		}
-	}
+        if (autoRegister == REGISTED) {
+            autoRegister = STARTED;
+            doStart();
+        }
+    }
 
-	/**
-	 * 停止服务
-	 */
-	protected abstract void doShutdown();
+    /**
+     * 停止服务
+     */
+    protected abstract void doShutdown();
 
-	@PreDestroy
-	@Override
-	public void shutdown() {
+    @PreDestroy
+    @Override
+    public void shutdown() {
 
-		if (autoRegister == STARTED) {
-			autoRegister = STOPED;
-			doShutdown();
-		}
-	}
+        if (autoRegister == STARTED) {
+            autoRegister = STOPED;
+            doShutdown();
+        }
+    }
 }

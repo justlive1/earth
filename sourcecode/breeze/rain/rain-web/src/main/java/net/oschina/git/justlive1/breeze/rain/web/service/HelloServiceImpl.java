@@ -20,33 +20,33 @@ import net.oschina.git.justlive1.breeze.snow.common.web.base.BaseService;
 @Service
 public class HelloServiceImpl extends BaseService implements HelloService {
 
-	@Value("${rain.service.url}")
-	String serviceUrl;
+    @Value("${rain.service.url}")
+    String serviceUrl;
 
-	@Autowired
-	@Override
-	protected void setTemplate(RestTemplate template) {
-		super.setTemplate(template);
-	}
+    @Autowired
+    @Override
+    protected void setTemplate(RestTemplate template) {
+        super.setTemplate(template);
+    }
 
-	@Override
-	public List<String> hello() {
+    @Override
+    public List<String> hello() {
 
-		return this.getForObject(serviceUrl + "/test/hello");
-	}
+        return this.getForObject(serviceUrl + "/test/hello");
+    }
 
-	@Override
-	public List<String> world(List<String> world) {
+    @Override
+    public List<String> world(List<String> world) {
 
-		int i = 0;
-		i = 10 / i;
+        int i = 0;
+        i = 10 / i;
 
-		return this.postJsonForObject(serviceUrl + "/test/world", world);
-	}
+        return this.postJsonForObject(serviceUrl + "/test/world", world);
+    }
 
-	@Override
-	public List<String> helloworld(Hello hello) {
+    @Override
+    public List<String> helloworld(Hello hello) {
 
-		return this.formSubmitForObject(serviceUrl + "/test/helloworld", hello);
-	}
+        return this.formSubmitForObject(serviceUrl + "/test/helloworld", hello);
+    }
 }

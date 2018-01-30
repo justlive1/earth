@@ -22,21 +22,21 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping
 public class RegistryApplication {
 
-	public static void main(String[] args) {
+    public static void main(String[] args) {
 
-		SpringApplication.run(RegistryApplication.class, args);
-	}
+        SpringApplication.run(RegistryApplication.class, args);
+    }
 
-	@Value("${earth.registry.path:/eureka}")
-	String registryPath;
+    @Value("${earth.registry.path:/eureka}")
+    String registryPath;
 
-	@RequestMapping("/index")
-	public ModelAndView index() {
-		return new ModelAndView("forward:/");
-	}
+    @RequestMapping("/index")
+    public ModelAndView index() {
+        return new ModelAndView("forward:/");
+    }
 
-	@RequestMapping("${earth.registry.path}/**")
-	public ModelAndView registry(HttpServletRequest request) {
-		return new ModelAndView("forward:/eureka" + request.getRequestURI().replaceFirst(registryPath, ""));
-	}
+    @RequestMapping("${earth.registry.path}/**")
+    public ModelAndView registry(HttpServletRequest request) {
+        return new ModelAndView("forward:/eureka" + request.getRequestURI().replaceFirst(registryPath, ""));
+    }
 }

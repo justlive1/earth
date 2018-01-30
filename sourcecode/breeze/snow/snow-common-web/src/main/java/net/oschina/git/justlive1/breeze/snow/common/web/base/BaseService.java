@@ -27,154 +27,154 @@ import net.oschina.git.justlive1.breeze.snow.common.base.exception.Exceptions;
  */
 public abstract class BaseService {
 
-	protected RestTemplate template;
+    protected RestTemplate template;
 
-	/**
-	 * 由继承该类的组件注入template
-	 * 
-	 * <pre class="code">
-	 * &#64;Override
-	 * protected void setTemplate(@Autowired RestTemplate template) {
-	 * 	super.setTemplate(template);
-	 * }
-	 * </pre>
-	 * 
-	 * @param template
-	 */
-	protected void setTemplate(RestTemplate template) {
-		this.template = template;
-	}
+    /**
+     * 由继承该类的组件注入template
+     * 
+     * <pre class="code">
+     * &#64;Override
+     * protected void setTemplate(@Autowired RestTemplate template) {
+     *     super.setTemplate(template);
+     * }
+     * </pre>
+     * 
+     * @param template
+     */
+    protected void setTemplate(RestTemplate template) {
+        this.template = template;
+    }
 
-	/**
-	 * 构造json请求体
-	 * 
-	 * @param request
-	 * @return
-	 */
-	protected <T> HttpEntity<T> buildEntity(T request) {
+    /**
+     * 构造json请求体
+     * 
+     * @param request
+     * @return
+     */
+    protected <T> HttpEntity<T> buildEntity(T request) {
 
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
-		return new HttpEntity<T>(request, headers);
-	}
+        return new HttpEntity<T>(request, headers);
+    }
 
-	/**
-	 * 构造表单提交请求体
-	 * 
-	 * @param request
-	 * @return
-	 */
-	protected HttpEntity<?> buildFormEntity(Object request) {
+    /**
+     * 构造表单提交请求体
+     * 
+     * @param request
+     * @return
+     */
+    protected HttpEntity<?> buildFormEntity(Object request) {
 
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-		if (request instanceof MultiValueMap) {
-			return new HttpEntity<>(request, headers);
-		}
+        if (request instanceof MultiValueMap) {
+            return new HttpEntity<>(request, headers);
+        }
 
-		final MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+        final MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
 
-		Map<?, ?> map;
-		if (request instanceof Map) {
-			map = (Map<?, ?>) request;
-		} else {
-			map = BeanMap.create(request);
-		}
+        Map<?, ?> map;
+        if (request instanceof Map) {
+            map = (Map<?, ?>) request;
+        } else {
+            map = BeanMap.create(request);
+        }
 
-		map.forEach((k, v) -> params.add(k.toString(), v.toString()));
+        map.forEach((k, v) -> params.add(k.toString(), v.toString()));
 
-		return new HttpEntity<MultiValueMap<String, String>>(params, headers);
-	}
+        return new HttpEntity<MultiValueMap<String, String>>(params, headers);
+    }
 
-	/**
-	 * get方式获取数据并转换类型
-	 * 
-	 * @param url
-	 *            请求地址
-	 * @param uriVariables
-	 *            uri中的参数
-	 * @return
-	 */
-	protected <T> T getForObject(String url, Object... uriVariables) {
+    /**
+     * get方式获取数据并转换类型
+     * 
+     * @param url
+     *            请求地址
+     * @param uriVariables
+     *            uri中的参数
+     * @return
+     */
+    protected <T> T getForObject(String url, Object... uriVariables) {
 
-		ParameterizedTypeReference<Response<T>> typeRef = new ParameterizedTypeReference<Response<T>>() {
-		};
+        ParameterizedTypeReference<Response<T>> typeRef = new ParameterizedTypeReference<Response<T>>() {
+        };
 
-		ResponseEntity<Response<T>> resp = template.exchange(url, HttpMethod.GET, null, typeRef, uriVariables);
+        ResponseEntity<Response<T>> resp = template.exchange(url, HttpMethod.GET, null, typeRef, uriVariables);
 
-		this.check(resp);
+        this.check(resp);
 
-		return resp.getBody().getData();
-	}
+        return resp.getBody().getData();
+    }
 
-	/**
-	 * post json 方式获取数据并转换类型
-	 * 
-	 * @param url
-	 *            请求地址
-	 * @param request
-	 *            请求body中的数据（可空）
-	 * @param uriVariables
-	 *            uri中的参数
-	 * @return
-	 */
-	protected <T, E> T postJsonForObject(String url, @Nullable E request, Object... uriVariables) {
+    /**
+     * post json 方式获取数据并转换类型
+     * 
+     * @param url
+     *            请求地址
+     * @param request
+     *            请求body中的数据（可空）
+     * @param uriVariables
+     *            uri中的参数
+     * @return
+     */
+    protected <T, E> T postJsonForObject(String url, @Nullable E request, Object... uriVariables) {
 
-		HttpEntity<E> entity = this.buildEntity(request);
+        HttpEntity<E> entity = this.buildEntity(request);
 
-		ParameterizedTypeReference<Response<T>> typeRef = new ParameterizedTypeReference<Response<T>>() {
-		};
+        ParameterizedTypeReference<Response<T>> typeRef = new ParameterizedTypeReference<Response<T>>() {
+        };
 
-		ResponseEntity<Response<T>> resp = template.exchange(url, HttpMethod.POST, entity, typeRef, uriVariables);
+        ResponseEntity<Response<T>> resp = template.exchange(url, HttpMethod.POST, entity, typeRef, uriVariables);
 
-		this.check(resp);
+        this.check(resp);
 
-		return resp.getBody().getData();
-	}
+        return resp.getBody().getData();
+    }
 
-	/**
-	 * form表单 方式获取数据并转换类型
-	 * 
-	 * @param url
-	 *            请求地址
-	 * @param request
-	 *            请求body中的数据（可空）
-	 * @param uriVariables
-	 *            uri中的参数
-	 * @return
-	 */
-	protected <T, E> T formSubmitForObject(String url, @Nullable E request, Object... uriVariables) {
+    /**
+     * form表单 方式获取数据并转换类型
+     * 
+     * @param url
+     *            请求地址
+     * @param request
+     *            请求body中的数据（可空）
+     * @param uriVariables
+     *            uri中的参数
+     * @return
+     */
+    protected <T, E> T formSubmitForObject(String url, @Nullable E request, Object... uriVariables) {
 
-		HttpEntity<?> entity = this.buildFormEntity(request);
+        HttpEntity<?> entity = this.buildFormEntity(request);
 
-		ParameterizedTypeReference<Response<T>> typeRef = new ParameterizedTypeReference<Response<T>>() {
-		};
+        ParameterizedTypeReference<Response<T>> typeRef = new ParameterizedTypeReference<Response<T>>() {
+        };
 
-		ResponseEntity<Response<T>> resp = template.exchange(url, HttpMethod.POST, entity, typeRef, uriVariables);
+        ResponseEntity<Response<T>> resp = template.exchange(url, HttpMethod.POST, entity, typeRef, uriVariables);
 
-		this.check(resp);
+        this.check(resp);
 
-		return resp.getBody().getData();
-	}
+        return resp.getBody().getData();
+    }
 
-	/**
-	 * 检查返回值
-	 * 
-	 * @param resp
-	 */
-	protected <T> void check(ResponseEntity<Response<T>> resp) {
+    /**
+     * 检查返回值
+     * 
+     * @param resp
+     */
+    protected <T> void check(ResponseEntity<Response<T>> resp) {
 
-		if (resp.getStatusCode() != HttpStatus.OK) {
-			throw Exceptions.fail(Response.FAIL, Response.FAIL);
-		}
+        if (resp.getStatusCode() != HttpStatus.OK) {
+            throw Exceptions.fail(Response.FAIL, Response.FAIL);
+        }
 
-		Response<T> body = resp.getBody();
+        Response<T> body = resp.getBody();
 
-		if (!body.isSuccess()) {
-			throw Exceptions.fail(body.getCode(), body.getMessage());
-		}
-	}
+        if (!body.isSuccess()) {
+            throw Exceptions.fail(body.getCode(), body.getMessage());
+        }
+    }
 
 }

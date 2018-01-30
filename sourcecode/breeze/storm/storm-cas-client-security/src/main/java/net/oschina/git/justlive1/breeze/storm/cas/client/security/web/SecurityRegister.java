@@ -18,13 +18,13 @@ import org.springframework.web.util.WebUtils;
  */
 public class SecurityRegister implements WebApplicationInitializer {
 
-	@Override
-	public void onStartup(ServletContext ctx) throws ServletException {
+    @Override
+    public void onStartup(ServletContext ctx) throws ServletException {
 
-		WebUtils.setWebAppRootSystemProperty(ctx);
+        WebUtils.setWebAppRootSystemProperty(ctx);
 
-		ctx.addFilter(BeanIds.SPRING_SECURITY_FILTER_CHAIN, DelegatingFilterProxy.class).addMappingForUrlPatterns(null,
-				true, ANY_PATH);
-	}
+        ctx.addFilter(BeanIds.SPRING_SECURITY_FILTER_CHAIN, DelegatingFilterProxy.class).addMappingForUrlPatterns(null,
+                true, ANY_PATH);
+    }
 
 }

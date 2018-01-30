@@ -12,9 +12,9 @@ import net.oschina.git.justlive1.breeze.cloud.registry.client.RegistryClient;
  */
 public class RegistryClientConfig extends DefaultEurekaClientConfig {
 
-	public RegistryClientConfig() {
-		super(RegistryClient.NAMESPACE);
-	}
+    public RegistryClientConfig() {
+        super(RegistryClient.NAMESPACE);
+    }
 
-	// TODO 一些eureka的属性需要mask
+    // TODO 一些eureka的属性需要mask
 }

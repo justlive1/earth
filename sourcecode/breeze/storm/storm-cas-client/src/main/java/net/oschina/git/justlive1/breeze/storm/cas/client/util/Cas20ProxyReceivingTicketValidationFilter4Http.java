@@ -14,10 +14,10 @@ import net.oschina.git.justlive1.breeze.snow.common.base.util.HostnameVerifierAl
  */
 public class Cas20ProxyReceivingTicketValidationFilter4Http extends Cas20ProxyReceivingTicketValidationFilter {
 
-	private static final HostnameVerifier VERIFIER = new HostnameVerifierAlwaysTrue();
+    private static final HostnameVerifier VERIFIER = new HostnameVerifierAlwaysTrue();
 
-	@Override
-	protected HostnameVerifier getHostnameVerifier() {
-		return VERIFIER;
-	}
+    @Override
+    protected HostnameVerifier getHostnameVerifier() {
+        return VERIFIER;
+    }
 }

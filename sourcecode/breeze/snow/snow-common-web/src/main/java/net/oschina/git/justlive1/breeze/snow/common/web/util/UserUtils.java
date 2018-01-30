@@ -19,51 +19,51 @@ import net.oschina.git.justlive1.breeze.snow.common.base.util.ReflectUtils;
  */
 public class UserUtils {
 
-	private static final String CAS_USERUTILS_CLASS = "git.oschina.net.justlive1.breeze.storm.cas.client.util.CasUserUtils";
-	private static final String SECURITY_USERUTILS_CLASS = "git.oschina.net.justlive1.breeze.storm.cas.client.security.util.SercurityUserUtils";
+    private static final String CAS_USERUTILS_CLASS = "git.oschina.net.justlive1.breeze.storm.cas.client.util.CasUserUtils";
+    private static final String SECURITY_USERUTILS_CLASS = "git.oschina.net.justlive1.breeze.storm.cas.client.security.util.SercurityUserUtils";
 
-	private static final Map<String, Method> CACHE_MAP = Maps.newHashMap();
+    private static final Map<String, Method> CACHE_MAP = Maps.newHashMap();
 
-	/**
-	 * 获取当前登陆用户名
-	 * 
-	 * @return
-	 */
-	public static String loginUserName() {
+    /**
+     * 获取当前登陆用户名
+     * 
+     * @return
+     */
+    public static String loginUserName() {
 
-		return invoke();
-	}
+        return invoke();
+    }
 
-	private static String invoke() {
+    private static String invoke() {
 
-		String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
-		Method method = CACHE_MAP.get(methodName);
-		if (method == null) {
+        String methodName = Thread.currentThread().getStackTrace()[2].getMethodName();
+        Method method = CACHE_MAP.get(methodName);
+        if (method == null) {
 
-			Class<?> clazz = null;
-			if (ClassUtils.isPresent(CAS_USERUTILS_CLASS, UserUtils.class.getClassLoader())) {
-				clazz = ReflectUtils.forName(CAS_USERUTILS_CLASS);
-			} else if (ClassUtils.isPresent(SECURITY_USERUTILS_CLASS, UserUtils.class.getClassLoader())) {
-				clazz = ReflectUtils.forName(SECURITY_USERUTILS_CLASS);
-			}
+            Class<?> clazz = null;
+            if (ClassUtils.isPresent(CAS_USERUTILS_CLASS, UserUtils.class.getClassLoader())) {
+                clazz = ReflectUtils.forName(CAS_USERUTILS_CLASS);
+            } else if (ClassUtils.isPresent(SECURITY_USERUTILS_CLASS, UserUtils.class.getClassLoader())) {
+                clazz = ReflectUtils.forName(SECURITY_USERUTILS_CLASS);
+            }
 
-			if (clazz == null) {
-				return null;
-			}
+            if (clazz == null) {
+                return null;
+            }
 
-			method = ReflectionUtils.findMethod(clazz, methodName);
-			CACHE_MAP.put(methodName, method);
-		}
-		return invoke(method, null);
-	}
+            method = ReflectionUtils.findMethod(clazz, methodName);
+            CACHE_MAP.put(methodName, method);
+        }
+        return invoke(method, null);
+    }
 
-	@SuppressWarnings("unchecked")
-	private static <T> T invoke(Method method, Object obj, Object... args) {
-		try {
-			return (T) method.invoke(obj, args);
-		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			throw new RuntimeException(e);
-		}
-	}
+    @SuppressWarnings("unchecked")
+    private static <T> T invoke(Method method, Object obj, Object... args) {
+        try {
+            return (T) method.invoke(obj, args);
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

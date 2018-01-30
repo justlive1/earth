@@ -115,7 +115,13 @@
 				<artifactId>cloud-admin-client</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-			
+
+			<dependency>
+				<groupId>net.oschina.git.justlive1.breeze.cloud</groupId>
+				<artifactId>cloud-admin-server</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
 			<dependency>
 				<groupId>net.oschina.git.justlive1.breeze.cloud</groupId>
 				<artifactId>cloud-registry-client</artifactId>
@@ -159,7 +165,7 @@
 				<artifactId>spring-boot-admin-starter-client</artifactId>
 				<version>${spring-boot-admin.version}</version>
 			</dependency>
-			
+
 			<dependency>
 				<groupId>org.springframework.session</groupId>
 				<artifactId>spring-session</artifactId>
@@ -183,5 +189,6 @@
 		<module>cloud-registry</module>
 		<module>cloud-registry-client</module>
 		<module>cloud-registry-client-eureka</module>
+		<module>cloud-admin-server-eureka</module>
 	</modules>
 </project>

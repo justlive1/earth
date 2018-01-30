@@ -57,6 +57,7 @@
 	
 	// Bugs
 		* storm-cas 开启ssl https使用内置tomcat时，配置的http端口无效，配置有误还是不支持？ -Fixed
+		* storm-cas 对接cloud-admin-server-eureka offline PKIX building failed
 	
 	// Warinings
 		* Runtime memory is used as the persistence storage for retrieving and managing tickets. Tickets that are issued during runtime will be LOST upon container restarts. This MAY impact SSO functionality.
