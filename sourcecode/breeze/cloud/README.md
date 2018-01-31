@@ -27,7 +27,10 @@
 			webHooks
 		
 		cloud-admin-server(10000)
-			springboot服务管理
+            springboot服务管理
+            
+        cloud-admin-server-eureka(10001)
+            springboot服务管理对接eureka服务注册
 			
 		cloud-admin-client
 			springboot服务管理客户端
@@ -56,6 +59,9 @@
 			注册服务		-ok
 			rest loadbalance
 			
+	// Questions
+        * cloud-admin-server-eureka 当eureka服务注册进入保护模式，当多个admin-server节点宕机后，启动新节点，该节点还是会请求所有宕机的admin-server
+    
 
 ## 部署
 [Release](https://gitee.com/justlive1/earth/releases)

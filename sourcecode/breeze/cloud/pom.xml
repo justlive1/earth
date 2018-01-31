@@ -25,7 +25,7 @@
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 
 		<snow.version>0.0.1-SNAPSHOT</snow.version>
-		
+
 		<cas.version>5.2.0</cas.version>
 		<cas.client.version>3.4.1</cas.client.version>
 		<springboot.version>1.5.8.RELEASE</springboot.version>
@@ -158,6 +158,12 @@
 			<dependency>
 				<groupId>de.codecentric</groupId>
 				<artifactId>spring-boot-admin-server-ui</artifactId>
+				<version>${spring-boot-admin.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>de.codecentric</groupId>
+				<artifactId>spring-boot-admin-server-ui-hystrix</artifactId>
 				<version>${spring-boot-admin.version}</version>
 			</dependency>
 
