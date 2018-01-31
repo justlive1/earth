@@ -24,7 +24,8 @@
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 
-		<snow-common-web.version>0.0.1-SNAPSHOT</snow-common-web.version>
+		<snow.version>0.0.1-SNAPSHOT</snow.version>
+		
 		<cas.version>5.2.0</cas.version>
 		<cas.client.version>3.4.1</cas.client.version>
 		<springboot.version>1.5.8.RELEASE</springboot.version>
