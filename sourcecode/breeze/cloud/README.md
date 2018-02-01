@@ -26,15 +26,6 @@
 			docker
 			webHooks
 		
-		cloud-admin-server(10000)
-            springboot服务管理
-            
-        cloud-admin-server-eureka(10001)
-            springboot服务管理对接eureka服务注册
-			
-		cloud-admin-client
-			springboot服务管理客户端
-		
 		cloud-config(11000)
 			native配置	-ok
 			远程仓库配置	-ok
@@ -59,8 +50,18 @@
 			注册服务		-ok
 			rest loadbalance
 			
+		cloud-admin-server(13000)
+            springboot服务管理
+            
+         cloud-admin-server-eureka(13000)
+            springboot服务管理对接eureka服务注册
+            
+         cloud-admin-client
+            springboot服务管理客户端
+		
 	// Questions
         * cloud-admin-server-eureka 当eureka服务注册进入保护模式，当多个admin-server节点宕机后，启动新节点，该节点还是会请求所有宕机的admin-server
+        * macOs下springboot 启动内置端口为10000时，ip绑定失败只能用localhost访问，tcp连接CLOSE_WAIT，怀疑是内置tomcat的bug，握手正常建立的过程中被关闭造成
     
 
 ## 部署

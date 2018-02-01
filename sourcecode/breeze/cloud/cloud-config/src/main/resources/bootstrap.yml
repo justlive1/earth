@@ -10,7 +10,7 @@ spring:
     name: cloud-config
   profiles:
     active: native
-    
+  
   cloud:
     config:
       server:
