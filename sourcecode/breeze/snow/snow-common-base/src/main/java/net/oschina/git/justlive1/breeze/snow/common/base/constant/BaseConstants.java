@@ -8,6 +8,8 @@ package net.oschina.git.justlive1.breeze.snow.common.base.constant;
  */
 public interface BaseConstants {
 
+    // common
+
     /**
      * 验证web启动key
      */
@@ -22,6 +24,18 @@ public interface BaseConstants {
      * 返回实体message属性字段
      */
     String RESP_MESSAGE_FIELD = "message";
+    
+    /**
+     * 所有路径匹配
+     */
+    String ANY_PATH = "/*";
+
+    /**
+     *  根目录
+     */
+    String ROOT_PATH = "/";
+
+    // 正则
 
     /**
      * Email校验正则
@@ -37,4 +51,23 @@ public interface BaseConstants {
      * 二代身份证校验正则
      */
     String REGEX_IDCARD2ND = "";
+
+    // mvc相关
+
+    /**
+     * csrf默认名称
+     */
+    String CSRF_COOKIE_NAME = "XSRF-TOKEN";
+
+    /**
+     * csrf参数名称
+     */
+    String CSRF_PARAMETER_NAME = "_csrf";
+
+    /**
+     * csrf http Header 名称
+     */
+    String CSRF_HEADER_NAME = "X-XSRF-TOKEN";
+
+    
 }

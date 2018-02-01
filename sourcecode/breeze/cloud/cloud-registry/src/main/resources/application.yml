@@ -11,6 +11,12 @@ earth:
 spring:
   application:
     name: registry
+    
+  boot:
+    admin:
+      url: http://cloud.earth.com:10000
+      username: mgmt
+      password: mgmt-security
 
 eureka:
   server:
@@ -22,3 +28,4 @@ eureka:
     fetchRegistry: false
     serviceUrl:
       defaultZone: http://${eureka.instance.hostname}:${server.port}${earth.registry.path:/eureka}/
+      

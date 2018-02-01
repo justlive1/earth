@@ -17,7 +17,7 @@ import de.codecentric.boot.admin.notify.RemindingNotifier;
 import de.codecentric.boot.admin.notify.filter.FilteringNotifier;
 
 @Configuration
-@ConditionalOnProperty(name = "spring.boot.admin.notify.reminder.enable", havingValue = "true")
+@ConditionalOnProperty(name = "spring.boot.admin.notify.reminder.enabled", havingValue = "true")
 @ConditionalOnBean(Notifier.class)
 @EnableScheduling
 public class NotifierConf {

@@ -11,7 +11,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.8.RELEASE</version>
+		<version>1.5.9.RELEASE</version>
 		<relativePath />
 	</parent>
 
@@ -28,7 +28,7 @@
 
 		<cas.version>5.2.0</cas.version>
 		<cas.client.version>3.4.1</cas.client.version>
-		<springboot.version>1.5.8.RELEASE</springboot.version>
+		<springboot.version>1.5.9.RELEASE</springboot.version>
 		<mybatis-springboot-start.version>1.1.1</mybatis-springboot-start.version>
 		<spring.version>5.0.2.RELEASE</spring.version>
 		<spring-security.version>5.0.0.RELEASE</spring-security.version>
@@ -112,6 +112,12 @@
 
 			<!-- self -->
 			<dependency>
+				<groupId>net.oschina.git.justlive1.breeze.snow</groupId>
+				<artifactId>snow-common-base</artifactId>
+				<version>${snow.version}</version>
+			</dependency>
+
+			<dependency>
 				<groupId>net.oschina.git.justlive1.breeze.cloud</groupId>
 				<artifactId>cloud-admin-client</artifactId>
 				<version>${project.version}</version>
@@ -164,6 +170,24 @@
 			<dependency>
 				<groupId>de.codecentric</groupId>
 				<artifactId>spring-boot-admin-server-ui-hystrix</artifactId>
+				<version>${spring-boot-admin.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>de.codecentric</groupId>
+				<artifactId>spring-boot-admin-server-ui-turbine</artifactId>
+				<version>${spring-boot-admin.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>de.codecentric</groupId>
+				<artifactId>spring-boot-admin-server-ui-activiti</artifactId>
+				<version>${spring-boot-admin.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>de.codecentric</groupId>
+				<artifactId>spring-boot-admin-server-ui-login</artifactId>
 				<version>${spring-boot-admin.version}</version>
 			</dependency>
 

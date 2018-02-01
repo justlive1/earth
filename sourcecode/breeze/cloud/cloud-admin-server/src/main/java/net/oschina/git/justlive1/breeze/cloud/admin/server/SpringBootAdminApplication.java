@@ -1,8 +1,10 @@
 package net.oschina.git.justlive1.breeze.cloud.admin.server;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.actuate.autoconfigure.ManagementWebSecurityAutoConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration;
 
 import de.codecentric.boot.admin.config.EnableAdminServer;
 
@@ -12,7 +14,7 @@ import de.codecentric.boot.admin.config.EnableAdminServer;
  * @author wubo
  *
  */
-@EnableAutoConfiguration
+@EnableAutoConfiguration(exclude = { SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class })
 @EnableAdminServer
 @SpringBootApplication
 public class SpringBootAdminApplication {
