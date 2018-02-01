@@ -9,7 +9,7 @@ spring:
   application:
     name: cloud-config
   profiles:
-    active: native
+    active: native,security
   
   cloud:
     config:
@@ -26,6 +26,7 @@ spring:
         encrypt:
           enabled: true
           
+
 encrypt:
   keyStore:
     location: classpath:/configServer.jks
@@ -33,9 +34,6 @@ encrypt:
     alias: config.earth.com
     secret: justlive1
     
-management:
-  security:
-    enabled: false
 
 eureka:
   instance:
@@ -45,3 +43,29 @@ eureka:
     serviceUrl:
       defaultZone: http://registry.earth.com:12000/registry/
       
+---
+spring:
+  profiles: insecurity
+
+management:
+  security:
+    enabled: false
+
+
+---
+spring:
+  profiles: security
+  boot:
+    auth: 
+      enabled: true
+
+eureka:
+  instance:
+    metadataMap:
+      user.name: ${security.user.name}
+      user.password: ${security.user.password}
+      
+security:
+  user:
+    name: mgmt
+    password: mgmt-security

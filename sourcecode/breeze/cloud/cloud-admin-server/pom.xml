@@ -17,7 +17,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>4.3.13.RELEASE</spring.version>
-        <spring-security.version>4.2.3.RELEASE</spring-security.version>
+		<spring-security.version>4.2.3.RELEASE</spring-security.version>
 	</properties>
 
 	<dependencies>
@@ -28,13 +28,13 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-mail</artifactId>
+			<groupId>net.oschina.git.justlive1.breeze.cloud</groupId>
+			<artifactId>cloud-security-support</artifactId>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
+			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 
 		<dependency>
@@ -60,11 +60,6 @@
 		<dependency>
 			<groupId>de.codecentric</groupId>
 			<artifactId>spring-boot-admin-server-ui-activiti</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>de.codecentric</groupId>
-			<artifactId>spring-boot-admin-server-ui-login</artifactId>
 		</dependency>
 
 		<dependency>

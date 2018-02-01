@@ -17,7 +17,7 @@ import de.codecentric.boot.admin.config.EnableAdminServer;
  *
  */
 @Configuration
-@ComponentScan(basePackages = "net.oschina.git.justlive1.breeze.cloud.admin.server.conf")
+@ComponentScan(basePackages = "net.oschina.git.justlive1.breeze")
 @EnableAutoConfiguration(exclude = { SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class })
 @EnableDiscoveryClient
 @EnableAdminServer

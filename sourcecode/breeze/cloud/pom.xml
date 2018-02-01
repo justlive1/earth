@@ -140,6 +140,12 @@
 				<artifactId>cloud-registry-client-eureka</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+			
+			<dependency>
+                <groupId>net.oschina.git.justlive1.breeze.cloud</groupId>
+                <artifactId>cloud-security-support</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
@@ -214,12 +220,13 @@
 	</dependencyManagement>
 
 	<modules>
-		<module>cloud-admin-server</module>
 		<module>cloud-admin-client</module>
+		<module>cloud-admin-server</module>
+		<module>cloud-admin-server-eureka</module>
 		<module>cloud-config</module>
 		<module>cloud-registry</module>
 		<module>cloud-registry-client</module>
 		<module>cloud-registry-client-eureka</module>
-		<module>cloud-admin-server-eureka</module>
+		<module>cloud-security-support</module>
 	</modules>
 </project>

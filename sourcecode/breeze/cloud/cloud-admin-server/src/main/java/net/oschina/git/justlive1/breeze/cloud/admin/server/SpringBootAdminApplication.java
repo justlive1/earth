@@ -16,7 +16,7 @@ import de.codecentric.boot.admin.config.EnableAdminServer;
  */
 @EnableAutoConfiguration(exclude = { SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class })
 @EnableAdminServer
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "net.oschina.git.justlive1.breeze")
 public class SpringBootAdminApplication {
 
     public static void main(String[] args) {
