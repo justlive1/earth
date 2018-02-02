@@ -8,3 +8,18 @@ eureka:
       enabled: true
     serviceUrl:
       defaultZone: http://registry.earth.com:12000/registry
+      
+      
+endpoints:
+  auditevents:
+    enabled: true
+  mappings: 
+    enabled: true
+  metrics:
+    enabled: true
+  trace:
+    enabled: true
+  heapdump:
+    enabled: true
+  env: 
+    enabled: true

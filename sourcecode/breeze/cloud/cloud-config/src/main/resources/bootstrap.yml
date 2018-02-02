@@ -26,6 +26,19 @@ spring:
         encrypt:
           enabled: true
           
+endpoints:
+  auditevents:
+    enabled: true
+  mappings: 
+    enabled: true
+  metrics:
+    enabled: true
+  trace:
+    enabled: true
+  heapdump:
+    enabled: true
+  env: 
+    enabled: true
 
 encrypt:
   keyStore:
@@ -68,4 +81,4 @@ eureka:
 security:
   user:
     name: mgmt
-    password: mgmt-security
+    password: '{cipher}AQBQR4vC5CdveuOGvX9H+2cyWKLqa6Cnndn/5rchqYukA1qVd3ET07qv4qjsyFQVH1sTzpOXUMpqYVl2T0GWE4w0Hbb+AFduEPl09+eGgOcuc7UyyU7cuMoN5aWo+gQAoETxLRbq2uOoyblGl8HBGx6HEVxPpgcFWaddpcFGLX8TZ1Hi5P/QobRPKHPQKTkQwLF0BPln+HiYFhNE3jdnhZzZ8DJW0ruRKh4f7pTAm8yBctfrCa9IipXMwrpoEhTuD9cRQbBQMDFjVEa0H7/s26TOI4aESmbK6NuMMmuuugVBI9EUTjblR96OHN8B9X8P28OF5av8wdqlJdN2qOfWWqOaFwatWq0tCvDm2hFvKM/IjkJjXb6egUDKZggzo34ACA0='
