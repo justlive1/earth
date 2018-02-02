@@ -140,12 +140,12 @@
 				<artifactId>cloud-registry-client-eureka</artifactId>
 				<version>${project.version}</version>
 			</dependency>
-			
+
 			<dependency>
-                <groupId>net.oschina.git.justlive1.breeze.cloud</groupId>
-                <artifactId>cloud-security-support</artifactId>
-                <version>${project.version}</version>
-            </dependency>
+				<groupId>net.oschina.git.justlive1.breeze.cloud</groupId>
+				<artifactId>cloud-security-support</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
