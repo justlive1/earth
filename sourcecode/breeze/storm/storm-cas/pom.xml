@@ -19,6 +19,8 @@
 		<!-- app.server could be -jetty, -undertow, -tomcat, or blank if you plan 
 			to provide appserver -->
 		<app.server>-tomcat</app.server>
+		<spring.version>4.3.12.RELEASE</spring.version>
+		<spring-security.version>4.2.3.RELEASE</spring-security.version>
 
 		<mainClassName>org.springframework.boot.loader.WarLauncher</mainClassName>
 		<isExecutable>false</isExecutable>
@@ -156,6 +158,7 @@
 					<execution>
 						<goals>
 							<goal>repackage</goal>
+							<goal>build-info</goal>
 						</goals>
 					</execution>
 				</executions>

@@ -10,6 +10,7 @@
         <Property name="cas.log.dir" >logs</Property>
         <!-- To see more CAS specific logging, adjust this property to info or debug or run server with -Dcas.log.leve=debug -->
         <Property name="cas.log.level" >debug</Property>
+        <Property name="spring.log.level" >debug</Property>
     </Properties>
     <Appenders>
         <Console name="console" target="SYSTEM_OUT">
@@ -63,23 +64,24 @@
         <AsyncLogger name="org.apereo" level="${sys:cas.log.level}" includeLocation="true"/>
         <AsyncLogger name="org.apereo.services.persondir" level="${sys:cas.log.level}" includeLocation="true"/>
         <AsyncLogger name="org.apereo.cas.web.flow" level="info" includeLocation="true"/>
-        <AsyncLogger name="org.apache" level="warn" />
+        <AsyncLogger name="org.apache" level="${cas.log.level}" />
         <AsyncLogger name="org.apache.http" level="error" />
         <AsyncLogger name="org.springframework" level="warn" />
-        <AsyncLogger name="org.springframework.cloud" level="debug" />
+        <AsyncLogger name="org.springframework.cloud" level="${spring.log.level}" />
         <AsyncLogger name="org.springframework.aop" level="warn" />
-        <AsyncLogger name="org.springframework.boot" level="warn" />
-        <AsyncLogger name="org.springframework.boot.actuate.autoconfigure" level="warn" />
+        <AsyncLogger name="org.springframework.boot" level="${spring.log.level}" />
+        <AsyncLogger name="org.springframework.boot.actuate.autoconfigure" level="${spring.log.level}" />
         <AsyncLogger name="org.springframework.webflow" level="warn" />
         <AsyncLogger name="org.springframework.session" level="warn" />
-        <AsyncLogger name="org.springframework.amqp" level="error" />
+        <AsyncLogger name="org.springframework.amqp" level="warn" />
         <AsyncLogger name="org.springframework.integration" level="warn" />
+        <AsyncLogger name="org.springframework.web.socket" level="warn" />
         <AsyncLogger name="org.springframework.messaging" level="warn" />
-        <AsyncLogger name="org.springframework.web" level="warn" />
+        <AsyncLogger name="org.springframework.web" level="${spring.log.level}" />
         <AsyncLogger name="org.springframework.orm.jpa" level="warn" />
         <AsyncLogger name="org.springframework.scheduling" level="warn" />
-        <AsyncLogger name="org.springframework.context.annotation" level="error" />
-        <AsyncLogger name="org.springframework.boot.devtools" level="error" />
+        <AsyncLogger name="org.springframework.context.annotation" level="warn" />
+        <AsyncLogger name="org.springframework.boot.devtools" level="${spring.log.level}" />
         <AsyncLogger name="org.springframework.web.socket" level="warn" />
         <AsyncLogger name="org.thymeleaf" level="warn" />
         <AsyncLogger name="org.pac4j" level="warn" />
@@ -91,7 +93,7 @@
         <AsyncLogger name="org.openid4java" level="warn" />
         <AsyncLogger name="org.ldaptive" level="warn" />
         <AsyncLogger name="com.hazelcast" level="warn" />
-        <AsyncLogger name="org.apereo.spring" level="warn" />
+        <AsyncLogger name="org.apereo.spring" level="${spring.log.level}" />
         
         <AsyncLogger name="springfox.documentation" level="error" />
         <AsyncLogger name="org.hibernate.validator" level="error" />
@@ -110,7 +112,7 @@
         </AsyncLogger>
 
         <!-- All Loggers inherit appenders specified here, unless additivity="false" on the Logger -->
-        <AsyncRoot level="debug">
+        <AsyncRoot level="${cas.log.level}">
             <AppenderRef ref="casFile"/>
             <!-- 
                  For deployment to an application server running as service, 
