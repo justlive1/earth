@@ -9,9 +9,9 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>cloud-registry-eureka</artifactId>
+	<artifactId>cloud-registry-server-eureka</artifactId>
 
-	<name>cloud-registry-eureka</name>
+	<name>cloud-registry-server-eureka</name>
 	<url>https://gitee.com/justlive1/earth</url>
 
 	<properties>
