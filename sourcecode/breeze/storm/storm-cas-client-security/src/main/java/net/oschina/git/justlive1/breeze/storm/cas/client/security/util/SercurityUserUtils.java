@@ -11,6 +11,9 @@ import org.springframework.security.core.userdetails.User;
  */
 public class SercurityUserUtils {
 
+    private SercurityUserUtils() {
+    }
+
     /**
      * 获取当前登陆用户
      * 

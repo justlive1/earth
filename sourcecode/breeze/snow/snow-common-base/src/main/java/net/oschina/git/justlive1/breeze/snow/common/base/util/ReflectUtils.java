@@ -13,6 +13,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 
+import net.oschina.git.justlive1.breeze.snow.common.base.exception.Exceptions;
+
 /**
  * 反射相关工具类
  * 
@@ -20,6 +22,12 @@ import java.util.HashMap;
  *
  */
 public class ReflectUtils {
+
+    public static final String MODULE_VALID = "REFLECT";
+    public static final String INVAID_CLASS = "-10000";
+
+    private ReflectUtils() {
+    }
 
     /**
      * 获取class
@@ -32,20 +40,18 @@ public class ReflectUtils {
         ClassLoader threadContextClassLoader = Thread.currentThread().getContextClassLoader();
         try {
             if (threadContextClassLoader != null) {
-                try {
-                    clazz = threadContextClassLoader.loadClass(className);
-                } catch (ClassNotFoundException e) {// NOSONOR
-                }
+                clazz = threadContextClassLoader.loadClass(className);
             }
 
             if (clazz == null) {
                 clazz = ReflectUtils.class.getClassLoader().loadClass(className);
             }
-        } catch (ClassNotFoundException e) {// NOSONOR
+        } catch (ClassNotFoundException e) {
+            // NOSONAR
         }
 
         if (clazz == null) {
-            throw new RuntimeException("Failed to load driver class " + className
+            throw Exceptions.fail(INVAID_CLASS, "Failed to load driver class " + className
                     + " in either of DataSourceUtils class loader or Thread context classloader");
         }
 
@@ -65,7 +71,7 @@ public class ReflectUtils {
         try {
             return (T) newInstance(clazz);
         } catch (Exception e) {
-            throw new RuntimeException("Failed to instantiate class " + className, e);
+            throw Exceptions.wrap(e, INVAID_CLASS, "Failed to instantiate class " + className);
         }
 
     }
@@ -128,7 +134,7 @@ public class ReflectUtils {
         try {
             return field.get(object);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw Exceptions.wrap(e);
         }
     }
 
@@ -198,7 +204,7 @@ public class ReflectUtils {
             in.close();
             return clone;
         } catch (Exception ex) {
-            throw new RuntimeException(ex);
+            throw Exceptions.wrap(ex);
         }
     }
 
@@ -252,7 +258,7 @@ public class ReflectUtils {
         try {
             return clazz.newInstance();
         } catch (Exception e) {
-            throw new RuntimeException("Can NOT instance new object for class [" + clazz + "]", e);
+            throw Exceptions.wrap(e, INVAID_CLASS, "Can NOT instance new object for class [" + clazz + "]");
         }
     }
 

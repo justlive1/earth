@@ -10,6 +10,9 @@ import org.jasig.cas.client.util.AssertionHolder;
  */
 public class CasUserUtils {
 
+    private CasUserUtils() {
+    }
+
     /**
      * 获取当前登陆用户名
      * 

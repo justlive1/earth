@@ -30,14 +30,6 @@ public class ErrorCode implements Serializable {
      */
     private String message;
 
-    @Override
-    public String toString() {
-        if (this.module == null) {
-            return this.code;
-        }
-        return this.module + "." + this.code;
-    }
-
     protected ErrorCode(String module, String code) {
         this.module = module;
         this.code = code;
@@ -47,5 +39,13 @@ public class ErrorCode implements Serializable {
         this.module = module;
         this.code = code;
         this.message = message;
+    }
+
+    @Override
+    public String toString() {
+        if (this.module == null) {
+            return this.code;
+        }
+        return this.module + "." + this.code;
     }
 }

@@ -37,7 +37,7 @@ public class Response<T> {
      * @return
      */
     public static <E> Response<E> success(E data) {
-        Response<E> resp = new Response<E>();
+        Response<E> resp = new Response<>();
         resp.setData(data);
         resp.setCode(SUCCESS);
         return resp;

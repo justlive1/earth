@@ -3,6 +3,7 @@ package net.oschina.git.justlive1.breeze.snow.common.web.controller;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Properties;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -70,7 +71,7 @@ public class CommonWebController {
      * @return
      */
     @GetMapping(value = "/systemProperties", produces = "application/json; charset=UTF-8")
-    public Response<?> systemProperties() {
+    public Response<Properties> systemProperties() {
         return Response.success(System.getProperties());
     }
 }

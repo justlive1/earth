@@ -11,6 +11,23 @@ package net.oschina.git.justlive1.breeze.snow.common.base.exception;
 public class Exceptions {
 
     /**
+     * 抛出unchecked异常
+     * 
+     * @param e
+     */
+    public static CodedException wrap(Throwable e) {
+        return new CodedException(e, null);
+    }
+
+    public static CodedException wrap(Throwable e, String code, String message) {
+        return new CodedException(e, errorMessage(null, code, message));
+    }
+
+    public static CodedException wrap(Throwable e, ErrorCode errorCode, Object... arguments) {
+        return new CodedException(e, errorCode, arguments);
+    }
+
+    /**
      * 创建ErrorCode
      * 
      * @param module

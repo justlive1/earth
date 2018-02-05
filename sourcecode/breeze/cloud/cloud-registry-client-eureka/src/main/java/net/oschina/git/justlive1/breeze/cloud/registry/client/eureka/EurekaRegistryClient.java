@@ -18,6 +18,7 @@ import com.netflix.discovery.EurekaClient;
 
 import lombok.extern.slf4j.Slf4j;
 import net.oschina.git.justlive1.breeze.cloud.registry.client.BaseRegistryClient;
+import net.oschina.git.justlive1.breeze.snow.common.base.exception.Exceptions;
 
 /**
  * Eureka服务注册client实现
@@ -43,7 +44,7 @@ public class EurekaRegistryClient extends BaseRegistryClient {
         try {
             ConfigurationManager.loadPropertiesFromResources(configPath);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw Exceptions.wrap(e);
         }
 
         RegistryInstanceConfig instanceConfig = new RegistryInstanceConfig();
@@ -75,7 +76,7 @@ public class EurekaRegistryClient extends BaseRegistryClient {
             try {
                 nextServerInfo = eurekaClient.getNextServerFromEureka(instanceConfig.getVipAddress(), false);
             } catch (Throwable e) {
-
+                // NOSONAR
                 log.info("Waiting ... verifying service registration with eureka ...");
                 try {
                     TimeUnit.SECONDS.sleep(5);
@@ -89,7 +90,7 @@ public class EurekaRegistryClient extends BaseRegistryClient {
 
     @Override
     protected void doStart() {
-
+        // Nothing
     }
 
     @Override

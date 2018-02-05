@@ -56,7 +56,7 @@ public abstract class BaseService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
 
-        return new HttpEntity<T>(request, headers);
+        return new HttpEntity<>(request, headers);
     }
 
     /**
@@ -74,7 +74,7 @@ public abstract class BaseService {
             return new HttpEntity<>(request, headers);
         }
 
-        final MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+        final MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 
         Map<?, ?> map;
         if (request instanceof Map) {
@@ -85,7 +85,7 @@ public abstract class BaseService {
 
         map.forEach((k, v) -> params.add(k.toString(), v.toString()));
 
-        return new HttpEntity<MultiValueMap<String, String>>(params, headers);
+        return new HttpEntity<>(params, headers);
     }
 
     /**

@@ -6,6 +6,7 @@ import java.util.Properties;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
+import net.oschina.git.justlive1.breeze.snow.common.base.exception.Exceptions;
 import net.oschina.git.justlive1.breeze.snow.common.base.util.PlaceHolderHelper;
 
 /**
@@ -35,7 +36,7 @@ public class PropertiesWrapper {
             this.props = props.getObject();
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw Exceptions.wrap(e);
         }
     }
 

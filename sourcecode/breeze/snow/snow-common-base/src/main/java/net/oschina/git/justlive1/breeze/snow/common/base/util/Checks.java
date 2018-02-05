@@ -22,6 +22,9 @@ public class Checks {
     public static final String INVAID_EMAIL = "-00002";
     public static final String INVAID_IDCARD = "-00003";
 
+    private Checks() {
+    }
+
     /**
      * 非空检查
      */
@@ -85,15 +88,15 @@ public class Checks {
      * @param idCard
      *            居民身份证号码18位，最后一位可能是数字或字母
      */
-    public static void IdCard2nd(String idCard) {
+    public static void idCard2nd(String idCard) {
         idCard(idCard, "idcard is invalid");
     }
 
-    public static void IdCard2nd(String idCard, String msg) {
+    public static void idCard2nd(String idCard, String msg) {
         idCard(idCard, errorMessage(MODULE_VALID, INVAID_IDCARD, msg));
     }
 
-    public static void IdCard2nd(String idCard, ErrorCode errCode, Object... params) {
+    public static void idCard2nd(String idCard, ErrorCode errCode, Object... params) {
         if (!Pattern.matches(REGEX_IDCARD2ND, idCard)) {
             throw Exceptions.fail(errCode, params);
         }

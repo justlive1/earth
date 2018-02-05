@@ -9,6 +9,7 @@ import org.springframework.util.ReflectionUtils;
 
 import com.google.common.collect.Maps;
 
+import net.oschina.git.justlive1.breeze.snow.common.base.exception.Exceptions;
 import net.oschina.git.justlive1.breeze.snow.common.base.util.ReflectUtils;
 
 /**
@@ -23,6 +24,9 @@ public class UserUtils {
     private static final String SECURITY_USERUTILS_CLASS = "git.oschina.net.justlive1.breeze.storm.cas.client.security.util.SercurityUserUtils";
 
     private static final Map<String, Method> CACHE_MAP = Maps.newHashMap();
+
+    private UserUtils() {
+    }
 
     /**
      * 获取当前登陆用户名
@@ -62,7 +66,7 @@ public class UserUtils {
         try {
             return (T) method.invoke(obj, args);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            throw new RuntimeException(e);
+            throw Exceptions.wrap(e);
         }
     }
 
