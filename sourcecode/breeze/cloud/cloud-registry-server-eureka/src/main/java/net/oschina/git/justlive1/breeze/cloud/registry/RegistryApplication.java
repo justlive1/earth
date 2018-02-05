@@ -4,7 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.actuate.autoconfigure.ManagementWebSecurityAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration;
 import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
  * @author wubo
  *
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "net.oschina.git.justlive1.breeze", exclude = {
+        SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class })
 @EnableEurekaServer
 @Controller
 @RequestMapping

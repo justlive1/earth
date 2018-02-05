@@ -24,7 +24,7 @@
 
 		<dependency>
 			<groupId>net.oschina.git.justlive1.breeze.cloud</groupId>
-			<artifactId>cloud-admin-client</artifactId>
+			<artifactId>cloud-security-support</artifactId>
 		</dependency>
 
 		<dependency>
