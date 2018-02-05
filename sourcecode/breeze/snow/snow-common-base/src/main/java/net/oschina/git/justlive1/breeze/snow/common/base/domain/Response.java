@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Response<T> {
 
-    public static final String SUCCESS = "00000";
+    public static final String SUCC = "00000";
     public static final String FAIL = "-99999";
     /**
      * 返回结果编码
@@ -39,7 +39,7 @@ public class Response<T> {
     public static <E> Response<E> success(E data) {
         Response<E> resp = new Response<>();
         resp.setData(data);
-        resp.setCode(SUCCESS);
+        resp.setCode(SUCC);
         return resp;
     }
 
@@ -61,6 +61,6 @@ public class Response<T> {
      * @return
      */
     public boolean isSuccess() {
-        return SUCCESS.equals(code);
+        return SUCC.equals(code);
     }
 }

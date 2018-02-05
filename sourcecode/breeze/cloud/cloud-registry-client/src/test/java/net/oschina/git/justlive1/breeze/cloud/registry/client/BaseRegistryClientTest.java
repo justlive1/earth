@@ -41,7 +41,7 @@ public class BaseRegistryClientTest {
                 try {
                     latch.await();
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    Thread.currentThread().interrupt();
                 }
                 client.register();
                 client.start();
@@ -61,7 +61,7 @@ public class BaseRegistryClientTest {
 
     static class ExampleRegistryClient extends BaseRegistryClient {
 
-        public AtomicInteger count = new AtomicInteger(0);
+        private AtomicInteger count = new AtomicInteger(0);
 
         @Override
         protected void doRegister() {

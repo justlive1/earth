@@ -6,6 +6,7 @@ package net.oschina.git.justlive1.breeze.cloud.registry.client;
  * @author wubo
  *
  */
+@FunctionalInterface
 public interface RegistryHandler {
 
     /**

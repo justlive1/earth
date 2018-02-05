@@ -63,7 +63,7 @@ public class EurekaRegistryClient extends BaseRegistryClient {
         try {
             TimeUnit.SECONDS.sleep(2);
         } catch (InterruptedException e) {
-            // Nothing
+            Thread.currentThread().interrupt();
         }
 
         log.info("Done sleeping, now changing status to UP");
@@ -75,13 +75,13 @@ public class EurekaRegistryClient extends BaseRegistryClient {
         while (nextServerInfo == null) {
             try {
                 nextServerInfo = eurekaClient.getNextServerFromEureka(instanceConfig.getVipAddress(), false);
-            } catch (Throwable e) {
-                // NOSONAR
+            } catch (Exception e) {
+
                 log.info("Waiting ... verifying service registration with eureka ...");
                 try {
                     TimeUnit.SECONDS.sleep(5);
                 } catch (InterruptedException e1) {
-                    // Nothing
+                    Thread.currentThread().interrupt();
                 }
             }
         }

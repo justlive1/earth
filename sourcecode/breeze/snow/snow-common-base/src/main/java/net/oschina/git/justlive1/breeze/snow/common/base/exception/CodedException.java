@@ -1,5 +1,7 @@
 package net.oschina.git.justlive1.breeze.snow.common.base.exception;
 
+import java.util.Arrays;
+
 import lombok.Getter;
 
 /**
@@ -21,7 +23,7 @@ public class CodedException extends RuntimeException {
     /**
      * 异常发生时的参数信息
      */
-    private final Object[] args;
+    private transient final Object[] args;
 
     protected CodedException(Throwable throwable, ErrorCode errorCode, Object... arguments) {
         super(throwable);
@@ -33,5 +35,13 @@ public class CodedException extends RuntimeException {
         super(errorCode.getMessage());
         this.errorCode = errorCode;
         this.args = arguments;
+    }
+
+    @Override
+    public String toString() {
+        if (args == null || args.length == 0) {
+            return errorCode.toString();
+        }
+        return errorCode.toString() + ":" + Arrays.toString(args);
     }
 }

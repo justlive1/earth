@@ -59,7 +59,7 @@ public class Exceptions {
      * @return
      */
     public static CodedException fail(ErrorCode errCode, Object... params) {
-        return new NoStackCodedException(errCode, params);
+        return new NoStackException(errCode, params);
     }
 
     public static CodedException fail(String code, String message, Object... params) {

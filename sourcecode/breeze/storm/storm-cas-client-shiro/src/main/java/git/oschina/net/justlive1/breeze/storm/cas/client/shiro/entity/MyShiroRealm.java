@@ -15,6 +15,8 @@ import org.apache.shiro.cas.CasRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.google.common.base.Strings;
+
 import net.oschina.git.justlive1.breeze.snow.common.web.base.ConfigProperties;
 
 /**
@@ -49,7 +51,7 @@ public class MyShiroRealm extends CasRealm {
 			throws AuthenticationException {
 		UsernamePasswordToken token = (UsernamePasswordToken) paramAuthenticationToken;
 		// TODO
-		if (token.getUsername().equals("")) {
+		if (Strings.isNullOrEmpty(token.getUsername())) {
 			return new SimpleAuthenticationInfo("", "", getName());
 		} else {
 			throw new AuthenticationException();

@@ -13,6 +13,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 
+import lombok.extern.slf4j.Slf4j;
 import net.oschina.git.justlive1.breeze.snow.common.base.exception.Exceptions;
 
 /**
@@ -21,6 +22,7 @@ import net.oschina.git.justlive1.breeze.snow.common.base.exception.Exceptions;
  * @author wubo
  *
  */
+@Slf4j
 public class ReflectUtils {
 
     public static final String MODULE_VALID = "REFLECT";
@@ -38,16 +40,20 @@ public class ReflectUtils {
     public static Class<?> forName(String className) {
         Class<?> clazz = null;
         ClassLoader threadContextClassLoader = Thread.currentThread().getContextClassLoader();
-        try {
-            if (threadContextClassLoader != null) {
+        if (threadContextClassLoader != null) {
+            try {
                 clazz = threadContextClassLoader.loadClass(className);
+            } catch (ClassNotFoundException e) {
+                log.warn(e.getMessage(), e);
             }
+        }
 
-            if (clazz == null) {
+        if (clazz == null) {
+            try {
                 clazz = ReflectUtils.class.getClassLoader().loadClass(className);
+            } catch (ClassNotFoundException e) {
+                log.warn(e.getMessage(), e);
             }
-        } catch (ClassNotFoundException e) {
-            // NOSONAR
         }
 
         if (clazz == null) {
@@ -241,7 +247,7 @@ public class ReflectUtils {
             return (T) new Double(0.0);
         }
         if (clazz == Boolean.class) {
-            return (T) new Boolean(false);
+            return (T) Boolean.FALSE;
         }
         if (clazz == BigDecimal.class) {
             return (T) new BigDecimal(0);
@@ -303,17 +309,22 @@ public class ReflectUtils {
     }
 
     public static Field[] getInheritanceDeclaredFields(Class<?> clazz) {
-        Collection<Field> fds = new ArrayList<Field>();
+        Collection<Field> fds = new ArrayList<>();
+        Class<?> local = clazz;
         while (true) {
-            if (clazz.isPrimitive() || clazz.equals(Object.class)) {
+            if (local.isPrimitive() || local == Object.class) {
                 break;
             }
-            Collections.addAll(fds, clazz.getDeclaredFields());
-            clazz = clazz.getSuperclass();
+            Collections.addAll(fds, local.getDeclaredFields());
+            local = local.getSuperclass();
         }
         Field[] ret = new Field[fds.size()];
         fds.toArray(ret);
         fds.clear();
         return ret;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(long.class.isPrimitive());
     }
 }

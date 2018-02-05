@@ -28,12 +28,12 @@ public class PropertiesWrapper {
         try {
 
             PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-            PropertiesFactoryBean props = new PropertiesFactoryBean();
-            props.setLocations(resolver.getResources(path));
-            props.setIgnoreResourceNotFound(true);
-            props.setFileEncoding("utf-8");
-            props.afterPropertiesSet();
-            this.props = props.getObject();
+            PropertiesFactoryBean factory = new PropertiesFactoryBean();
+            factory.setLocations(resolver.getResources(path));
+            factory.setIgnoreResourceNotFound(true);
+            factory.setFileEncoding("utf-8");
+            factory.afterPropertiesSet();
+            this.props = factory.getObject();
 
         } catch (IOException e) {
             throw Exceptions.wrap(e);

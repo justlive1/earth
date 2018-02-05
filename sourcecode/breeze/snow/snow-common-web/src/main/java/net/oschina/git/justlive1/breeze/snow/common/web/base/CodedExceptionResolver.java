@@ -19,7 +19,7 @@ import com.google.common.collect.Maps;
 
 import net.oschina.git.justlive1.breeze.snow.common.base.constant.BaseConstants;
 import net.oschina.git.justlive1.breeze.snow.common.base.exception.CodedException;
-import net.oschina.git.justlive1.breeze.snow.common.base.exception.NoStackCodedException;
+import net.oschina.git.justlive1.breeze.snow.common.base.exception.NoStackException;
 
 /**
  * CodedException统一处理<br>
@@ -69,16 +69,15 @@ public class CodedExceptionResolver extends SimpleMappingExceptionResolver {
         boolean isFault = true;
         if (CodedException.class.isInstance(ex)) {
             error = buildError((CodedException) ex);
-            if (NoStackCodedException.class.isInstance(ex)) {
+            if (NoStackException.class.isInstance(ex)) {
                 isFault = false;
             }
         } else {
             error = buildError(ex);
         }
 
-        // 记录日志 TODO
         if (isFault) {
-
+            // 记录日志 TODO
         }
 
         // 判断请求是否支持json格式数据返回
