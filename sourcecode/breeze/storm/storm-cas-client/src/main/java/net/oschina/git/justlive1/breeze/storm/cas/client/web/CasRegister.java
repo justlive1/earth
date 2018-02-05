@@ -72,7 +72,7 @@ public class CasRegister implements WebApplicationInitializer {
         ticket.setInitParameters(params);
         ticket.addMappingForUrlPatterns(null, true, ANY_PATH);
 
-        // 开启 AssertionHolder.getAssertion().getPrincipal().getName();
+        // 获取登录名
         ctx.addFilter(AssertionThreadLocalFilter.class.getName(), AssertionThreadLocalFilter.class)
                 .addMappingForUrlPatterns(null, true, ANY_PATH);
     }

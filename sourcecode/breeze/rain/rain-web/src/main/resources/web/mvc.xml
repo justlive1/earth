@@ -17,7 +17,7 @@
 		ignore-resource-not-found="true" />
 
 	<context:component-scan
-		base-package="git.oschina.net.justlive1.breeze.**.controller"></context:component-scan>
+		base-package="net.oschina.git.justlive1.breeze.**.controller"></context:component-scan>
 
 	<!-- i18n -->
 	<bean id="localeChangeInterceptor"

@@ -11,14 +11,17 @@ import javax.net.ssl.X509TrustManager;
 import net.oschina.git.justlive1.breeze.snow.common.base.exception.Exceptions;
 
 /**
- * 信任所有证书
+ * http工具类
  * 
  * @author wubo
  *
  */
-public abstract class AbstractTrustAllManager {
+public class HttpUtils {
 
-    static {
+    private HttpUtils() {
+    }
+
+    public static void trustAllManager() {
         // Create a trust manager that does not validate certificate chains
         TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
             @Override
@@ -46,4 +49,5 @@ public abstract class AbstractTrustAllManager {
             throw Exceptions.wrap(e);
         }
     }
+
 }

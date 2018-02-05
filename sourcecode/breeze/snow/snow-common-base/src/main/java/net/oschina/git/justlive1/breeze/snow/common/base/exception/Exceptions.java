@@ -10,6 +10,9 @@ package net.oschina.git.justlive1.breeze.snow.common.base.exception;
  */
 public class Exceptions {
 
+    private Exceptions() {
+    }
+
     /**
      * 抛出unchecked异常
      * 

@@ -31,7 +31,26 @@ import net.oschina.git.justlive1.breeze.snow.common.base.exception.Exceptions;
 @Component
 public class EurekaRegistryClient extends BaseRegistryClient {
 
-    private ApplicationInfoManager applicationInfoManager;
+    /**
+     * 命名空间
+     */
+    public static final String NAMESPACE = "earth.registry";
+
+    /**
+     * 是否使用ip替代hostname
+     */
+    public static final String PREFER_IP_ADDRESS = NAMESPACE + ".preferIpAddress";
+
+    /**
+     * virtual hostname
+     */
+    public static final String VIP_ADDRESS = NAMESPACE + ".vipAddress";
+
+    /**
+     * 是否开启
+     */
+    public static final String ENABLED = NAMESPACE + ".enabled";
+
     private EurekaClient eurekaClient;
 
     @Value("${earth.registry.configPath:config/application.properties}")
@@ -54,7 +73,7 @@ public class EurekaRegistryClient extends BaseRegistryClient {
         }
 
         InstanceInfo instanceInfo = new EurekaConfigBasedInstanceInfoProvider(instanceConfig).get();
-        applicationInfoManager = new ApplicationInfoManager(instanceConfig, instanceInfo);
+        ApplicationInfoManager applicationInfoManager = new ApplicationInfoManager(instanceConfig, instanceInfo);
         eurekaClient = new DiscoveryClient(applicationInfoManager, new RegistryClientConfig());
 
         log.info("Registering service to eureka with STARTING status");

@@ -84,9 +84,7 @@ public class PlaceHolderHelper {
     }
 
     protected String parseStringValue(String value, Properties properties, Set<String> visitedPlaceholders) {
-
         StringBuilder result = new StringBuilder(value);
-
         int startIndex = value.indexOf(this.placeholderPrefix);
         while (startIndex != -1) {
             int endIndex = findPlaceholderEndIndex(result, startIndex);
@@ -101,19 +99,9 @@ public class PlaceHolderHelper {
                 placeholder = parseStringValue(placeholder, properties, visitedPlaceholders);
                 // 获取没有占位的属性值
                 String propVal = properties.getProperty(placeholder);
-                if (propVal == null && this.valueSeparator != null) {
-                    int separatorIndex = placeholder.indexOf(this.valueSeparator);
-                    if (separatorIndex != -1) {
-                        String actualPlaceholder = placeholder.substring(0, separatorIndex);
-                        String defaultValue = placeholder.substring(separatorIndex + this.valueSeparator.length());
-                        propVal = properties.getProperty(actualPlaceholder);
-                        if (propVal == null) {
-                            propVal = defaultValue;
-                        }
-                    }
-                }
+                propVal = getCommonVal(properties, placeholder, propVal);
                 if (propVal != null) {
-                    // 递归 ${value:${value1}} 中的 ${value1}
+                    // 递归 表达式中含有表达式
                     propVal = parseStringValue(propVal, properties, visitedPlaceholders);
                     result.replace(startIndex, endIndex + this.placeholderSuffix.length(), propVal);
                     startIndex = result.indexOf(this.placeholderPrefix, startIndex + propVal.length());
@@ -129,8 +117,22 @@ public class PlaceHolderHelper {
                 startIndex = -1;
             }
         }
-
         return result.toString();
+    }
+
+    private String getCommonVal(Properties properties, String placeholder, String propVal) {
+        if (propVal == null && this.valueSeparator != null) {
+            int separatorIndex = placeholder.indexOf(this.valueSeparator);
+            if (separatorIndex != -1) {
+                String actualPlaceholder = placeholder.substring(0, separatorIndex);
+                String defaultValue = placeholder.substring(separatorIndex + this.valueSeparator.length());
+                propVal = properties.getProperty(actualPlaceholder);
+                if (propVal == null) {
+                    propVal = defaultValue;
+                }
+            }
+        }
+        return propVal;
     }
 
     private int findPlaceholderEndIndex(CharSequence buf, int startIndex) {

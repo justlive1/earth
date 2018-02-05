@@ -23,7 +23,7 @@ public class CodedException extends RuntimeException {
     /**
      * 异常发生时的参数信息
      */
-    private transient final Object[] args;
+    private final transient Object[] args;
 
     protected CodedException(Throwable throwable, ErrorCode errorCode, Object... arguments) {
         super(throwable);

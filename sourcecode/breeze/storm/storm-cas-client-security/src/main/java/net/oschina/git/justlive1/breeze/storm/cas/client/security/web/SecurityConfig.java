@@ -27,7 +27,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.jdbc.JdbcDaoImpl;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
-import net.oschina.git.justlive1.breeze.snow.common.base.util.AbstractTrustAllManager;
+import net.oschina.git.justlive1.breeze.snow.common.base.util.HttpUtils;
 import net.oschina.git.justlive1.breeze.snow.common.base.util.ReflectUtils;
 import net.oschina.git.justlive1.breeze.snow.common.web.base.ConfigProperties;
 import net.sf.ehcache.Cache;
@@ -39,7 +39,11 @@ import net.sf.ehcache.Cache;
  *
  */
 @Configuration
-public class SecurityConfig extends AbstractTrustAllManager {
+public class SecurityConfig {
+
+    static {
+        HttpUtils.trustAllManager();
+    }
 
     @Autowired
     ConfigProperties configProps;

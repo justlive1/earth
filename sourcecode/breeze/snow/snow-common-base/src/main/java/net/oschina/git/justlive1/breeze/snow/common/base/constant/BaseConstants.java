@@ -8,6 +8,9 @@ package net.oschina.git.justlive1.breeze.snow.common.base.constant;
  */
 public class BaseConstants {
 
+    private BaseConstants() {
+    }
+    
     // common
 
     /**

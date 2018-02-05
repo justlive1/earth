@@ -117,12 +117,8 @@ public class CodedExceptionResolver extends SimpleMappingExceptionResolver {
         }
 
         // 客户端声明支持JSon
-        if (accept.indexOf(MediaType.ALL_VALUE) >= 0 || accept.indexOf(APPLICATION_ALL) >= 0
-                || accept.indexOf(MediaType.APPLICATION_JSON_VALUE) >= 0) {
-            return true;
-        }
-
-        return false;
+        return accept.indexOf(MediaType.ALL_VALUE) >= 0 || accept.indexOf(APPLICATION_ALL) >= 0
+                || accept.indexOf(MediaType.APPLICATION_JSON_VALUE) >= 0;
     }
 
     /**

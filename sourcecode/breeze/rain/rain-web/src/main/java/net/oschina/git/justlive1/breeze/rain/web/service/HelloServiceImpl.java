@@ -38,9 +38,6 @@ public class HelloServiceImpl extends BaseService implements HelloService {
     @Override
     public List<String> world(List<String> world) {
 
-        int i = 0;
-        i = 10 / i;
-
         return this.postJsonForObject(serviceUrl + "/test/world", world);
     }
 

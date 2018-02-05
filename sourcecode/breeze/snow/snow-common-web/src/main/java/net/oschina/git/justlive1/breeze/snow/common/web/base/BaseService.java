@@ -65,7 +65,7 @@ public abstract class BaseService {
      * @param request
      * @return
      */
-    protected HttpEntity<?> buildFormEntity(Object request) {
+    protected HttpEntity<Object> buildFormEntity(Object request) {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);

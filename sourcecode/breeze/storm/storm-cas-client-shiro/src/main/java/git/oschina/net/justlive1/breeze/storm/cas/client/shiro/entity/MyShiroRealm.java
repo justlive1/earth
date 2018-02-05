@@ -23,7 +23,6 @@ import net.oschina.git.justlive1.breeze.snow.common.web.base.ConfigProperties;
  * @author liuwenlai
  *
  */
-@SuppressWarnings("deprecation")
 public class MyShiroRealm extends CasRealm {
 
 	@Autowired

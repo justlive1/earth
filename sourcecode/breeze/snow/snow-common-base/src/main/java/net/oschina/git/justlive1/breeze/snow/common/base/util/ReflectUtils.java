@@ -134,6 +134,9 @@ public class ReflectUtils {
     public static Object getValue(Object object, String propertyName) {
         Class<?> clazz = object.getClass();
         Field field = getDeclaredField(clazz, propertyName);
+        if (field == null) {
+            return null;
+        }
         if (!field.isAccessible()) {
             field.setAccessible(true);
         }
@@ -157,7 +160,7 @@ public class ReflectUtils {
      *             非法逻辑异常
      */
     public static void replaceNullProperty(Object persistentObject, Object newObject)
-            throws IllegalArgumentException, IllegalAccessException {
+            throws IllegalAccessException {
         Class<?> clazz = persistentObject.getClass();
         Field[] fields = getAllDeclaredFields(clazz);
         for (int i = 0; i < fields.length; i++) {
@@ -226,31 +229,31 @@ public class ReflectUtils {
     @SuppressWarnings("unchecked")
     public static <T> T newInstance(Class<T> clazz) {
         if (clazz == Integer.class) {
-            return (T) new Integer(0);
+            return (T) Integer.valueOf(0);
         }
         if (clazz == String.class) {
-            return (T) new String();
+            return (T) "";
         }
         if (clazz == Long.class) {
-            return (T) new Long(0L);
+            return (T) Long.valueOf(0);
         }
         if (clazz == Short.class) {
-            return (T) new Short((short) 0);
+            return (T) Short.valueOf((short) 0);
         }
         if (clazz == Byte.class) {
-            return (T) new Byte((byte) 0);
+            return (T) Byte.valueOf((byte) 0);
         }
         if (clazz == Float.class) {
-            return (T) new Float(0.0);
+            return (T) Float.valueOf(0.0f);
         }
         if (clazz == Double.class) {
-            return (T) new Double(0.0);
+            return (T) Double.valueOf(0);
         }
         if (clazz == Boolean.class) {
             return (T) Boolean.FALSE;
         }
         if (clazz == BigDecimal.class) {
-            return (T) new BigDecimal(0);
+            return (T) BigDecimal.ZERO;
         }
         if (clazz == java.sql.Date.class) {
             return (T) new java.sql.Date(System.currentTimeMillis());
@@ -266,46 +269,6 @@ public class ReflectUtils {
         } catch (Exception e) {
             throw Exceptions.wrap(e, INVAID_CLASS, "Can NOT instance new object for class [" + clazz + "]");
         }
-    }
-
-    /**
-     * clone一个新的对象。
-     * 
-     * @param <T>
-     *            需要创建的对象的类型
-     * @param ex
-     *            实例
-     * @return 返回clone的对象
-     */
-    @SuppressWarnings("unchecked")
-    public static <T> T clone(T ex) {
-        Class<T> clazz = (Class<T>) ex.getClass();
-        if (clazz == Integer.class) {
-            return (T) new Integer((Integer) ex);
-        }
-        if (clazz == String.class) {
-            return (T) new String((String) ex);
-        }
-        if (clazz == Long.class) {
-            return (T) new Long((Long) ex);
-        }
-        if (clazz == Short.class) {
-            return (T) new Short((Short) ex);
-        }
-        if (clazz == Byte.class) {
-            return (T) new Byte((Byte) ex);
-        }
-        if (clazz == Float.class) {
-            return (T) new Float((Float) ex);
-        }
-        if (clazz == Double.class) {
-            return (T) new Double((Double) ex);
-        }
-        if (clazz == Boolean.class) {
-            return (T) new Boolean((Boolean) ex);
-        }
-        return (T) byteClone(ex);
-
     }
 
     public static Field[] getInheritanceDeclaredFields(Class<?> clazz) {
@@ -324,7 +287,4 @@ public class ReflectUtils {
         return ret;
     }
 
-    public static void main(String[] args) {
-        System.out.println(long.class.isPrimitive());
-    }
 }
