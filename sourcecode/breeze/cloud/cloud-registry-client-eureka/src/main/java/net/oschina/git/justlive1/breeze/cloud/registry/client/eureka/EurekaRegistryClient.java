@@ -77,7 +77,7 @@ public class EurekaRegistryClient extends BaseRegistryClient {
                 nextServerInfo = eurekaClient.getNextServerFromEureka(instanceConfig.getVipAddress(), false);
             } catch (Exception e) {
 
-                log.info("Waiting ... verifying service registration with eureka ...");
+                log.info("Waiting ... verifying service registration with eureka ...", e);
                 try {
                     TimeUnit.SECONDS.sleep(5);
                 } catch (InterruptedException e1) {
