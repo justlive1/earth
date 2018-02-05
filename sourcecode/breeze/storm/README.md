@@ -55,18 +55,7 @@
 			单点退出
 			权限认证
 	
-	// Bugs
-		* storm-cas 开启ssl https使用内置tomcat时，配置的http端口无效，配置有误还是不支持？ -Fixed
-		* storm-cas 对接cloud-admin-server-eureka offline PKIX building failed
 	
-	// Warinings
-		* Runtime memory is used as the persistence storage for retrieving and managing tickets. Tickets that are issued during runtime will be LOST upon container restarts. This MAY impact SSO functionality.
-		* List of authorized users for admin pages security is not defined. Allowing access for all authenticated users
-		* Secret key for encryption is not defined for [Ticket-granting Cookie]
-		* Secret key for signing is not defined for [Ticket-granting Cookie]
-		* Secret key for signing is not defined under [cas.webflow.crypto.signing.key]
-		* Secret key for encryption is not defined under [cas.webflow.crypto.encryption.key].
-
 ## 部署
 [Release](https://gitee.com/justlive1/earth/releases)
 
