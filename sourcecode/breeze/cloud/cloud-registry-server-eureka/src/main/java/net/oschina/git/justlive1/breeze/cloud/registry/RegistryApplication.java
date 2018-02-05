@@ -25,11 +25,6 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping
 public class RegistryApplication {
 
-    public static void main(String[] args) {
-
-        SpringApplication.run(RegistryApplication.class, args);
-    }
-
     @Value("${earth.registry.path:/eureka}")
     String registryPath;
 
@@ -42,4 +37,10 @@ public class RegistryApplication {
     public ModelAndView registry(HttpServletRequest request) {
         return new ModelAndView("forward:/eureka" + request.getRequestURI().replaceFirst(registryPath, ""));
     }
+
+    public static void main(String[] args) {
+
+        SpringApplication.run(RegistryApplication.class, args);
+    }
+
 }

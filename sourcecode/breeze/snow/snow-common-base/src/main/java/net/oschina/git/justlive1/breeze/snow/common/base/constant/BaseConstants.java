@@ -8,9 +8,6 @@ package net.oschina.git.justlive1.breeze.snow.common.base.constant;
  */
 public class BaseConstants {
 
-    private BaseConstants() {
-    }
-    
     // common
 
     /**
@@ -72,4 +69,6 @@ public class BaseConstants {
      */
     public static final String CSRF_HEADER_NAME = "X-XSRF-TOKEN";
 
+    private BaseConstants() {
+    }
 }
