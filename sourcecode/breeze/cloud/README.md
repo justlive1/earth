@@ -38,8 +38,8 @@
 			cloud bus
 			client
 		
-		cloud-registry(12000)
-			发现服务
+		cloud-registry-server-eureka(12000)
+			基于eureka的发现服务
 			client
 		
 		cloud-registry-client
@@ -59,6 +59,11 @@
          cloud-admin-client
             springboot服务管理客户端
 		
+		cloud-security-support
+		  包含login-ui、security、actuator的依赖
+		  SecurityConf配置formlogin，需要spring.boot.auth.enabled=true开启
+		  springcloud项目依赖需要@EnableAutoConfiguration(exclude = { SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class })
+
 
 ## 部署
 [Release](https://gitee.com/justlive1/earth/releases)
