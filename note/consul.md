@@ -28,6 +28,7 @@ consul
 - 启动consul
     - 启动开发模式 consul agent -dev
    
+```
     ==> Starting Consul agent...
     ==> Consul agent running!
            Version: 'v1.0.3'
@@ -64,16 +65,19 @@ consul
         2018/02/07 14:34:04 [DEBUG] agent: Node info in sync
         2018/02/07 14:34:06 [DEBUG] Skipping remote check "serfHealth" since it is managed automatically
         2018/02/07 14:34:06 [DEBUG] agent: Node info in sync
+```
 
 - 集群成员
     - consul members可以查看集群中成员
     - 增加 -detailed 命令可以查看详情
-        
-        Node   Address         Status  Type    Build  Protocol  DC   Segment
-        cloud  127.0.0.1:8301  alive   server  1.0.3  2         dc1  <all>
     
-        Node   Address         Status  Tags
-        cloud  127.0.0.1:8301  alive   build=1.0.3:48f3dd56,dc=dc1,id=e1678894-52d1-44c6-656d-5d69dd8d98e3,port=8300,raft_vsn=3,role=consul,segment=<all>,vsn=2,vsn_max=3,vsn_min=2,wan_join_port=8302
+```
+Node   Address         Status  Type    Build  Protocol  DC   Segment
+cloud  127.0.0.1:8301  alive   server  1.0.3  2         dc1  <all>
+
+Node   Address         Status  Tags
+cloud  127.0.0.1:8301  alive   build=1.0.3:48f3dd56,dc=dc1,id=e1678894-52d1-44c6-656d-5d69dd8d98e3,port=8300,raft_vsn=3,role=consul,segment=<all>,vsn=2,vsn_max=3,vsn_min=2,wan_join_port=8302
+```
     
 - 停止服务
     - consul leave -option
