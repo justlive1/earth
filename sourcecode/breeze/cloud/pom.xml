@@ -137,6 +137,12 @@
 
 			<dependency>
 				<groupId>net.oschina.git.justlive1.breeze.cloud</groupId>
+				<artifactId>cloud-registry-client-consul</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>net.oschina.git.justlive1.breeze.cloud</groupId>
 				<artifactId>cloud-registry-client-eureka</artifactId>
 				<version>${project.version}</version>
 			</dependency>

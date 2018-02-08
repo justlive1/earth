@@ -9,7 +9,7 @@ spring:
   application:
     name: cloud-config
   profiles:
-    active: native,security
+    active: native,consul,security
   
   cloud:
     config:
@@ -46,8 +46,21 @@ encrypt:
     password: letmein
     alias: config.earth.com
     secret: justlive1
-    
 
+---
+spring:
+  profiles: consul
+  
+  cloud:
+    consul:
+      host: registry.earth.com
+      port: 8500
+
+
+---    
+spring:
+  profiles: eureka
+  
 eureka:
   instance:
     preferIpAddress: true
