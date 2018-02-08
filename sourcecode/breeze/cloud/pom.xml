@@ -227,6 +227,7 @@
 		<module>cloud-registry</module>
 		<module>cloud-registry-client</module>
 		<module>cloud-registry-client-eureka</module>
+		<module>cloud-registry-client-consul</module>
 		<module>cloud-security-support</module>
 	</modules>
 </project>
