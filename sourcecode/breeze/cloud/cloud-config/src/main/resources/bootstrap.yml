@@ -9,7 +9,7 @@ spring:
   application:
     name: cloud-config
   profiles:
-    active: native,consul,security
+    active: native,eureka,security
   
   cloud:
     config:
