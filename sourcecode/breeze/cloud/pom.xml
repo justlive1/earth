@@ -230,10 +230,10 @@
 		<module>cloud-admin-server</module>
 		<module>cloud-admin-server-eureka</module>
 		<module>cloud-config</module>
-		<module>cloud-registry</module>
 		<module>cloud-registry-client</module>
 		<module>cloud-registry-client-eureka</module>
 		<module>cloud-registry-client-consul</module>
+		<module>cloud-registry-server-eureka</module>
 		<module>cloud-security-support</module>
 	</modules>
 </project>

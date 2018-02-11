@@ -20,8 +20,8 @@ public abstract class BaseRegistryClient implements RegistryClient {
 
     private static final int NON_REGISTED = 0;
     private static final int REGISTED = -1;
-    private static final int STARTED = -1;
-    private static final int STOPED = -2;
+    private static final int STARTED = -2;
+    private static final int STOPED = -3;
 
     /**
      * 使用了@EnableDiscoveryClient会自动配置

@@ -3,8 +3,6 @@ package net.oschina.git.justlive1.breeze.cloud.registry.client.eureka;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import javax.inject.Singleton;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.netflix.eureka.EurekaDiscoveryClient;
 import org.springframework.stereotype.Component;
@@ -27,7 +25,6 @@ import net.oschina.git.justlive1.breeze.snow.common.base.exception.Exceptions;
  *
  */
 @Slf4j
-@Singleton
 @Component
 public class EurekaRegistryClient extends BaseRegistryClient {
 

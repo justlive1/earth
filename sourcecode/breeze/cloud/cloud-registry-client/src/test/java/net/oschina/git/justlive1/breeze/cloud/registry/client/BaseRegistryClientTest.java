@@ -49,10 +49,10 @@ public class BaseRegistryClientTest {
             });
         }
 
-        TimeUnit.SECONDS.sleep(5);
+        TimeUnit.SECONDS.sleep(1);
         latch.countDown();
 
-        TimeUnit.SECONDS.sleep(5);
+        TimeUnit.SECONDS.sleep(1);
         Assert.assertEquals(3, client.count.get());
 
         pool.shutdown();
