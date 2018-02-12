@@ -228,6 +228,7 @@
 	<modules>
 		<module>cloud-admin-client</module>
 		<module>cloud-admin-server</module>
+		<module>cloud-admin-server-consul</module>
 		<module>cloud-admin-server-eureka</module>
 		<module>cloud-config</module>
 		<module>cloud-registry-client</module>
