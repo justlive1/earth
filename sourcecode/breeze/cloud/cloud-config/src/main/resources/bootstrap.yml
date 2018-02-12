@@ -14,6 +14,7 @@ spring:
   cloud:
     config:
       server:
+        prefix: configs
         native:
           searchLocations: classpath:/config-repo,classpath:/config-repo/{application}
           order: 1
@@ -55,7 +56,10 @@ spring:
     consul:
       host: registry.earth.com
       port: 8500
-
+    discovery:
+      healthCheckPath: ${management.contextPath}/health
+      healthCheckInterval: 15s
+      instanceId: ${spring.application.name}:${vcap.application.instanceId:${spring.application.instanceId:${random.value}}}
 
 ---    
 spring:

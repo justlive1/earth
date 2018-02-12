@@ -1,5 +1,6 @@
 package net.oschina.git.justlive1.breeze.cloud.security.support.conf;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.autoconfigure.ManagementWebSecurityAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration;
@@ -21,18 +22,22 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Import({ SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class })
 public class SecurityConf extends WebSecurityConfigurerAdapter {
 
+    @Value("${server.contextPath:}")
+    private String contextPath;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         // Page with login form is served as /login.html and does a POST on /login
-        http.formLogin().loginPage("/ui/login.html").loginProcessingUrl("/ui/login").permitAll();
+        http.formLogin().loginPage(contextPath + "/ui/login.html").loginProcessingUrl(contextPath + "/ui/login")
+                .permitAll();
         // The UI does a POST on /logout on logout
-        http.logout().logoutUrl("/ui/logout");
+        http.logout().logoutUrl(contextPath + "/ui/logout");
         // The ui currently doesn't support csrf
         http.csrf().disable();
 
         // Requests for the login page and the static assets are allowed
-        http.authorizeRequests().antMatchers("/ui/**", "/**/*.css").permitAll();
+        http.authorizeRequests().antMatchers("/**/ui/**", "/**/*.css").permitAll();
         // ... and any other request needs to be authorized
         http.authorizeRequests().antMatchers("/**").authenticated();
 
@@ -45,7 +50,7 @@ public class SecurityConf extends WebSecurityConfigurerAdapter {
 
         @Override
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
-            registry.addResourceHandler("/ui/**")
+            registry.addResourceHandler(contextPath + "/ui/**")
                     .addResourceLocations("classpath:/META-INF/spring-boot-admin-server-ui/").resourceChain(true);
         }
     }
