@@ -146,6 +146,12 @@
 				<artifactId>cloud-registry-client-eureka</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+			
+			<dependency>
+                <groupId>net.oschina.git.justlive1.breeze.cloud</groupId>
+                <artifactId>cloud-registry-client-zookeeper</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 
 			<dependency>
 				<groupId>net.oschina.git.justlive1.breeze.cloud</groupId>
@@ -232,8 +238,9 @@
 		<module>cloud-admin-server-eureka</module>
 		<module>cloud-config</module>
 		<module>cloud-registry-client</module>
-		<module>cloud-registry-client-eureka</module>
 		<module>cloud-registry-client-consul</module>
+		<module>cloud-registry-client-eureka</module>
+		<module>cloud-registry-client-zookeeper</module>
 		<module>cloud-registry-server-eureka</module>
 		<module>cloud-security-support</module>
 	</modules>
