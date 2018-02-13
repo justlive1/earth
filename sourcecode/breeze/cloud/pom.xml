@@ -236,6 +236,7 @@
 		<module>cloud-admin-server</module>
 		<module>cloud-admin-server-consul</module>
 		<module>cloud-admin-server-eureka</module>
+		<module>cloud-admin-server-zookeeper</module>
 		<module>cloud-config</module>
 		<module>cloud-registry-client</module>
 		<module>cloud-registry-client-consul</module>
