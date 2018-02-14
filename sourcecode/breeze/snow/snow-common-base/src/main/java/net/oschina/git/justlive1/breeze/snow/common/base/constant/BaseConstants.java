@@ -52,6 +52,41 @@ public class BaseConstants {
      */
     public static final String REGEX_IDCARD2ND = "[1-9]\\d{16}[a-zA-Z0-9]{1}";
 
+    /**
+     * 手机校验正则
+     */
+    public static final String REGEX_MOBILE = "(\\+\\d+)?1[34578]\\d{9}$";
+
+    /**
+     * 电话校验正则
+     */
+    public static final String REGEX_PHONE = "(\\+\\d+)?(\\d{3,4}\\-?)?\\d{7,8}$";
+
+    /**
+     * 整数校验正则
+     */
+    public static final String REGEX_DIGIT = "[\\-\\+]?\\d+";
+
+    /**
+     * 空白字符校验正则
+     */
+    public static final String REGEX_BLANK_SPACE = "\\s+";
+
+    /**
+     * 中文字符校验正则
+     */
+    public static final String REGEX_CHINESE = "^[\u4E00-\u9FA5]+$";
+
+    /**
+     * 邮政编码校验正则
+     */
+    public static final String REGEX_POSTCODE = "[1-9]\\d{5}";
+
+    /**
+     * ipv4校验正则
+     */
+    public static final String REGEX_IP = "[1-9](\\d{1,2})?\\.(0|([1-9](\\d{1,2})?))\\.(0|([1-9](\\d{1,2})?))\\.(0|([1-9](\\d{1,2})?))";
+
     // mvc相关
 
     /**
