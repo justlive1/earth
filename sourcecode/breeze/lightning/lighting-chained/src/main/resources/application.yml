@@ -1,0 +1,15 @@
+server: 
+  port: 20000
+  
+spring:
+  application:
+    name: light-chained
+
+logging:
+  level.: info
+  file: ${spring.application.name}.log
+
+  
+
+
+      
