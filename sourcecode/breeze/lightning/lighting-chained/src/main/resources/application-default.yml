@@ -1,0 +1,24 @@
+  
+lighting:
+  core:
+    tmpPath: /tmp/snow/
+    logPath: /tmp/logs/snow/
+    
+    builds: {
+        NODE: {
+            type: NODE,
+            envPath: /usr/local/bin/,
+            cmds: [npm install, npm run build]
+          }
+      }
+    
+    remotes: {
+        GITHUB: {
+            type: GITHUB,
+            refPrefix: refs/heads,
+            filePath: archive,
+            fileSuffix: .zip,
+            agent: GitHub-Hookshot,
+            event: push
+          }
+      }

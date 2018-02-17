@@ -36,18 +36,19 @@ public class Checks {
     /**
      * 非空检查
      */
-    public static void notNull(Object obj) {
-        notNull(obj, "can not be null");
+    public static <T> T notNull(T obj) {
+        return notNull(obj, "can not be null");
     }
 
-    public static void notNull(Object obj, String msg) {
-        notNull(obj, errorMessage(MODULE_VALID, NULL_VALUE, msg));
+    public static <T> T notNull(T obj, String msg) {
+        return notNull(obj, errorMessage(MODULE_VALID, NULL_VALUE, msg));
     }
 
-    public static void notNull(Object obj, ErrorCode errCode, Object... params) {
+    public static <T> T notNull(T obj, ErrorCode errCode, Object... params) {
         if (obj == null) {
             throw fail(errCode, params);
         }
+        return obj;
     }
 
     /**

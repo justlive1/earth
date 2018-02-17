@@ -9,7 +9,3 @@ logging:
   level.: info
   file: ${spring.application.name}.log
 
-  
-
-
-      

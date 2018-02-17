@@ -17,6 +17,14 @@
 ```
     // 功能点
         lighting-chained
+            下载源码zip
+            git pull
+            svn update
+            node编译
+            java编译
+            build
+            静态资源发布
+            服务项目发布
             
 
 
