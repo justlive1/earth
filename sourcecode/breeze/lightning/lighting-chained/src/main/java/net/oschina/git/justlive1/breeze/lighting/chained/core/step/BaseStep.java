@@ -15,6 +15,9 @@ import net.oschina.git.justlive1.breeze.lighting.chained.conf.ProjectProps;
 public abstract class BaseStep implements Step, BeanNameAware {
 
     public static final String LOG_SUFFIX = "_build.log";
+    public static final String ERROR_CODE = "-1";
+    public static final String NOT_CONFIGURED_MSG = "%s for %s is not configured";
+    public static final String BEAN_NOT_FOUND = "cannot not find bean named by %s";
 
     @Autowired
     protected CoreProps coreProps;

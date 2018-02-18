@@ -35,6 +35,11 @@ public class CoreProps {
     private Map<String, Build> builds;
 
     /**
+     * 部署配置
+     */
+    private Map<String, Deploy> deploys;
+
+    /**
      * 远程仓库
      * 
      * @author wubo
@@ -94,9 +99,32 @@ public class CoreProps {
 
         private String type;
 
+        private String handle;
+
         private String envPath;
 
         private String[] cmds;
     }
 
+    /**
+     * 部署方式
+     * 
+     * @author wubo
+     *
+     */
+    @Data
+    public static class Deploy {
+
+        public enum TYPE {
+            STATIC
+        }
+
+        private String type;
+
+        private String handle;
+
+        private String envPath;
+
+        private String[] cmds;
+    }
 }
