@@ -2,9 +2,13 @@ package net.oschina.git.justlive1.breeze.lighting.chained.core.step;
 
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 
+import lombok.extern.slf4j.Slf4j;
 import net.oschina.git.justlive1.breeze.lighting.chained.conf.CoreProps;
 import net.oschina.git.justlive1.breeze.lighting.chained.conf.ProjectProps;
+import net.oschina.git.justlive1.breeze.snow.common.base.exception.Exceptions;
 
 /**
  * 基本步骤
@@ -12,7 +16,8 @@ import net.oschina.git.justlive1.breeze.lighting.chained.conf.ProjectProps;
  * @author wubo
  *
  */
-public abstract class BaseStep implements Step, BeanNameAware {
+@Slf4j
+public abstract class BaseStep implements Step, BeanNameAware, ApplicationContextAware {
 
     public static final String LOG_SUFFIX = "_build.log";
     public static final String ERROR_CODE = "-1";
@@ -27,6 +32,13 @@ public abstract class BaseStep implements Step, BeanNameAware {
 
     protected String beanName;
 
+    protected ApplicationContext appCtx;
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        this.appCtx = applicationContext;
+    }
+
     @Override
     public void setBeanName(String name) {
         this.beanName = name;
@@ -35,6 +47,23 @@ public abstract class BaseStep implements Step, BeanNameAware {
     @Override
     public String toString() {
         return String.format("[%s],%s", beanName, super.toString());
+    }
+
+    protected void dispatcher(String[] handles, StepContext ctx) {
+
+        for (String handle : handles) {
+
+            Step step = this.appCtx.getBean(handle, Step.class);
+            if (step == null) {
+                String msg = String.format(BEAN_NOT_FOUND, handle);
+                log.error(msg);
+                throw Exceptions.fail(ERROR_CODE, msg);
+            }
+
+            step.before(ctx);
+            step.handle(ctx);
+            step.after(ctx);
+        }
     }
 
 }

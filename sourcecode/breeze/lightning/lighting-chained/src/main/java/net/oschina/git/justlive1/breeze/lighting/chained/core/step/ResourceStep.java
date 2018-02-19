@@ -7,13 +7,13 @@ import net.oschina.git.justlive1.breeze.lighting.chained.conf.ProjectProps.Proje
 import net.oschina.git.justlive1.breeze.snow.common.base.util.Checks;
 
 /**
- * 构建
+ * 资源步骤
  * 
  * @author wubo
  *
  */
 @Service
-public class BuildStep extends BaseStep {
+public class ResourceStep extends BaseStep {
 
     @Override
     public String unqueId() {
@@ -23,17 +23,15 @@ public class BuildStep extends BaseStep {
     @Override
     public void before(StepContext ctx) {
 
-        Project project = (Project) ctx.get(StepContext.PROJECT);
-        String buildType = Checks.notNull(project.getBuildType());
-        Option build = Checks.notNull(Checks.notNull(coreProps.getBuilds()).get(buildType),
-                String.format(NOT_CONFIGURED_MSG, buildType, project));
-        ctx.put(StepContext.BUILD, build);
+        String projectName = Checks.notNull((String) ctx.get(StepContext.PROJECT_NAME));
+        Project project = Checks.notNull(Checks.notNull(projectProps.getProjects()).get(projectName));
+        ctx.put(StepContext.PROJECT, project);
     }
 
     @Override
     public void handle(StepContext ctx) {
 
-        Option build = (Option) ctx.get(StepContext.BUILD);
+        Option build = (Option) ctx.get(StepContext.RESOURCE);
         String[] handles = Checks.notNull(build.getHandles());
         this.dispatcher(handles, ctx);
     }

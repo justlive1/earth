@@ -4,13 +4,6 @@ lighting:
     tmpPath: /tmp/snow/
     logPath: /tmp/logs/snow/
     
-    builds: {
-        NODE: {
-            type: NODE,
-            envPath: /usr/local/bin/,
-            cmds: [npm install, npm run build]
-          }
-      }
     
     remotes: {
         GITHUB: {
@@ -20,5 +13,28 @@ lighting:
             fileSuffix: .zip,
             agent: GitHub-Hookshot,
             event: push
+          }
+      }
+
+    resources: {
+        ZIP: {
+            type: ZIP,
+            handles: []
+          }
+      }
+
+    builds: {
+        NODE: {
+            type: NODE,
+            envPath: /usr/local/bin/,
+            cmds: [npm install, npm run build],
+            handles: []
+          }
+      }
+      
+    deploys: {
+        STATIC: {
+            type: STATIC,
+            handles: []
           }
       }

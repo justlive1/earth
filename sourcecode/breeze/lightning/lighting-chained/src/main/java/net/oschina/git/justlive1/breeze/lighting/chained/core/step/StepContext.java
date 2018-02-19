@@ -13,6 +13,7 @@ public class StepContext {
 
     public static final String REMOTE = "REMOTE";
     public static final String REMOTE_FILE = "REMOTE_FILE";
+    public static final String RESOURCE = "RESOURCE";
     public static final String TARGET_FILE = "TARGET_FILE";
     public static final String TARGET_FILE_NAME = "TARGET_FILE_NAME";
     public static final String BUILD = "BUILD";

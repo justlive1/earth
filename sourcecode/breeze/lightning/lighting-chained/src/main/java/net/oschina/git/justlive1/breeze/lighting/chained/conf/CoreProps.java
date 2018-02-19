@@ -13,6 +13,22 @@ import lombok.Data;
 @Data
 public class CoreProps {
 
+    public enum REMOTE_TYPE {
+        GITHUB
+    }
+
+    public enum RESOURCE_TYPE {
+        ZIP, GIT, SVN
+    }
+
+    public enum BUILD_TYPE {
+        NODE
+    }
+
+    public enum DEPLOY_TYPE {
+        STATIC
+    }
+
     /**
      * 临时路径
      * 
@@ -30,14 +46,19 @@ public class CoreProps {
     private Map<String, Remote> remotes;
 
     /**
+     * 资源配置
+     */
+    private Map<String, Option> resources;
+
+    /**
      * 构建配置
      */
-    private Map<String, Build> builds;
+    private Map<String, Option> builds;
 
     /**
      * 部署配置
      */
-    private Map<String, Deploy> deploys;
+    private Map<String, Option> deploys;
 
     /**
      * 远程仓库
@@ -47,10 +68,6 @@ public class CoreProps {
      */
     @Data
     public static class Remote {
-
-        public enum TYPE {
-            GITHUB
-        }
 
         /**
          * 远程类型
@@ -85,43 +102,17 @@ public class CoreProps {
     }
 
     /**
-     * 构建方式
+     * 配置选项
      * 
      * @author wubo
      *
      */
     @Data
-    public static class Build {
-
-        public enum TYPE {
-            NODE
-        }
+    public static class Option {
 
         private String type;
 
-        private String handle;
-
-        private String envPath;
-
-        private String[] cmds;
-    }
-
-    /**
-     * 部署方式
-     * 
-     * @author wubo
-     *
-     */
-    @Data
-    public static class Deploy {
-
-        public enum TYPE {
-            STATIC
-        }
-
-        private String type;
-
-        private String handle;
+        private String[] handles;
 
         private String envPath;
 
