@@ -27,5 +27,7 @@ public class ProjectProps {
         private String deployType;
 
         private String deployPath;
+
+        private String[] steps;
     }
 }

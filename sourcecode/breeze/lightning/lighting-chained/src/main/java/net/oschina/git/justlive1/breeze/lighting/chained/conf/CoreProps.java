@@ -41,6 +41,11 @@ public class CoreProps {
     private String logPath;
 
     /**
+     * 默认执行步骤
+     */
+    private String[] defaultSteps;
+
+    /**
      * 远程配置
      */
     private Map<String, Remote> remotes;

@@ -3,8 +3,11 @@ lighting:
   core:
     tmpPath: /tmp/snow/
     logPath: /tmp/logs/snow/
-    
-    
+    defaultSteps: 
+      - resourceStep
+      - buildStep
+      - deployStep
+      
     remotes: {
         GITHUB: {
             type: GITHUB,
@@ -19,7 +22,7 @@ lighting:
     resources: {
         ZIP: {
             type: ZIP,
-            handles: []
+            handles: [downloadStep, unzipStep]
           }
       }
 
@@ -36,5 +39,17 @@ lighting:
         STATIC: {
             type: STATIC,
             handles: []
+          }
+      }
+      
+      
+  project:
+    projects: {
+        website-master: {
+            id: website-master,
+            sourceType: ZIP,
+            buildType: NODE,
+            deployType: STATIC,
+            deployPath: /tmp/snow/
           }
       }

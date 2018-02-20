@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import net.oschina.git.justlive1.breeze.lighting.chained.conf.CoreProps;
 import net.oschina.git.justlive1.breeze.lighting.chained.conf.CoreProps.Remote;
+import net.oschina.git.justlive1.breeze.lighting.chained.core.manage.StepManager;
 import net.oschina.git.justlive1.breeze.lighting.chained.core.step.StepContext;
 import net.oschina.git.justlive1.breeze.lighting.chained.model.webhook.Payload;
 import net.oschina.git.justlive1.breeze.snow.common.base.util.Checks;
@@ -28,7 +29,7 @@ public class ApiController {
     static final String PONG = "pong";
 
     @Autowired
-    CoreProps coreProps;
+    StepManager stepManager;
 
     /**
      * webhook调用
@@ -44,7 +45,7 @@ public class ApiController {
             return ResponseEntity.ok().body(PONG);
         }
 
-        Remote remote = Checks.notNull(coreProps.getRemotes()).get(CoreProps.REMOTE_TYPE.GITHUB.name());
+        Remote remote = Checks.notNull(stepManager.findByType(CoreProps.REMOTE_TYPE.GITHUB.name()));
 
         if (!agent.startsWith(remote.getAgent()) || !remote.getEvent().equals(event)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -52,15 +53,16 @@ public class ApiController {
 
         String ref = payload.getRef().replace(remote.getRefPrefix(), "");
         String url = payload.getRepository().getUrl() + remote.getFilePrefix() + ref + remote.getFileSuffix();
-        String project = ref + "-" + payload.getRepository().getName();
+        String projectName = ref + "-" + payload.getRepository().getName();
 
         StepContext ctx = new StepContext();
         ctx.put(StepContext.REMOTE, remote);
         ctx.put(StepContext.REMOTE_FILE, url);
-        ctx.put(StepContext.PROJECT, project);
+        ctx.put(StepContext.PROJECT_NAME, projectName);
 
-        // TODO
+        stepManager.excute(ctx);
 
         return ResponseEntity.ok().body(PONG);
     }
+    
 }
