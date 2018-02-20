@@ -82,9 +82,9 @@ public class StepManager {
 
         String[] stepIds = MoreObjects.firstNonNull(project.getSteps(), coreProps.getDefaultSteps());
 
-//        if (log.isDebugEnabled()) {
-            log.info("excute stepIds: [{}]", Arrays.toString(stepIds));
-//        }
+        if (log.isDebugEnabled()) {
+            log.debug("excute stepIds: [{}]", Arrays.toString(stepIds));
+        }
 
         for (String id : stepIds) {
             Step step = stepMap.get(id);
