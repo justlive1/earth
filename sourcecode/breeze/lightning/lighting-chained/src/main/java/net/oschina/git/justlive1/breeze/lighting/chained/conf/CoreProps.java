@@ -1,5 +1,6 @@
 package net.oschina.git.justlive1.breeze.lighting.chained.conf;
 
+import java.util.List;
 import java.util.Map;
 
 import lombok.Data;
@@ -87,7 +88,7 @@ public class CoreProps {
         /**
          * 触发事件
          */
-        private String event;
+        private List<String> events;
 
         /**
          * 分支前缀

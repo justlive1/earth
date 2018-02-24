@@ -47,7 +47,8 @@ public class ApiController {
 
         Remote remote = Checks.notNull(stepManager.findByType(CoreProps.REMOTE_TYPE.GITHUB.name()));
 
-        if (!agent.startsWith(remote.getAgent()) || !remote.getEvent().equals(event)) {
+        if (!agent.startsWith(remote.getAgent())
+                || (remote.getEvents() != null && !remote.getEvents().contains(event))) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
@@ -64,5 +65,5 @@ public class ApiController {
 
         return ResponseEntity.ok().body(PONG);
     }
-    
+
 }
