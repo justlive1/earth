@@ -4,8 +4,11 @@
 
 ## 介绍
 
+- cloud-admin-* 服务管理
 - cloud-config 配置中心
-- cloud-registry 服务注册中心
+- cloud-registry-* 服务注册
+- cloud-security-support 包含security的ui和配置
+
 
 
 ## 特性
