@@ -15,16 +15,16 @@ import org.springframework.context.annotation.Profile;
 @Configuration
 public class DefaultConf {
 
-    @Bean
-    @ConfigurationProperties(prefix = "lighting.core")
-    public CoreProps coreProps() {
-        return new CoreProps();
-    }
+  @Bean
+  @ConfigurationProperties(prefix = "lighting.core")
+  public CoreProps coreProps() {
+    return new CoreProps();
+  }
 
-    @Bean
-    @ConfigurationProperties(prefix = "lighting.project")
-    public ProjectProps projectProps() {
-        return new ProjectProps();
-    }
-    
+  @Bean
+  @ConfigurationProperties(prefix = "lighting.project")
+  public ProjectProps projectProps() {
+    return new ProjectProps();
+  }
+
 }

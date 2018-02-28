@@ -9,18 +9,18 @@ package net.oschina.git.justlive1.breeze.cloud.registry.client;
  */
 public interface RegistryClient {
 
-    /**
-     * 注册服务
-     */
-    void register();
+  /**
+   * 注册服务
+   */
+  void register();
 
-    /**
-     * 启动服务
-     */
-    void start();
+  /**
+   * 启动服务
+   */
+  void start();
 
-    /**
-     * 停止服务
-     */
-    void shutdown();
+  /**
+   * 停止服务
+   */
+  void shutdown();
 }

@@ -8,7 +8,6 @@ import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-
 import de.codecentric.boot.admin.config.EnableAdminServer;
 
 /**
@@ -19,13 +18,14 @@ import de.codecentric.boot.admin.config.EnableAdminServer;
  */
 @Configuration
 @ComponentScan(basePackages = "net.oschina.git.justlive1.breeze")
-@EnableAutoConfiguration(exclude = { SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class })
+@EnableAutoConfiguration(
+    exclude = {SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class})
 @EnableDiscoveryClient
 @EnableAdminServer
 @EnableCircuitBreaker
 public class SpringBootAdminApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(SpringBootAdminApplication.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(SpringBootAdminApplication.class, args);
+  }
 }

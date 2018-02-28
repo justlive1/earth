@@ -14,15 +14,16 @@ import org.springframework.cloud.config.server.EnableConfigServer;
  * @author wubo
  *
  */
-@EnableAutoConfiguration(exclude = { SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class })
+@EnableAutoConfiguration(
+    exclude = {SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class})
 @EnableDiscoveryClient
 @EnableConfigServer
 @SpringBootApplication(scanBasePackages = "net.oschina.git.justlive1.breeze")
 public class ConfigApplication {
 
-    public static void main(String[] args) {
+  public static void main(String[] args) {
 
-        SpringApplication.run(ConfigApplication.class, args);
-    }
+    SpringApplication.run(ConfigApplication.class, args);
+  }
 
 }

@@ -1,7 +1,6 @@
 package net.oschina.git.justlive1.breeze.cloud.registry;
 
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.autoconfigure.ManagementWebSecurityAutoConfiguration;
@@ -18,29 +17,30 @@ import org.springframework.web.servlet.ModelAndView;
  * @author wubo
  *
  */
-@SpringBootApplication(scanBasePackages = "net.oschina.git.justlive1.breeze", exclude = {
-        SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class })
+@SpringBootApplication(scanBasePackages = "net.oschina.git.justlive1.breeze",
+    exclude = {SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class})
 @EnableEurekaServer
 @Controller
 @RequestMapping
 public class RegistryApplication {
 
-    @Value("${earth.registry.path:/eureka}")
-    String registryPath;
+  @Value("${earth.registry.path:/eureka}")
+  String registryPath;
 
-    @RequestMapping("/index")
-    public ModelAndView index() {
-        return new ModelAndView("forward:/");
-    }
+  @RequestMapping("/index")
+  public ModelAndView index() {
+    return new ModelAndView("forward:/");
+  }
 
-    @RequestMapping("${earth.registry.path}/**")
-    public ModelAndView registry(HttpServletRequest request) {
-        return new ModelAndView("forward:/eureka" + request.getRequestURI().replaceFirst(registryPath, ""));
-    }
+  @RequestMapping("${earth.registry.path}/**")
+  public ModelAndView registry(HttpServletRequest request) {
+    return new ModelAndView(
+        "forward:/eureka" + request.getRequestURI().replaceFirst(registryPath, ""));
+  }
 
-    public static void main(String[] args) {
+  public static void main(String[] args) {
 
-        SpringApplication.run(RegistryApplication.class, args);
-    }
+    SpringApplication.run(RegistryApplication.class, args);
+  }
 
 }

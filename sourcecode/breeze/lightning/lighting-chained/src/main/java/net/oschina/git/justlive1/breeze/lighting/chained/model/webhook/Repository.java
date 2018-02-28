@@ -11,10 +11,10 @@ import lombok.Data;
 @Data
 public class Repository {
 
-    private Long id;
+  private Long id;
 
-    private String name;
+  private String name;
 
-    private String url;
+  private String url;
 
 }

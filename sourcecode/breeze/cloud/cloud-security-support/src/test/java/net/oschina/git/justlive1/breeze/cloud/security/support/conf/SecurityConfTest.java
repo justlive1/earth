@@ -1,7 +1,6 @@
 package net.oschina.git.justlive1.breeze.cloud.security.support.conf;
 
 import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 /**
@@ -10,9 +9,9 @@ import org.junit.Test;
  */
 public class SecurityConfTest {
 
-    @Test
-    public void test() {
-        assertNotNull("Not yet implemented");
-    }
+  @Test
+  public void test() {
+    assertNotNull("Not yet implemented");
+  }
 
 }

@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
-
 import de.codecentric.boot.admin.config.EnableAdminServer;
 
 /**
@@ -15,13 +14,14 @@ import de.codecentric.boot.admin.config.EnableAdminServer;
  * @author wubo
  *
  */
-@EnableAutoConfiguration(exclude = { SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class })
+@EnableAutoConfiguration(
+    exclude = {SecurityAutoConfiguration.class, ManagementWebSecurityAutoConfiguration.class})
 @EnableAdminServer
 @EnableCircuitBreaker
 @SpringBootApplication(scanBasePackages = "net.oschina.git.justlive1.breeze")
 public class SpringBootAdminApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(SpringBootAdminApplication.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(SpringBootAdminApplication.class, args);
+  }
 }

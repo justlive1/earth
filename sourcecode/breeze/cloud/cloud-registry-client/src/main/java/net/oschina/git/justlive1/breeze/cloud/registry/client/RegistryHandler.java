@@ -9,10 +9,10 @@ package net.oschina.git.justlive1.breeze.cloud.registry.client;
 @FunctionalInterface
 public interface RegistryHandler {
 
-    /**
-     * 是否需要注册
-     * 
-     * @return
-     */
-    boolean needRegister();
+  /**
+   * 是否需要注册
+   * 
+   * @return
+   */
+  boolean needRegister();
 }

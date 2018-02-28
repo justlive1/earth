@@ -10,8 +10,8 @@ import com.netflix.discovery.DefaultEurekaClientConfig;
  */
 public class RegistryClientConfig extends DefaultEurekaClientConfig {
 
-    public RegistryClientConfig() {
-        super(EurekaRegistryClient.NAMESPACE);
-    }
+  public RegistryClientConfig() {
+    super(EurekaRegistryClient.NAMESPACE);
+  }
 
 }

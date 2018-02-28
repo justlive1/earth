@@ -1,7 +1,6 @@
 package net.oschina.git.justlive1.breeze.lighting.chained.conf;
 
 import java.util.Map;
-
 import lombok.Data;
 
 /**
@@ -13,21 +12,21 @@ import lombok.Data;
 @Data
 public class ProjectProps {
 
-    private Map<String, Project> projects;
+  private Map<String, Project> projects;
 
-    @Data
-    public static class Project {
+  @Data
+  public static class Project {
 
-        private String id;
+    private String id;
 
-        private String sourceType;
+    private String sourceType;
 
-        private String buildType;
+    private String buildType;
 
-        private String deployType;
+    private String deployType;
 
-        private String deployPath;
+    private String deployPath;
 
-        private String[] steps;
-    }
+    private String[] steps;
+  }
 }

@@ -8,33 +8,31 @@ package net.oschina.git.justlive1.breeze.lighting.chained.core.step;
  */
 public interface Step {
 
-    /**
-     * 唯一标示
-     * 
-     * @return
-     */
-    String unqueId();
+  /**
+   * 唯一标示
+   * 
+   * @return
+   */
+  String unqueId();
 
-    /**
-     * 前置处理
-     * 
-     * @param ctx
-     */
-    default void before(StepContext ctx) {
-    }
+  /**
+   * 前置处理
+   * 
+   * @param ctx
+   */
+  default void before(StepContext ctx) {}
 
-    /**
-     * 处理
-     * 
-     * @param ctx
-     */
-    void handle(StepContext ctx);
+  /**
+   * 处理
+   * 
+   * @param ctx
+   */
+  void handle(StepContext ctx);
 
-    /**
-     * 后续处理
-     * 
-     * @param ctx
-     */
-    default void after(StepContext ctx) {
-    }
+  /**
+   * 后续处理
+   * 
+   * @param ctx
+   */
+  default void after(StepContext ctx) {}
 }

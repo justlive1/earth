@@ -4,3 +4,7 @@ target
 .classpath
 .settings
 *.log
+
+.idea
+.gradle
+build

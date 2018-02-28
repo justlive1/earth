@@ -11,36 +11,35 @@ import org.springframework.security.core.userdetails.User;
  */
 public class SercurityUserUtils {
 
-    private SercurityUserUtils() {
+  private SercurityUserUtils() {}
+
+  /**
+   * 获取当前登陆用户
+   * 
+   * @return
+   */
+  public static User loginUser() {
+
+    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    if (principal != null && User.class.isInstance(principal)) {
+      return (User) principal;
     }
 
-    /**
-     * 获取当前登陆用户
-     * 
-     * @return
-     */
-    public static User loginUser() {
+    return null;
+  }
 
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal != null && User.class.isInstance(principal)) {
-            return (User) principal;
-        }
+  /**
+   * 获取当前登陆用户名
+   * 
+   * @return
+   */
+  public static String loginUserName() {
 
-        return null;
+    User user = loginUser();
+    if (user != null) {
+      return user.getUsername();
     }
 
-    /**
-     * 获取当前登陆用户名
-     * 
-     * @return
-     */
-    public static String loginUserName() {
-
-        User user = loginUser();
-        if (user != null) {
-            return user.getUsername();
-        }
-
-        return null;
-    }
+    return null;
+  }
 }

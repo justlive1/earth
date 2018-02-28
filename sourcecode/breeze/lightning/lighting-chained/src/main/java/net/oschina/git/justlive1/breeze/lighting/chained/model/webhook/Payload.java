@@ -11,14 +11,14 @@ import lombok.Data;
 @Data
 public class Payload {
 
-    private String ref;
+  private String ref;
 
-    private String before;
+  private String before;
 
-    private String after;
+  private String after;
 
-    private String compare;
+  private String compare;
 
-    private Repository repository;
+  private Repository repository;
 
 }

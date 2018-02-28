@@ -1,7 +1,6 @@
 package net.oschina.git.justlive1.breeze.storm.cas.client.security.web;
 
 import java.util.Arrays;
-
 import org.jasig.cas.client.proxy.ProxyGrantingTicketStorage;
 import org.jasig.cas.client.session.SingleSignOutFilter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,6 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
-
 import net.oschina.git.justlive1.breeze.snow.common.web.base.ConfigProperties;
 import net.oschina.git.justlive1.breeze.storm.cas.client.security.auth.CustomAuthenticationFailureHandler;
 import net.oschina.git.justlive1.breeze.storm.cas.client.security.auth.CustomAuthenticationSuccessHandler;
@@ -38,37 +36,37 @@ import net.oschina.git.justlive1.breeze.storm.cas.client.security.auth.CustomAut
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    ConfigProperties configProps;
+  @Autowired
+  ConfigProperties configProps;
 
-    @Autowired(required = false)
-    CustomAuthenticationSuccessHandler authenticationSuccessHandler;
+  @Autowired(required = false)
+  CustomAuthenticationSuccessHandler authenticationSuccessHandler;
 
-    @Autowired(required = false)
-    CustomAuthenticationFailureHandler authenticationFailureHandler;
+  @Autowired(required = false)
+  CustomAuthenticationFailureHandler authenticationFailureHandler;
 
-    @Autowired
-    AuthenticationEntryPoint authenticationEntryPoint;
+  @Autowired
+  AuthenticationEntryPoint authenticationEntryPoint;
 
-    @Autowired
-    AuthenticationProvider authenticationProvider;
+  @Autowired
+  AuthenticationProvider authenticationProvider;
 
-    @Autowired
-    ServiceProperties props;
+  @Autowired
+  ServiceProperties props;
 
-    @Autowired
-    ProxyGrantingTicketStorage storage;
+  @Autowired
+  ProxyGrantingTicketStorage storage;
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        // 设置不拦截规则
-        web.ignoring().antMatchers(configProps.ignoreMatchers).antMatchers(configProps.accessDeniedUrl);
-    }
+  @Override
+  public void configure(WebSecurity web) throws Exception {
+    // 设置不拦截规则
+    web.ignoring().antMatchers(configProps.ignoreMatchers).antMatchers(configProps.accessDeniedUrl);
+  }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
 
-        // @formatter:off
+    // @formatter:off
 
         http.csrf().disable().authorizeRequests().expressionHandler(expressionHandler()).and().exceptionHandling()
                 .accessDeniedPage(configProps.accessDeniedUrl).and().httpBasic()
@@ -82,74 +80,75 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // @formatter:on
 
+  }
+
+  @Override
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+
+    auth.authenticationProvider(authenticationProvider);
+  }
+
+  @Override
+  protected AuthenticationManager authenticationManager() throws Exception {
+
+    return new ProviderManager(Arrays.asList(authenticationProvider));
+  }
+
+  DefaultWebSecurityExpressionHandler expressionHandler() {
+
+    return new DefaultWebSecurityExpressionHandler();
+  }
+
+  /**
+   * 单点登出过滤器
+   * 
+   * @return
+   */
+  SingleSignOutFilter singleSignOutFilter() {
+
+    SingleSignOutFilter singleSignOutFilter = new SingleSignOutFilter();
+    singleSignOutFilter.setIgnoreInitConfiguration(true);
+    singleSignOutFilter.setCasServerUrlPrefix(configProps.casServerPrefixUrl);
+    return singleSignOutFilter;
+  }
+
+  /**
+   * cas认证过滤器
+   * 
+   * @return
+   * @throws Exception
+   */
+  CasAuthenticationFilter casAuthenticationFilter() throws Exception {
+
+    CasAuthenticationFilter filter = new CasAuthenticationFilter();
+    filter.setServiceProperties(props);
+    filter.setAuthenticationManager(authenticationManager());
+
+    filter.setFilterProcessesUrl(configProps.securityFilterProcessesUrl);
+    filter.setAuthenticationDetailsSource(new ServiceAuthenticationDetailsSource(props));
+
+    if (configProps.useProxyReceptor) {
+      filter.setProxyGrantingTicketStorage(storage);
+      filter.setProxyReceptorUrl(configProps.proxyReceptorUrl);
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-        auth.authenticationProvider(authenticationProvider);
+    AuthenticationFailureHandler failureHandler = authenticationFailureHandler;
+    if (failureHandler == null) {
+      failureHandler = new SimpleUrlAuthenticationFailureHandler(configProps.accessDeniedUrl);
     }
+    filter.setAuthenticationFailureHandler(failureHandler);
 
-    @Override
-    protected AuthenticationManager authenticationManager() throws Exception {
+    AuthenticationSuccessHandler successHandler = authenticationSuccessHandler;
+    if (successHandler == null) {
 
-        return new ProviderManager(Arrays.asList(authenticationProvider));
+      SavedRequestAwareAuthenticationSuccessHandler handler =
+          new SavedRequestAwareAuthenticationSuccessHandler();
+      handler.setDefaultTargetUrl(configProps.defaultSuccessUrl);
+      successHandler = handler;
     }
+    filter.setAuthenticationSuccessHandler(successHandler);
 
-    DefaultWebSecurityExpressionHandler expressionHandler() {
-
-        return new DefaultWebSecurityExpressionHandler();
-    }
-
-    /**
-     * 单点登出过滤器
-     * 
-     * @return
-     */
-    SingleSignOutFilter singleSignOutFilter() {
-
-        SingleSignOutFilter singleSignOutFilter = new SingleSignOutFilter();
-        singleSignOutFilter.setIgnoreInitConfiguration(true);
-        singleSignOutFilter.setCasServerUrlPrefix(configProps.casServerPrefixUrl);
-        return singleSignOutFilter;
-    }
-
-    /**
-     * cas认证过滤器
-     * 
-     * @return
-     * @throws Exception
-     */
-    CasAuthenticationFilter casAuthenticationFilter() throws Exception {
-
-        CasAuthenticationFilter filter = new CasAuthenticationFilter();
-        filter.setServiceProperties(props);
-        filter.setAuthenticationManager(authenticationManager());
-
-        filter.setFilterProcessesUrl(configProps.securityFilterProcessesUrl);
-        filter.setAuthenticationDetailsSource(new ServiceAuthenticationDetailsSource(props));
-
-        if (configProps.useProxyReceptor) {
-            filter.setProxyGrantingTicketStorage(storage);
-            filter.setProxyReceptorUrl(configProps.proxyReceptorUrl);
-        }
-
-        AuthenticationFailureHandler failureHandler = authenticationFailureHandler;
-        if (failureHandler == null) {
-            failureHandler = new SimpleUrlAuthenticationFailureHandler(configProps.accessDeniedUrl);
-        }
-        filter.setAuthenticationFailureHandler(failureHandler);
-
-        AuthenticationSuccessHandler successHandler = authenticationSuccessHandler;
-        if (successHandler == null) {
-
-            SavedRequestAwareAuthenticationSuccessHandler handler = new SavedRequestAwareAuthenticationSuccessHandler();
-            handler.setDefaultTargetUrl(configProps.defaultSuccessUrl);
-            successHandler = handler;
-        }
-        filter.setAuthenticationSuccessHandler(successHandler);
-
-        return filter;
-    }
+    return filter;
+  }
 
 }

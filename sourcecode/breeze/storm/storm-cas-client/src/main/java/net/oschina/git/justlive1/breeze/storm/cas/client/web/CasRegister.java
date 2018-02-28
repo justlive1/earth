@@ -10,14 +10,11 @@ import static net.oschina.git.justlive1.breeze.snow.common.web.base.ConfigProper
 import static net.oschina.git.justlive1.breeze.snow.common.web.base.ConfigProperties.IGNORES_URLS_FIELD;
 import static net.oschina.git.justlive1.breeze.snow.common.web.base.ConfigProperties.SERVER_NAME;
 import static net.oschina.git.justlive1.breeze.snow.common.web.base.ConfigProperties.SERVER_NAME_FIELD;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import javax.servlet.FilterRegistration.Dynamic;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-
 import org.jasig.cas.client.authentication.AuthenticationFilter;
 import org.jasig.cas.client.configuration.ConfigurationKeys;
 import org.jasig.cas.client.session.SingleSignOutFilter;
@@ -25,7 +22,6 @@ import org.jasig.cas.client.session.SingleSignOutHttpSessionListener;
 import org.jasig.cas.client.util.AssertionThreadLocalFilter;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.util.WebUtils;
-
 import net.oschina.git.justlive1.breeze.snow.common.web.util.PropertiesWrapper;
 import net.oschina.git.justlive1.breeze.storm.cas.client.util.Cas20ProxyReceivingTicketValidationFilter4Http;
 import net.oschina.git.justlive1.breeze.storm.cas.client.util.MultipleAntPathMatcher;
@@ -38,42 +34,44 @@ import net.oschina.git.justlive1.breeze.storm.cas.client.util.MultipleAntPathMat
  */
 public class CasRegister implements WebApplicationInitializer {
 
-    @Override
-    public void onStartup(ServletContext ctx) throws ServletException {
+  @Override
+  public void onStartup(ServletContext ctx) throws ServletException {
 
-        WebUtils.setWebAppRootSystemProperty(ctx);
+    WebUtils.setWebAppRootSystemProperty(ctx);
 
-        PropertiesWrapper props = new PropertiesWrapper(DEFAULT_CONFIG_PATH);
+    PropertiesWrapper props = new PropertiesWrapper(DEFAULT_CONFIG_PATH);
 
-        Map<String, String> params = new HashMap<>(5);
-        params.put(CAS_SERVER_URL_PREFIX_FIELD, props.getProperty(CAS_SERVER_URL_PREFIX));
-        params.put(CAS_SERVER_LOGINURL_FIELD, props.getProperty(CAS_SERVER_LOGINURL));
-        params.put(SERVER_NAME_FIELD, props.getProperty(SERVER_NAME));
-        params.put(IGNORES_URLS_FIELD, props.getProperty(IGNORES_URLS));
-        params.put(ConfigurationKeys.IGNORE_URL_PATTERN_TYPE.getName(), MultipleAntPathMatcher.class.getName());
+    Map<String, String> params = new HashMap<>(5);
+    params.put(CAS_SERVER_URL_PREFIX_FIELD, props.getProperty(CAS_SERVER_URL_PREFIX));
+    params.put(CAS_SERVER_LOGINURL_FIELD, props.getProperty(CAS_SERVER_LOGINURL));
+    params.put(SERVER_NAME_FIELD, props.getProperty(SERVER_NAME));
+    params.put(IGNORES_URLS_FIELD, props.getProperty(IGNORES_URLS));
+    params.put(ConfigurationKeys.IGNORE_URL_PATTERN_TYPE.getName(),
+        MultipleAntPathMatcher.class.getName());
 
-        // 单点退出
-        ctx.addListener(SingleSignOutHttpSessionListener.class);
+    // 单点退出
+    ctx.addListener(SingleSignOutHttpSessionListener.class);
 
-        SingleSignOutFilter signOut = new SingleSignOutFilter();
-        signOut.setCasServerUrlPrefix(props.getProperty(CAS_SERVER_URL_PREFIX));
-        signOut.setIgnoreInitConfiguration(true);
+    SingleSignOutFilter signOut = new SingleSignOutFilter();
+    signOut.setCasServerUrlPrefix(props.getProperty(CAS_SERVER_URL_PREFIX));
+    signOut.setIgnoreInitConfiguration(true);
 
-        ctx.addFilter(SingleSignOutFilter.class.getName(), signOut).addMappingForUrlPatterns(null, true, ANY_PATH);
+    ctx.addFilter(SingleSignOutFilter.class.getName(), signOut).addMappingForUrlPatterns(null, true,
+        ANY_PATH);
 
-        // cas认证
-        Dynamic auth = ctx.addFilter(AuthenticationFilter.class.getName(), AuthenticationFilter.class);
-        auth.setInitParameters(params);
-        auth.addMappingForUrlPatterns(null, true, ANY_PATH);
+    // cas认证
+    Dynamic auth = ctx.addFilter(AuthenticationFilter.class.getName(), AuthenticationFilter.class);
+    auth.setInitParameters(params);
+    auth.addMappingForUrlPatterns(null, true, ANY_PATH);
 
-        // ticket
-        Dynamic ticket = ctx.addFilter(Cas20ProxyReceivingTicketValidationFilter4Http.class.getName(),
-                Cas20ProxyReceivingTicketValidationFilter4Http.class);
-        ticket.setInitParameters(params);
-        ticket.addMappingForUrlPatterns(null, true, ANY_PATH);
+    // ticket
+    Dynamic ticket = ctx.addFilter(Cas20ProxyReceivingTicketValidationFilter4Http.class.getName(),
+        Cas20ProxyReceivingTicketValidationFilter4Http.class);
+    ticket.setInitParameters(params);
+    ticket.addMappingForUrlPatterns(null, true, ANY_PATH);
 
-        // 获取登录名
-        ctx.addFilter(AssertionThreadLocalFilter.class.getName(), AssertionThreadLocalFilter.class)
-                .addMappingForUrlPatterns(null, true, ANY_PATH);
-    }
+    // 获取登录名
+    ctx.addFilter(AssertionThreadLocalFilter.class.getName(), AssertionThreadLocalFilter.class)
+        .addMappingForUrlPatterns(null, true, ANY_PATH);
+  }
 }

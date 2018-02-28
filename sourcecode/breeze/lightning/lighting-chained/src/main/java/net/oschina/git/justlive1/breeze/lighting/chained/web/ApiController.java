@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import net.oschina.git.justlive1.breeze.lighting.chained.conf.CoreProps;
 import net.oschina.git.justlive1.breeze.lighting.chained.conf.CoreProps.Remote;
 import net.oschina.git.justlive1.breeze.lighting.chained.core.manage.StepManager;
@@ -25,45 +24,47 @@ import net.oschina.git.justlive1.breeze.snow.common.base.util.Checks;
 @RequestMapping("/api")
 public class ApiController {
 
-    static final String PING = "ping";
-    static final String PONG = "pong";
+  static final String PING = "ping";
+  static final String PONG = "pong";
 
-    @Autowired
-    StepManager stepManager;
+  @Autowired
+  StepManager stepManager;
 
-    /**
-     * webhook调用
-     * 
-     * @param source
-     * @return
-     */
-    @RequestMapping("/github/webhook")
-    public ResponseEntity<String> webhook(@RequestBody Payload payload, @RequestHeader("User-Agent") String agent,
-            @RequestHeader("X-GitHub-Event") String event, @RequestHeader("X-Hub-Signature") String signature) {
+  /**
+   * webhook调用
+   * 
+   * @param source
+   * @return
+   */
+  @RequestMapping("/github/webhook")
+  public ResponseEntity<String> webhook(@RequestBody Payload payload,
+      @RequestHeader("User-Agent") String agent, @RequestHeader("X-GitHub-Event") String event,
+      @RequestHeader("X-Hub-Signature") String signature) {
 
-        if (PING.equals(event)) {
-            return ResponseEntity.ok().body(PONG);
-        }
-
-        Remote remote = Checks.notNull(stepManager.findByType(CoreProps.REMOTE_TYPE.GITHUB.name()));
-
-        if (!agent.startsWith(remote.getAgent())
-                || (remote.getEvents() != null && !remote.getEvents().contains(event))) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
-
-        String ref = payload.getRef().replace(remote.getRefPrefix(), "");
-        String url = payload.getRepository().getUrl() + remote.getFilePrefix() + ref + remote.getFileSuffix();
-        String projectName = ref + "-" + payload.getRepository().getName();
-
-        StepContext ctx = new StepContext();
-        ctx.put(StepContext.REMOTE, remote);
-        ctx.put(StepContext.REMOTE_FILE, url);
-        ctx.put(StepContext.PROJECT_NAME, projectName);
-
-        stepManager.excute(ctx);
-
-        return ResponseEntity.ok().body(PONG);
+    if (PING.equals(event)) {
+      return ResponseEntity.ok().body(PONG);
     }
+
+    Remote remote = Checks.notNull(stepManager.findByType(CoreProps.REMOTE_TYPE.GITHUB.name()));
+
+    if (!agent.startsWith(remote.getAgent())
+        || (remote.getEvents() != null && !remote.getEvents().contains(event))) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
+    String ref = payload.getRef().replace(remote.getRefPrefix(), "");
+    String url =
+        payload.getRepository().getUrl() + remote.getFilePrefix() + ref + remote.getFileSuffix();
+    String projectName = ref + "-" + payload.getRepository().getName();
+
+    StepContext ctx = new StepContext();
+    ctx.put(StepContext.REMOTE, remote);
+    ctx.put(StepContext.REMOTE_FILE, url);
+    ctx.put(StepContext.PROJECT_NAME, projectName);
+
+    stepManager.excute(ctx);
+
+    return ResponseEntity.ok().body(PONG);
+  }
 
 }

@@ -11,12 +11,12 @@ import javax.net.ssl.SSLSession;
  */
 public class HostnameVerifierAlwaysTrue implements HostnameVerifier {
 
-    static {
-        HttpUtils.trustAllManager();
-    }
+  static {
+    HttpUtils.trustAllManager();
+  }
 
-    @Override
-    public boolean verify(String hostname, SSLSession session) {
-        return false;
-    }
+  @Override
+  public boolean verify(String hostname, SSLSession session) {
+    return false;
+  }
 }
