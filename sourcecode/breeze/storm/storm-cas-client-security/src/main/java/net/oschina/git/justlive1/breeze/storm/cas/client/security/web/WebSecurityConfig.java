@@ -66,19 +66,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
 
-    // @formatter:off
 
-        http.csrf().disable().authorizeRequests().expressionHandler(expressionHandler()).and().exceptionHandling()
-                .accessDeniedPage(configProps.accessDeniedUrl).and().httpBasic()
-                .authenticationEntryPoint(authenticationEntryPoint).and().addFilter(casAuthenticationFilter())
-                .addFilterBefore(singleSignOutFilter(), CasAuthenticationFilter.class).authorizeRequests().anyRequest()
-                .authenticated().and().logout().logoutUrl(configProps.logoutUrl)
-                .logoutSuccessUrl(configProps.logoutSuccessUrl)
-                .invalidateHttpSession(configProps.logoutSessionInvalidate).permitAll().and().sessionManagement()
-                .sessionFixation().changeSessionId().maximumSessions(configProps.sessionMaximum)
-                .expiredUrl(configProps.sessionExpireUrl);
+    http.csrf().disable().authorizeRequests().expressionHandler(expressionHandler()).and()
+        .exceptionHandling().accessDeniedPage(configProps.accessDeniedUrl).and().httpBasic()
+        .authenticationEntryPoint(authenticationEntryPoint).and()
+        .addFilter(casAuthenticationFilter())
+        .addFilterBefore(singleSignOutFilter(), CasAuthenticationFilter.class).authorizeRequests()
+        .anyRequest().authenticated().and().logout().logoutUrl(configProps.logoutUrl)
+        .logoutSuccessUrl(configProps.logoutSuccessUrl)
+        .invalidateHttpSession(configProps.logoutSessionInvalidate).permitAll().and()
+        .sessionManagement().sessionFixation().changeSessionId()
+        .maximumSessions(configProps.sessionMaximum).expiredUrl(configProps.sessionExpireUrl);
 
-        // @formatter:on
 
   }
 
