@@ -1,0 +1,6 @@
+
+rootProject.name = 'mist'
+
+include 'mist-api'
+include 'mist-server'
+
