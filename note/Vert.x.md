@@ -393,7 +393,113 @@ SomeScript.groovy // 将使用Groovy的Factory
 
 ```
 
+- Verticle 隔离组
 
+```
+默认情况，当Vert.x部署Verticle时它会调用当前类加载器来加载类，而不会创建一个新的。大多数情况下，这是最简单、最清晰和最干净。
 
+但是在某些情况下，您可能需要部署一个Verticle，它包含的类要与应用程序中其他类隔离开来。比如您想要在一个Vert.x实例中部署两个同名不同版本的Verticle，或者不同的Verticle使用了同一个jar包的不同版本。
 
+当使用隔离组时，您需要用 setIsolatedClassed 方法来提供一个您想隔离的类名列表。列表项可以是一个Java 限定类全名，如 com.mycompany.myproject.engine.MyClass；也可以是包含通配符的可匹配某个包或子包的任何类，例如 com.mycompany.myproject.* 将会匹配所有 com.mycompany.myproject 包或任意子包中的任意类名。
+
+请注意仅仅只有匹配的类会被隔离，其他任意类会被当前类加载器加载。
+
+若您想要加载的类和资源不存在于主类路径（main classpath），您可使用 setExtraClasspath 方法将额外的类路径添加到这里。
+
+警告：谨慎使用此功能，类加载器可能会导致您的应用难于调试，变得一团乱麻（can of worms）。
+
+DeploymentOptions options = new DeploymentOptions().setIsolationGroup("mygroup");
+options.setIsolatedClasses(Arrays.asList("com.mycompany.myverticle.*",
+                   "com.mycompany.somepkg.SomeClass", "org.somelibrary.*"));
+vertx.deployVerticle("com.mycompany.myverticle.VerticleClass", options);
+
+```
+
+- 从命令行运行Verticle
+
+```
+
+您可以在 Maven 或 Gradle 项目中以正常方式添加 Vert.x Core 为依赖，在项目中直接使用 Vert.x。
+
+但是，您也可以从命令行直接运行 Vert.x 的 Verticle。
+
+为此，您需要下载并安装 Vert.x 的发行版，并且将安装的 bin 目录添加到您的 PATH 环境变量中，还要确保您的 PATH 中设置了Java 8的JDK环境。
+
+请注意：JDK需要支持Java代码的运行时编译（on the fly compilation）。
+
+现在您可以使用 vertx run 命令运行Verticle了，这儿是一些例子：
+
+# 运行JavaScript的Verticle
+vertx run my_verticle.js
+
+# 运行Ruby的Verticle
+vertx run a_n_other_verticle.rb
+
+# 使用集群模式运行Groovy的Verticle
+vertx run FooVerticle.groovy -cluster
+您甚至可以不必编译 Java 源代码，直接运行它：
+
+vertx run SomeJavaSourceFile.java
+Vert.x 将在运行它之前对 Java 源代码文件执行运行时编译，这对于快速原型制作和演示很有用。不需要设置 Maven 或 Gradle 就能跑起来！
+
+```
+
+- Context 对象
+
+```
+当 Vert.x 传递一个事件给处理器或者调用 Verticle 的 start 或 stop 方法时，它会关联一个 Context 对象来执行。通常来说这个 Context 会是一个 Event Loop Context，它绑定到了一个特定的 Event Loop 线程上。所以在该 Context 上执行的操作总是在同一个 Event Loop 线程中。对于运行内联的阻塞代码的 Worker Verticle 来说，会关联一个 Worker Context，并且所有的操作运都会运行在 Worker 线程池的线程上。
+
+每个 Verticle 在部署的时候都会被分配一个 Context（根据配置不同，可以是Event Loop Context 或者 Worker Context），之后此 Verticle 上所有的普通代码都会在此 Context 上执行（即对应的 Event Loop 或Worker 线程）。一个 Context 对应一个 Event Loop 线程（或 Worker 线程），但一个 Event Loop 可能对应多个 Context。
+
+Context context = vertx.getOrCreateContext();
+
+若已经有一个 Context 和当前线程关联，那么它直接重用这个 Context 对象，如果没有则创建一个新的。您可以检查获取的 Context 的类型：
+
+Context context = vertx.getOrCreateContext();
+if (context.isEventLoopContext()) {
+  System.out.println("Context attached to Event Loop");
+} else if (context.isWorkerContext()) {
+  System.out.println("Context attached to Worker Thread");
+} else if (context.isMultiThreadedWorkerContext()) {
+  System.out.println("Context attached to Worker Thread - multi threaded worker");
+} else if (! Context.isOnVertxThread()) {
+  System.out.println("Context not attached to a thread managed by vert.x");
+}
+
+当您获取了这个 Context 对象，您就可以在 Context 中异步执行代码了。换句话说，您提交的任务将会在同一个 Context 中运行：
+
+vertx.getOrCreateContext().runOnContext(v -> {
+  System.out.println("This will be executed asynchronously in the same context");
+})
+
+当在同一个 Context 中运行了多个处理函数时，可能需要在它们之间共享数据。 Context 对象提供了存储和读取共享数据的方法。举例来说，它允许您将数据传递到 runOnContext 方法运行的某些操作中：
+
+final Context context = vertx.getOrCreateContext();
+context.put("data", "hello");
+context.runOnContext((v) -> {
+  String hello = context.get("data");
+});
+
+```
+
+- 执行周期性/延迟性操作
+
+```
+
+在 Vert.x 中，想要延迟之后执行或定期执行操作很常见。
+
+在 Standard Verticle 中您不能直接让线程休眠以引入延迟，因为它会阻塞 Event Loop 线程。取而代之是使用 Vert.x 定时器。定时器可以是一次性或周期性的
+
+一次性计时器
+    一次性计时器会在一定延迟后调用一个 Event Handler，以毫秒为单位计时。
+    可以通过 setTimer 方法传递延迟时间和一个处理器来设置计时器的触发。
+    
+    long timerID = vertx.setTimer(1000, id -> {
+      System.out.println("And one second later this is printed");
+    });
+    System.out.println("First this is printed");
+
+    返回值是一个唯一的计时器id，该id可用于之后取消该计时器，这个计时器id会传入给处理器。
+
+```
 
