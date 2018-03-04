@@ -500,6 +500,101 @@ context.runOnContext((v) -> {
     System.out.println("First this is printed");
 
     返回值是一个唯一的计时器id，该id可用于之后取消该计时器，这个计时器id会传入给处理器。
+    
+周期性计时器
+    您同样可以使用 setPeriodic 方法设置一个周期性触发的计时器。第一次触发之前同样会有一段设置的延时时间。
+
+    setPeriodic 方法的返回值也是一个唯一的计时器id，若之后该计时器需要取消则使用该id。传给处理器的参数也是这个唯一的计时器id。
+    
+    请记住这个计时器将会定期触发。如果您的定时任务会花费大量的时间，则您的计时器事件可能会连续执行甚至发生更坏的情况：重叠。这种情况，您应考虑使用 setTimer 方法，当任务执行完成时设置下一个计时器
+    
+    long timerID = vertx.setPeriodic(1000, id -> {
+      System.out.println("And every second this is printed");
+    });
+    
+    System.out.println("First this is printed");
+
+取消计时器
+    指定一个计时器id并调用 cancelTimer 方法来取消一个周期性计时器
+    
+    vertx.cancelTimer(timerID);
+    
+    如果您在 Verticle 中创建了计时器，当这个 Verticle 被撤销时这个计时器会被自动关闭。    
+    
+```
+
+- Verticle Worker Pool
+
+```
+
+Verticle 使用 Vert.x 中的 Worker Pool 来执行阻塞式行为，例如 executeBlocking 或 Worker Verticle。
+可以在部署配置项中指定不同的Worker 线程池
+
+vertx.deployVerticle("the-verticle", new DeploymentOptions().setWorkerPoolName("the-specific-pool"));
+
+
+```
+
+- Event Bus
+
+```
+
+Event Bus 是 Vert.x 的神经系统。
+
+    每一个 Vert.x 实例都有一个单独的 Event Bus 实例。您可以通过 Vertx 实例的 eventBus 方法来获得对应的 EventBus 实例。
+    
+    您的应用中的不同部分通过 Event Bus 相互通信，无论它们使用哪一种语言实现，无论它们在同一个 Vert.x 实例中或在不同的 Vert.x 实例中。
+    
+    甚至可以通过桥接的方式允许在浏览器中运行的客户端JavaScript在相同的Event Bus上相互通信。
+    
+    Event Bus可形成跨越多个服务器节点和多个浏览器的点对点的分布式消息系统。
+    
+    Event Bus支持发布/订阅、点对点、请求/响应的消息通信方式。
+    
+    Event Bus的API很简单。基本上只涉及注册处理器、撤销处理器和发送和发布消息。
+
+寻址
+    消息会被 Event Bus 发送到一个 地址(address)。
+    
+    同任何花哨的寻址方案相比，Vert.x的地址格式并不麻烦。Vert.x中的地址是一个简单的字符串，任意字符串都合法。当然，使用某种模式来命名仍然是明智的。如：使用点号来划分命名空间。
+    
+    一些合法的地址形如：europe.news.feed1、acme.games.pacman、sausages和X。
+
+
+处理器
+    消息在处理器（Handler）中被接收。您可以在某个地址上注册一个处理器来接收消息。
+    
+    同一个地址可以注册许多不同的处理器，一个处理器也可以注册在多个不同的地址上。
+    
+发布/订阅消息
+    Event Bus支持 发布消息 功能。
+    
+    消息将被发布到一个地址中，发布意味着会将信息传递给 所有 注册在该地址上的处理器。这和 发布/订阅模式 很类似。
+
+点对点模式/请求-响应模式
+    Event Bus也支持 点对点消息模式。
+    
+    消息将被发送到一个地址中，Vert.x将会把消息分发到某个注册在该地址上的处理器。若这个地址上有不止一个注册过的处理器，它将使用 不严格的轮询算法 选择其中一个。
+    
+    点对点消息传递模式下，可在消息发送的时候指定一个应答处理器（可选）。
+    
+    当接收者收到消息并且已经被处理时，它可以选择性决定回复该消息，若选择回复则绑定的应答处理器将会被调用。当发送者收到回复消息时，它也可以回复，这个过程可以不断重复。通过这种方式可以允许在两个不同的 Verticle 之间设置一个对话窗口。这种消息模式被称作 请求-响应 模式。
+    
+尽力传输
+    Vert.x会尽它最大努力去传递消息，并且不会主动丢弃消息。这种方式称为 尽力传输(Best-effort delivery)。
+    
+    但是，当 Event Bus 中的全部或部分发生故障时，则可能会丢失消息。
+    
+    若您的应用关心丢失的消息，您应该编写具有幂等性的处理器，并且您的发送者可以在恢复后重试。
+    
+    RPC通信通常情况下有三种语义：at least once、at most once 和 exactly once。不同语义情况下要考虑的情况不同。
+    
+消息类型
+    Vert.x 默认允许任何基本/简单类型、String 或 Buffer 作为消息发送。不过在 Vert.x 中的通常做法是使用 JSON 格式来发送消息。
+    
+    JSON 对于 Vert.x 支持的所有语言都是非常容易创建、读取和解析的，因此它已经成为了Vert.x中的通用语(lingua franca)。但是若您不想用 JSON，我们并不强制您使用它。
+    
+    Event Bus 非常灵活，它支持在 Event Bus 中发送任意对象。您可以通过为您想要发送的对象自定义一个 MessageCodec 来实现。
 
 ```
 
