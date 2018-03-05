@@ -596,5 +596,40 @@ Event Bus 是 Vert.x 的神经系统。
     
     Event Bus 非常灵活，它支持在 Event Bus 中发送任意对象。您可以通过为您想要发送的对象自定义一个 MessageCodec 来实现。
 
+Event Bus API
+
+    //获取Event Bus
+    EventBus eb = vertx.eventBus();
+    
+    //最简单的注册处理器的方式是使用 consumer 方法
+    EventBus eb = vertx.eventBus();
+    eb.consumer("news.uk.sport", message -> {
+      System.out.println("I have received a message: " + message.body());
+    });
+    
+    MessageConsumer<String> consumer = eb.consumer("news.uk.sport");
+    consumer.handler(message -> {
+      System.out.println("I have received a message: " + message.body());
+    });
+    
+    //在集群模式下的Event Bus上注册处理器时，注册信息会花费一些时间才能传播到集群中的所有节点。若希望在完成注册后收到通知，您可以在 MessageConsumer 对象上注册一个 completion handler。
+    consumer.completionHandler(res -> {
+      if (res.succeeded()) {
+        System.out.println("The handler registration has reached all nodes");
+      } else {
+        System.out.println("Registration failed!");
+      }
+    });
+
+    //您可以通过 unregister() 方法来注销处理器。若在集群模式下的 Event Bus 中撤销处理器，则同样会花费一些时间在节点中传播。若您想在完成后收到通知，可以使用unregister(handler) 方法注册处理器
+    consumer.unregister(res -> {
+      if (res.succeeded()) {
+        System.out.println("The handler un-registration has reached all nodes");
+      } else {
+        System.out.println("Un-registration failed!");
+      }
+    });
+    
+
 ```
 
