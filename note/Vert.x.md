@@ -630,6 +630,13 @@ Event Bus API
       }
     });
     
+    //发布消息很简单，只需使用 publish 方法指定一个地址去发布即可。这个消息将会传递给所有在地址 news.uk.sport 上注册过的处理器
+    eventBus.publish("news.uk.sport", "Yay! Someone kicked a ball");
+    
+    //设置消息头 在 Event Bus 上发送的消息可包含头信息。这可通过在发送或发布时提供的 DeliveryOptions 来指定。
+    DeliveryOptions options = new DeliveryOptions();
+    options.addHeader("some-header", "some-value");
+    eventBus.send("news.uk.sport", "Yay! Someone kicked a ball", options);
 
 ```
 
