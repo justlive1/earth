@@ -637,6 +637,34 @@ Event Bus API
     DeliveryOptions options = new DeliveryOptions();
     options.addHeader("some-header", "some-value");
     eventBus.send("news.uk.sport", "Yay! Someone kicked a ball", options);
+    
+    /*
+    应答消息/发送回复
+    当使用 send 方法发送消息时，Event Bus会尝试将消息传递到注册在Event Bus上的 MessageConsumer中。
+    在某些情况下，发送者需要知道消费者何时收到消息并 处理 了消息。
+    消费者可以通过调用 reply 方法来应答这个消息。
+    当这种情况发生时，它会将消息回复给发送者并且在发送者中调用应答处理器来处理回复的消息。
+    在应答的消息体中可以包含有用的信息。
+    关于 处理中 的含义实际上是由应用程序来定义的。这完全取决于消费者如何执行，Event Bus 对此并不关心
+        一个简单地实现了返回当天时间的服务，在应答的消息里会包含当天时间信息。
+        一个实现了持久化队列的消息消费者，当消息成功持久化到存储时，可以使用true来应答消息，或false表示失败。
+        一个处理订单的消息消费者也许会用true确认这个订单已经成功处理并且可以从数据库中删除。
+    */
+    
+    //接收者
+    MessageConsumer<String> consumer = eventBus.consumer("news.uk.sport");
+    consumer.handler(message -> {
+      System.out.println("I have received a message: " + message.body());
+      message.reply("how interesting!");
+    });
+    
+    //发送者：
+    eventBus.send("news.uk.sport", "Yay! Someone kicked a ball across a patch of grass", ar -> {
+      if (ar.succeeded()) {
+        System.out.println("Received reply: " + ar.result().body());
+      }
+    });
+    
 
 ```
 
