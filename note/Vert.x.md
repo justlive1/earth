@@ -665,6 +665,10 @@ Event Bus API
       }
     });
     
+    //消息编解码器 可以在 Event Bus 中发送任何对象，只要你为这个对象类型注册一个编解码器 MessageCodec。消息编解码器有一个名称，您需要在发送或发布消息时通过 DeliveryOptions 来指定
+    ventBus.registerCodec(myCodec);
+    DeliveryOptions options = new DeliveryOptions().setCodecName(myCodec.name());
+    eventBus.send("orders", new MyPOJO(), options);
 
 ```
 
