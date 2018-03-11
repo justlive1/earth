@@ -669,6 +669,21 @@ Event Bus API
     ventBus.registerCodec(myCodec);
     DeliveryOptions options = new DeliveryOptions().setCodecName(myCodec.name());
     eventBus.send("orders", new MyPOJO(), options);
+    //若您总是希望某个类使用将特定的编解码器，那么您可以为这个类注册默认编解码器。这样您就不需要在每次发送的时候使用 DeliveryOptions 来指定了
+    eventBus.registerDefaultCodec(MyPOJO.class, myCodec);
+    eventBus.send("orders", new MyPOJO());
 
+    //集群模式的 Event Bus
+    //需要确在您的 classpath 中（或构建工具的依赖中）包含 ClusterManager 的实现类，如默认的 HazelcastClusterManager。
+    VertxOptions options = new VertxOptions();
+    Vertx.clusteredVertx(options, res -> {
+      if (res.succeeded()) {
+        Vertx vertx = res.result();
+        EventBus eventBus = vertx.eventBus();
+        System.out.println("We now have a clustered event bus: " + eventBus);
+      } else {
+        System.out.println("Failed: " + res.cause());
+      }
+    });
 ```
 
