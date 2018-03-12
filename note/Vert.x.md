@@ -685,5 +685,23 @@ Event Bus API
         System.out.println("Failed: " + res.cause());
       }
     });
+    //上边代码段描述了如何在Event Bus中使用SSL连接替换传统的TCP连接。
+    //警告： 若要在集群模式下保证安全性，必须 将集群管理器配置成加密的或强制安全的。
+    //EventBusOptions还允许您指定 Event Bus 是否运行在集群模式下，以及它的主机信息和端口。您可使用 setClustered、getClusterHost和 getClusterPort 方法来设置
+    VertxOptions options = new VertxOptions()
+        .setEventBusOptions(new EventBusOptions()
+            .setClusterPublicHost("whatever")
+            .setClusterPublicPort(1234)
+        );
+    
+    Vertx.clusteredVertx(options, res -> {
+      if (res.succeeded()) {
+        Vertx vertx = res.result();
+        EventBus eventBus = vertx.eventBus();
+        System.out.println("We now have a clustered event bus: " + eventBus);
+      } else {
+        System.out.println("Failed: " + res.cause());
+      }
+    });
 ```
 
