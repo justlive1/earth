@@ -66,6 +66,9 @@
         mist-valid
             校验相关，包含ticket校验等
             
+        mist-client
+            认证中心客户端
+            
 
 
 ```
