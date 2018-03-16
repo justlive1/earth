@@ -16,7 +16,11 @@
 		<java.version>1.8</java.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
+
 		<spring.version>5.0.2.RELEASE</spring.version>
+		<vertx.version>3.5.1</vertx.version>
+		<org.reflections>0.9.11</org.reflections>
+
 		<aspectj.version>1.8.9</aspectj.version>
 		<assertj.version>2.6.0</assertj.version>
 		<caffeine.version>2.3.5</caffeine.version>
@@ -104,6 +108,12 @@
 				<version>${project.version}</version>
 			</dependency>
 
+			<dependency>
+				<groupId>net.oschina.git.justlive1.breeze.snow</groupId>
+				<artifactId>snow-common-web-vertx</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
 			<!-- Spring begin -->
 			<dependency>
 				<groupId>org.springframework</groupId>
@@ -118,6 +128,20 @@
 				<scope>test</scope>
 			</dependency>
 			<!-- Spring end -->
+
+			<dependency>
+				<groupId>io.vertx</groupId>
+				<artifactId>vertx-dependencies</artifactId>
+				<version>${vertx.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.reflections</groupId>
+				<artifactId>reflections</artifactId>
+				<version>${org.reflections}</version>
+			</dependency>
 
 			<dependency>
 				<groupId>commons-fileupload</groupId>
@@ -198,7 +222,8 @@
 	</dependencyManagement>
 
 	<modules>
-		<module>snow-common-web</module>
 		<module>snow-common-base</module>
+		<module>snow-common-web</module>
+		<module>snow-common-web-vertx</module>
 	</modules>
 </project>
