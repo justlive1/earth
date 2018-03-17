@@ -13,7 +13,7 @@ import io.vertx.core.http.HttpMethod;
  * @author wubo
  *
  */
-@Target({ElementType.TYPE})
+@Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface VertxRouteMapping {
