@@ -26,7 +26,11 @@ public class BaseConstants {
   public static final String RESP_MESSAGE_FIELD = "message";
 
   /**
-   * 所有路径匹配
+   * 匹配所有
+   */
+  public static final String ANY = "*";
+  /**
+   * 匹配所有路径
    */
   public static final String ANY_PATH = "/*";
 

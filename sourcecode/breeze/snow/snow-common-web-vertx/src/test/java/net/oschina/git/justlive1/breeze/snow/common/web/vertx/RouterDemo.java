@@ -1,9 +1,9 @@
 package net.oschina.git.justlive1.breeze.snow.common.web.vertx;
 
 import net.oschina.git.justlive1.breeze.snow.common.web.vertx.annotation.VertxRouteMapping;
-import net.oschina.git.justlive1.breeze.snow.common.web.vertx.annotation.VertxRouter;
+import net.oschina.git.justlive1.breeze.snow.common.web.vertx.annotation.VertxRoute;
 
-@VertxRouter("/demo")
+@VertxRoute("/demo")
 public class RouterDemo {
 
   @VertxRouteMapping(value = "/test")

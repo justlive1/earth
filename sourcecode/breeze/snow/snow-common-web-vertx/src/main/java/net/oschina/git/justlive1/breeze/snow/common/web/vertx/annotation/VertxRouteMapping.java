@@ -57,4 +57,8 @@ public @interface VertxRouteMapping {
    */
   String[] produces() default {};
 
+  /**
+   * 是否使用阻塞方式
+   */
+  boolean blocking() default false;
 }
