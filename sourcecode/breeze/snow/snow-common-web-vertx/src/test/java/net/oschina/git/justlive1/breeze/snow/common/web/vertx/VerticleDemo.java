@@ -33,8 +33,8 @@ public class VerticleDemo extends AbstractVerticle {
     router.route().handler(CookieHandler.create());
     router.route().handler(BodyHandler.create());
 
-    RouteRegisterFactory routerAdapter = new RouteRegisterFactory(router);
-    routerAdapter.execute();
+    RouteRegisterFactory routeRegisterFactory = new RouteRegisterFactory(router);
+    routeRegisterFactory.execute();
 
     vertx.createHttpServer().requestHandler(router::accept).listen(8080);
 

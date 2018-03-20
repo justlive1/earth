@@ -39,8 +39,9 @@ public class RouteRegisterFactory {
   public RouteRegisterFactory(Router router) {
     this.router = router;
     this.routeWraps = new HashMap<>(32);
-    this.paramResolver = new ParamResolverComposite(ImmutableList.<MethodParamResolver>builder()
-        .add(new RequestParamResolver()).add(new HeaderParamResolver()).build());
+    this.paramResolver = new ParamResolverComposite(
+        ImmutableList.<MethodParamResolver>builder().add(new RequestParamResolver())
+            .add(new HeaderParamResolver()).add(new PathParamResolver()).build());
   }
 
   public void execute() {
@@ -58,6 +59,11 @@ public class RouteRegisterFactory {
 
   }
 
+  /**
+   * 解析{@code VertxRoute}注解的route类
+   * 
+   * @param clazz
+   */
   private void parseVertxRoute(Class<?> clazz) {
 
     VertxRoute route = clazz.getAnnotation(VertxRoute.class);
@@ -68,6 +74,7 @@ public class RouteRegisterFactory {
     } catch (InstantiationException | IllegalAccessException e) {
       throw Exceptions.wrap(e);
     }
+
     String root = transferUri(route.value());
 
     Method[] methods = clazz.getMethods();
@@ -80,6 +87,13 @@ public class RouteRegisterFactory {
 
   }
 
+  /**
+   * 解析{@code VertxRoute}注解类下注解了{@code VertxRouteMapping}的方法
+   * 
+   * @param root
+   * @param method
+   * @param bean
+   */
   private void parseVertxRouteMapping(String root, Method method, Object bean) {
 
     VertxRouteMapping routeMapping = method.getAnnotation(VertxRouteMapping.class);
@@ -111,6 +125,12 @@ public class RouteRegisterFactory {
 
   }
 
+  /**
+   * 解析方法上使用了注解的参数
+   * 
+   * @param parameters
+   * @return
+   */
   private ParamWrap[] parseVertxRouterParamters(Parameter[] parameters) {
 
     ParamWrap[] paramWraps = new ParamWrap[parameters.length];
@@ -122,6 +142,9 @@ public class RouteRegisterFactory {
     return paramWraps;
   }
 
+  /**
+   * 讲Route注册到vertx中
+   */
   private void register() {
 
     for (Map.Entry<String, RouteWrap> entry : routeWraps.entrySet()) {
@@ -137,7 +160,7 @@ public class RouteRegisterFactory {
       for (HttpMethod method : routeMapping.method()) {
         route.method(method);
       }
-      Handler<RoutingContext> handler = ctx -> runWithArgs(wrap, ctx);
+      Handler<RoutingContext> handler = ctx -> executeWithArgs(wrap, ctx);
       if (routeMapping.blocking()) {
         route.blockingHandler(handler);
       } else {
@@ -150,7 +173,13 @@ public class RouteRegisterFactory {
 
   }
 
-  private void runWithArgs(RouteWrap wrap, RoutingContext ctx) {
+  /**
+   * 绑定参数到Route上下文的方法
+   * 
+   * @param wrap
+   * @param ctx
+   */
+  private void executeWithArgs(RouteWrap wrap, RoutingContext ctx) {
 
     Object[] args = new Object[wrap.paramWraps.length];
 
@@ -165,10 +194,16 @@ public class RouteRegisterFactory {
       Object obj = wrap.method.invoke(wrap.bean, args);
       ctx.response().end(obj.toString());
     } catch (Exception e) {
-      log.error("", e);
+      throw Exceptions.wrap(e);
     }
   }
 
+  /**
+   * 处理uri，将首个/去除
+   * 
+   * @param uri
+   * @return
+   */
   private static String transferUri(String uri) {
     if (uri.startsWith(PATH_SEPARATOR)) {
       return uri.substring(1);
