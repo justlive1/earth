@@ -1,4 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  net.oschina.git.justlive1.breeze.storm.cas.CasConfig,\
+  justlive1.earth.breeze.storm.cas.CasConfig,\
   org.apereo.cas.config.CasEmbeddedContainerTomcatConfiguration
 

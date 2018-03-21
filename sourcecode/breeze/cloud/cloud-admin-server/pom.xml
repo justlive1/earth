@@ -4,7 +4,7 @@
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>net.oschina.git.justlive1.breeze.cloud</groupId>
+		<groupId>justlive1.earth.breeze.cloud</groupId>
 		<artifactId>cloud</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
@@ -23,12 +23,12 @@
 	<dependencies>
 
 		<dependency>
-			<groupId>net.oschina.git.justlive1.breeze.snow</groupId>
+			<groupId>justlive1.earth.breeze.snow</groupId>
 			<artifactId>snow-common-base</artifactId>
 		</dependency>
 
 		<dependency>
-			<groupId>net.oschina.git.justlive1.breeze.cloud</groupId>
+			<groupId>justlive1.earth.breeze.cloud</groupId>
 			<artifactId>cloud-security-support</artifactId>
 		</dependency>
 

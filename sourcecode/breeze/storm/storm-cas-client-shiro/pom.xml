@@ -4,7 +4,7 @@
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>net.oschina.git.justlive1.breeze.storm</groupId>
+		<groupId>justlive1.earth.breeze.storm</groupId>
 		<artifactId>storm</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
@@ -17,12 +17,12 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<shiro.version>1.2.6</shiro.version>
+		<shiro.version>1.4.0</shiro.version>
 	</properties>
 	<dependencies>
 
 		<dependency>
-			<groupId>net.oschina.git.justlive1.breeze.snow</groupId>
+			<groupId>justlive1.earth.breeze.snow</groupId>
 			<artifactId>snow-common-web</artifactId>
 		</dependency>
 
