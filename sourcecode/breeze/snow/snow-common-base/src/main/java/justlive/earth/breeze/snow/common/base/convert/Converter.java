@@ -1,5 +1,7 @@
 package justlive.earth.breeze.snow.common.base.convert;
 
+import justlive.earth.breeze.snow.common.base.convert.support.ConverterTypePair;
+
 /**
  * 类型转换器
  * 
@@ -8,8 +10,8 @@ package justlive.earth.breeze.snow.common.base.convert;
  * @param <S>
  * @param <T>
  */
-@FunctionalInterface
 public interface Converter<S, T> {
+
 
   /**
    * 类型转换
@@ -18,4 +20,13 @@ public interface Converter<S, T> {
    * @return
    */
   T convert(S source);
+
+  /**
+   * 获取类型对
+   * 
+   * @return
+   */
+  default ConverterTypePair pair() {
+    return null;
+  }
 }
