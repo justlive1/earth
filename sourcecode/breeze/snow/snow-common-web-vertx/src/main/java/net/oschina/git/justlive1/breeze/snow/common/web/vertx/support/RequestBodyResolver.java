@@ -4,6 +4,12 @@ import java.lang.reflect.Parameter;
 import io.vertx.ext.web.RoutingContext;
 import net.oschina.git.justlive1.breeze.snow.common.web.vertx.annotation.VertxRequestBody;
 
+/**
+ * http body 解析器
+ * 
+ * @author wubo
+ *
+ */
 public class RequestBodyResolver implements MethodParamResolver {
 
   @Override
