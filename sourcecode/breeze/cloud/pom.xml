@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>justlive1.earth.breeze.cloud</groupId>
+	<groupId>justlive.earth.breeze.cloud</groupId>
 	<artifactId>cloud</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
@@ -112,49 +112,49 @@
 
 			<!-- self -->
 			<dependency>
-				<groupId>justlive1.earth.breeze.snow</groupId>
+				<groupId>justlive.earth.breeze.snow</groupId>
 				<artifactId>snow-common-base</artifactId>
 				<version>${snow.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>justlive1.earth.breeze.cloud</groupId>
+				<groupId>justlive.earth.breeze.cloud</groupId>
 				<artifactId>cloud-admin-client</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>justlive1.earth.breeze.cloud</groupId>
+				<groupId>justlive.earth.breeze.cloud</groupId>
 				<artifactId>cloud-admin-server</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>justlive1.earth.breeze.cloud</groupId>
+				<groupId>justlive.earth.breeze.cloud</groupId>
 				<artifactId>cloud-registry-client</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>justlive1.earth.breeze.cloud</groupId>
+				<groupId>justlive.earth.breeze.cloud</groupId>
 				<artifactId>cloud-registry-client-consul</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>justlive1.earth.breeze.cloud</groupId>
+				<groupId>justlive.earth.breeze.cloud</groupId>
 				<artifactId>cloud-registry-client-eureka</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			
 			<dependency>
-                <groupId>justlive1.earth.breeze.cloud</groupId>
+                <groupId>justlive.earth.breeze.cloud</groupId>
                 <artifactId>cloud-registry-client-zookeeper</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
 			<dependency>
-				<groupId>justlive1.earth.breeze.cloud</groupId>
+				<groupId>justlive.earth.breeze.cloud</groupId>
 				<artifactId>cloud-security-support</artifactId>
 				<version>${project.version}</version>
 			</dependency>

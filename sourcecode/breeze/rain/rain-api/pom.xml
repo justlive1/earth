@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>justlive1.earth.breeze.rain</groupId>
+		<groupId>justlive.earth.breeze.rain</groupId>
 		<artifactId>rain</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>

@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>justlive1.earth.breeze.storm</groupId>
+	<groupId>justlive.earth.breeze.storm</groupId>
 	<artifactId>storm</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
@@ -100,13 +100,13 @@
 		<dependencies>
 
 			<dependency>
-				<groupId>justlive1.earth.breeze.snow</groupId>
+				<groupId>justlive.earth.breeze.snow</groupId>
 				<artifactId>snow-common-base</artifactId>
 				<version>${snow-common-web.version}</version>
 			</dependency>
 
 			<dependency>
-				<groupId>justlive1.earth.breeze.snow</groupId>
+				<groupId>justlive.earth.breeze.snow</groupId>
 				<artifactId>snow-common-web</artifactId>
 				<version>${snow-common-web.version}</version>
 			</dependency>
