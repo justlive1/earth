@@ -29,4 +29,10 @@ public class ParamWrap {
    * resolve方法下标
    */
   private int index;
+
+  /**
+   * 参数类型
+   */
+  private Class<?> clazz;
+
 }

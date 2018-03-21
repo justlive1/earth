@@ -34,5 +34,5 @@ public interface MethodParamResolver {
    * @param ctx
    * @return
    */
-  String render(ParamWrap wrap, RoutingContext ctx);
+  Object render(ParamWrap wrap, RoutingContext ctx);
 }

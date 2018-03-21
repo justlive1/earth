@@ -39,7 +39,7 @@ public class ParamResolverComposite implements MethodParamResolver {
   }
 
   @Override
-  public String render(ParamWrap wrap, RoutingContext ctx) {
+  public Object render(ParamWrap wrap, RoutingContext ctx) {
     return resolvers.get(wrap.getIndex()).render(wrap, ctx);
   }
 

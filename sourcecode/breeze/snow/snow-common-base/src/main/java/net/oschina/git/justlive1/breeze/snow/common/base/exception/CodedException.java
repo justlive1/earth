@@ -38,6 +38,9 @@ public class CodedException extends RuntimeException {
 
   @Override
   public String toString() {
+    if (errorCode == null) {
+      return super.toString();
+    }
     if (args == null || args.length == 0) {
       return errorCode.toString();
     }

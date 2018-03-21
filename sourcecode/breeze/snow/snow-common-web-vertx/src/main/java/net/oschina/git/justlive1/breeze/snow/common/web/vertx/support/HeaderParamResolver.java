@@ -20,11 +20,11 @@ public class HeaderParamResolver implements MethodParamResolver {
   @Override
   public ParamWrap resolve(Parameter parameter) {
     VertxHeaderParam annotation = parameter.getAnnotation(VertxHeaderParam.class);
-    return new ParamWrap(annotation.value(), annotation.required(), 0);
+    return new ParamWrap(annotation.value(), annotation.required(), 0, parameter.getType());
   }
 
   @Override
-  public String render(ParamWrap wrap, RoutingContext ctx) {
+  public Object render(ParamWrap wrap, RoutingContext ctx) {
     return ctx.request().getHeader(wrap.getValue());
   }
 

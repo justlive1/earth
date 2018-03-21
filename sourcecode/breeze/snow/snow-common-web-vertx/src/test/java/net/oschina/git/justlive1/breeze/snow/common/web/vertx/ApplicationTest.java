@@ -20,9 +20,10 @@ public class ApplicationTest {
 
     TimeUnit.SECONDS.sleep(6);
 
-    vertx.createHttpClient().get(8080, "localhost", "/demo/test/type?name=name").handler(res -> {
-      res.bodyHandler(System.out::println);
-    }).exceptionHandler(System.out::println).end();
+    vertx.createHttpClient().get(8080, "localhost", "/demo/test/path?request=path")
+        .putHeader("header", "header").handler(res -> {
+          res.bodyHandler(System.out::println);
+        }).exceptionHandler(System.out::println).end();
 
     TimeUnit.SECONDS.sleep(2);
   }

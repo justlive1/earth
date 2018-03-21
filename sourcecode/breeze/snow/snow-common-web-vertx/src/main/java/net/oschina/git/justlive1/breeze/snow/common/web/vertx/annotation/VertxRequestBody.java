@@ -7,7 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 用于Route绑定方法上的入参到request header
+ * 用于Route解析http body绑定到注解参数上
  * 
  * @author wubo
  *
@@ -15,14 +15,7 @@ import java.lang.annotation.Target;
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface VertxHeaderParam {
-
-  /**
-   * 参数名称
-   * 
-   * @return
-   */
-  String value() default "";
+public @interface VertxRequestBody {
 
   /**
    * 是否必须
@@ -30,4 +23,5 @@ public @interface VertxHeaderParam {
    * @return
    */
   boolean required() default true;
+
 }

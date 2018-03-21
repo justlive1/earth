@@ -20,11 +20,11 @@ public class PathParamResolver implements MethodParamResolver {
   @Override
   public ParamWrap resolve(Parameter parameter) {
     VertxPathParam annotation = parameter.getAnnotation(VertxPathParam.class);
-    return new ParamWrap(annotation.value(), annotation.required(), 0);
+    return new ParamWrap(annotation.value(), annotation.required(), 0, parameter.getType());
   }
 
   @Override
-  public String render(ParamWrap wrap, RoutingContext ctx) {
+  public Object render(ParamWrap wrap, RoutingContext ctx) {
     return ctx.request().getParam(wrap.getValue());
   }
 

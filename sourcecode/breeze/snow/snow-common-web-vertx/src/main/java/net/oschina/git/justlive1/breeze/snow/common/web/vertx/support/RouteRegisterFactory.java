@@ -13,9 +13,11 @@ import io.vertx.ext.web.Route;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import lombok.extern.slf4j.Slf4j;
+import net.oschina.git.justlive1.breeze.snow.common.base.constant.BaseConstants;
 import net.oschina.git.justlive1.breeze.snow.common.base.exception.Exceptions;
 import net.oschina.git.justlive1.breeze.snow.common.web.vertx.annotation.VertxRoute;
 import net.oschina.git.justlive1.breeze.snow.common.web.vertx.annotation.VertxRouteMapping;
+import net.oschina.git.justlive1.breeze.snow.common.web.vertx.exception.ErrorCodes;
 
 /**
  * route注册工厂，用于解析Route相关注解并初始化Route
@@ -28,8 +30,6 @@ import net.oschina.git.justlive1.breeze.snow.common.web.vertx.annotation.VertxRo
 @Slf4j
 public class RouteRegisterFactory {
 
-  static final String PATH_SEPARATOR = "/";
-
   private Map<String, RouteWrap> routeWraps;
 
   private Router router;
@@ -39,11 +39,14 @@ public class RouteRegisterFactory {
   public RouteRegisterFactory(Router router) {
     this.router = router;
     this.routeWraps = new HashMap<>(32);
-    this.paramResolver = new ParamResolverComposite(
-        ImmutableList.<MethodParamResolver>builder().add(new RequestParamResolver())
-            .add(new HeaderParamResolver()).add(new PathParamResolver()).build());
+    this.paramResolver = new ParamResolverComposite(ImmutableList.<MethodParamResolver>builder()
+        .add(new RequestParamResolver()).add(new HeaderParamResolver()).add(new PathParamResolver())
+        .add(new RequestBodyResolver()).build());
   }
 
+  /**
+   * 执行route的解析和注册
+   */
   public void execute() {
 
     Reflections rel = new Reflections();
@@ -102,18 +105,18 @@ public class RouteRegisterFactory {
     String baseUrl = "";
 
     if (root.length() != 0) {
-      baseUrl = PATH_SEPARATOR.concat(root);
+      baseUrl = BaseConstants.ROOT_PATH.concat(root);
     }
 
     for (String path : paths) {
       String url = "";
       String p = transferUri(path);
       if (p.length() != 0) {
-        url = baseUrl.concat(PATH_SEPARATOR).concat(p);
+        url = baseUrl.concat(BaseConstants.ROOT_PATH).concat(p);
       }
 
       if (routeWraps.containsKey(url)) {
-        throw Exceptions.fail((String) null, String.format("url[%s]重复绑定", url));
+        throw Exceptions.fail(ErrorCodes.URL_HAS_BOUND);
       }
 
       Parameter[] parameters = method.getParameters();
@@ -205,7 +208,7 @@ public class RouteRegisterFactory {
    * @return
    */
   private static String transferUri(String uri) {
-    if (uri.startsWith(PATH_SEPARATOR)) {
+    if (uri.startsWith(BaseConstants.ROOT_PATH)) {
       return uri.substring(1);
     }
     return uri;
