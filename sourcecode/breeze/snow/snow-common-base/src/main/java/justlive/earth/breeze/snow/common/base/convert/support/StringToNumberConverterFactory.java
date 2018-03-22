@@ -1,5 +1,7 @@
 package justlive.earth.breeze.snow.common.base.convert.support;
 
+import java.util.List;
+import com.google.common.collect.Lists;
 import justlive.earth.breeze.snow.common.base.convert.Converter;
 import justlive.earth.breeze.snow.common.base.convert.ConverterFactory;
 import justlive.earth.breeze.snow.common.base.util.NumberUtils;
@@ -23,6 +25,17 @@ public class StringToNumberConverterFactory implements ConverterFactory<String, 
   @Override
   public <T extends Number> Converter<String, T> getConverter(Class<T> targetType) {
     return new StringToNumber<>(targetType);
+  }
+
+  @SuppressWarnings("unchecked")
+  @Override
+  public List<Converter<Object, Object>> converters() {
+    List<Converter<Object, Object>> converters = Lists.newArrayList();
+    for (Class<? extends Number> clazz : NumberUtils.STANDARD_NUMBER_TYPES) {
+      Converter<?, ?> c = new StringToNumber<>(clazz);
+      converters.add((Converter<Object, Object>) c);
+    }
+    return converters;
   }
 
   private static final class StringToNumber<T extends Number> implements Converter<String, T> {

@@ -10,7 +10,7 @@ import justlive.earth.breeze.snow.common.web.vertx.annotation.VertxPathParam;
  * @author wubo
  *
  */
-public class PathParamResolver implements MethodParamResolver {
+public class PathParamResolver extends AbastractConverterParamResolver {
 
   @Override
   public boolean supported(Parameter parameter) {
@@ -25,7 +25,7 @@ public class PathParamResolver implements MethodParamResolver {
 
   @Override
   public Object render(ParamWrap wrap, RoutingContext ctx) {
-    return ctx.request().getParam(wrap.getValue());
+    return converter(ctx.request().getParam(wrap.getValue()), wrap.getClazz());
   }
 
 }

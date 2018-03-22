@@ -11,10 +11,10 @@ public interface ConverterRegistry {
   /**
    * 注册转换器
    */
-  void addConverter(Converter<?, ?> converter);
+  ConverterRegistry addConverter(Converter<?, ?> converter);
 
   /**
    * 注册转换器工厂
    */
-  void addConverterFactory(ConverterFactory<?, ?> factory);
+  ConverterRegistry addConverterFactory(ConverterFactory<?, ?> factory);
 }

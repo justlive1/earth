@@ -13,6 +13,10 @@ import io.vertx.ext.web.Route;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
 import justlive.earth.breeze.snow.common.base.constant.BaseConstants;
+import justlive.earth.breeze.snow.common.base.convert.support.DefaultConverterService;
+import justlive.earth.breeze.snow.common.base.convert.support.StringToBooleanConverter;
+import justlive.earth.breeze.snow.common.base.convert.support.StringToCharacterConverter;
+import justlive.earth.breeze.snow.common.base.convert.support.StringToNumberConverterFactory;
 import justlive.earth.breeze.snow.common.base.exception.Exceptions;
 import justlive.earth.breeze.snow.common.web.vertx.annotation.VertxRoute;
 import justlive.earth.breeze.snow.common.web.vertx.annotation.VertxRouteMapping;
@@ -39,8 +43,16 @@ public class RouteRegisterFactory {
   public RouteRegisterFactory(Router router) {
     this.router = router;
     this.routeWraps = new HashMap<>(32);
+
+    DefaultConverterService converterService = new DefaultConverterService();
+    converterService.addConverter(new StringToBooleanConverter())
+        .addConverter(new StringToCharacterConverter())
+        .addConverterFactory(new StringToNumberConverterFactory());
+
     this.paramResolver = new ParamResolverComposite(ImmutableList.<MethodParamResolver>builder()
-        .add(new RequestParamResolver()).add(new HeaderParamResolver()).add(new PathParamResolver())
+        .add(new RequestParamResolver().converterService(converterService))
+        .add(new HeaderParamResolver().converterService(converterService))
+        .add(new PathParamResolver().converterService(converterService))
         .add(new RequestBodyResolver()).build());
   }
 

@@ -10,7 +10,7 @@ import justlive.earth.breeze.snow.common.web.vertx.annotation.VertxHeaderParam;
  * @author wubo
  *
  */
-public class HeaderParamResolver implements MethodParamResolver {
+public class HeaderParamResolver extends AbastractConverterParamResolver {
 
   @Override
   public boolean supported(Parameter parameter) {
@@ -25,7 +25,7 @@ public class HeaderParamResolver implements MethodParamResolver {
 
   @Override
   public Object render(ParamWrap wrap, RoutingContext ctx) {
-    return ctx.request().getHeader(wrap.getValue());
+    return converter(ctx.request().getHeader(wrap.getValue()), wrap.getClazz());
   }
 
 }

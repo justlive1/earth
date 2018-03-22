@@ -18,7 +18,7 @@ public class ApplicationTest {
     Vertx vertx = Vertx.vertx();
     vertx.deployVerticle(VerticleDemo.class.getName());
 
-    TimeUnit.SECONDS.sleep(6);
+    TimeUnit.SECONDS.sleep(12);
 
     vertx.createHttpClient().get(8080, "localhost", "/demo/test/path?request=path")
         .putHeader("header", "header").handler(res -> {

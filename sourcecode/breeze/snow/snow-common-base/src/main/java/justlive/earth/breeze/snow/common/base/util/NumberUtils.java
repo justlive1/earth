@@ -20,15 +20,15 @@ public class NumberUtils {
    * jdk标准Number类型<br>
    * Byte, Short, Integer, Long, BigInteger, Float, Double, BigDecimal
    */
-  public static final Set<Class<?>> STANDARD_NUMBER_TYPES;
+  public static final Set<Class<? extends Number>> STANDARD_NUMBER_TYPES;
 
   private static final Map<Class<?>, Function<String, ?>> FUNCTIONS;
 
   static {
 
-    STANDARD_NUMBER_TYPES = ImmutableSet.<Class<?>>builder().add(Byte.class).add(Short.class)
-        .add(Integer.class).add(Long.class).add(BigInteger.class).add(Float.class).add(Double.class)
-        .add(BigDecimal.class).build();
+    STANDARD_NUMBER_TYPES = ImmutableSet.<Class<? extends Number>>builder().add(Byte.class)
+        .add(Short.class).add(Integer.class).add(Long.class).add(BigInteger.class).add(Float.class)
+        .add(Double.class).add(BigDecimal.class).build();
 
     FUNCTIONS = ImmutableMap.<Class<?>, Function<String, ?>>builder()
         .put(Byte.class,
@@ -42,8 +42,8 @@ public class NumberUtils {
         .put(BigInteger.class,
             trimmed -> (isHexNumber(trimmed) ? decodeBigInteger(trimmed) : new BigInteger(trimmed)))
         .put(Float.class, Float::valueOf).put(Double.class, Double::valueOf)
-        .put(BigDecimal.class, trimmed -> new BigDecimal(trimmed))
-        .put(Number.class, trimmed -> new BigDecimal(trimmed)).build();
+        .put(BigDecimal.class, NumberUtils::stringToBigDecimal)
+        .put(Number.class, NumberUtils::stringToBigDecimal).build();
   }
 
   private NumberUtils() {}
@@ -111,5 +111,9 @@ public class NumberUtils {
 
     BigInteger result = new BigInteger(value.substring(index), radix);
     return (negative ? result.negate() : result);
+  }
+
+  public static BigDecimal stringToBigDecimal(String val) {
+    return new BigDecimal(val);
   }
 }

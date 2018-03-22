@@ -10,7 +10,7 @@ import justlive.earth.breeze.snow.common.web.vertx.annotation.VertxRequestBody;
  * @author wubo
  *
  */
-public class RequestBodyResolver implements MethodParamResolver {
+public class RequestBodyResolver extends AbastractConverterParamResolver {
 
   @Override
   public boolean supported(Parameter parameter) {

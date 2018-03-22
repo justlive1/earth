@@ -12,7 +12,7 @@ public class RouterDemo {
 
   @VertxRouteMapping(value = "/test/:path")
   public String test1(@VertxRequestParam("request") String request,
-      @VertxHeaderParam("header") String header, @VertxPathParam("path") String path) {
+      @VertxHeaderParam("header") Boolean header, @VertxPathParam("path") Long path) {
     return String.format("{%s},{%s},{%s}", request, header, path);
   }
 
