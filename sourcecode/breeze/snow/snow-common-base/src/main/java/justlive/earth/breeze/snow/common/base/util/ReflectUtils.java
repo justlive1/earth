@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ReflectUtils {
 
   public static final String MODULE_VALID = "REFLECT";
-  public static final String INVAID_CLASS = "-10000";
+  public static final String INVAID_CLASS = "10000";
 
   private ReflectUtils() {}
 

@@ -37,7 +37,7 @@ public class ConverterTypePair {
       pair = new ConverterTypePair(sourceType, targetType);
       ConverterTypePair out = CACHE.putIfAbsent(key, pair);
       if (out != null) {
-        pair = out;
+        return out;
       }
     }
     return pair;

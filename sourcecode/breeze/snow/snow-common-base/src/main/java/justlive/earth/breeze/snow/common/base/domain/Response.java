@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class Response<T> {
 
   public static final String SUCC = "00000";
-  public static final String FAIL = "-99999";
+  public static final String FAIL = "99999";
   /**
    * 返回结果编码
    */

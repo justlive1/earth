@@ -16,17 +16,17 @@ import justlive.earth.breeze.snow.common.base.exception.Exceptions;
 public class Checks {
 
   public static final String MODULE_VALID = "VALID";
-  public static final String NULL_VALUE = "-00001";
-  public static final String INVALID_EMAIL = "-00002";
-  public static final String INVALID_IDCARD = "-00003";
-  public static final String INVALID_MOBILE = "-00004";
-  public static final String INVALID_PHONE = "-00005";
-  public static final String INVALID_DIGIT = "-00006";
-  public static final String INVALID_DECIMAL = "-00007";
-  public static final String INVALID_BLACK_SPACE = "-00008";
-  public static final String INVALID_CHINESE = "-00009";
-  public static final String INVALID_POSTCODE = "-00010";
-  public static final String INVALID_IP = "-00011";
+  public static final String NULL_VALUE = "00001";
+  public static final String INVALID_EMAIL = "00002";
+  public static final String INVALID_IDCARD = "00003";
+  public static final String INVALID_MOBILE = "00004";
+  public static final String INVALID_PHONE = "00005";
+  public static final String INVALID_DIGIT = "00006";
+  public static final String INVALID_DECIMAL = "00007";
+  public static final String INVALID_BLACK_SPACE = "00008";
+  public static final String INVALID_CHINESE = "00009";
+  public static final String INVALID_POSTCODE = "00010";
+  public static final String INVALID_IP = "00011";
 
   private Checks() {}
 
