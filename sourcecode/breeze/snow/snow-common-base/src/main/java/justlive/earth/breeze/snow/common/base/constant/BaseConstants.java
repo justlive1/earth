@@ -39,6 +39,21 @@ public class BaseConstants {
    */
   public static final String ROOT_PATH = "/";
 
+  /**
+   * URL协议-文件
+   */
+  public static final String URL_PROTOCOL_FILE = "file";
+
+  /**
+   * URL协议-jar
+   */
+  public static final String URL_PROTOCOL_JAR = "jar";
+
+  /**
+   * URL协议-war
+   */
+  public static final String URL_PROTOCOL_WAR = "war";
+
   // 正则
 
   /**
