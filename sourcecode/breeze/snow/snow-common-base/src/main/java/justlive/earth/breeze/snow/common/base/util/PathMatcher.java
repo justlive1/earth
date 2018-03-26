@@ -67,7 +67,6 @@ public class PathMatcher {
         if (pre) {
           // 第二次遇到*，替换成.*
           sb.append(ANY_REGEX);
-          pre = false;
         } else if (i + 1 == len) {
           // 单星是最后一个字符，则直接将*转成[^/]*
           sb.append(NOT_SEPARATOR_REGEX);
@@ -80,13 +79,8 @@ public class PathMatcher {
           sb.append(NOT_SEPARATOR_REGEX);
           pre = false;
         }
-        if (chars[i] == ONLY_ONE) {
-          // 接着判断当前字符是不是?，是的话替换成.
-          sb.append(ONLY_NOE_REGEX);
-        } else {
-          // 普通字符，直接添进来
-          sb.append(chars[i]);
-        }
+        // 遇到？替换成. 否则不变
+        sb.append(chars[i] == ONLY_ONE ? ONLY_NOE_REGEX : chars[i]);
       }
     }
     return Pattern.compile(sb.toString());
