@@ -27,8 +27,8 @@ public class FileSystemResource implements SourceResource {
    */
   public FileSystemResource(String filePath) {
     Checks.notNull(filePath);
-    this.filePath = filePath;
     this.file = new File(filePath);
+    this.filePath = file.toPath().normalize().toString();
   }
 
   /**
@@ -89,9 +89,9 @@ public class FileSystemResource implements SourceResource {
    */
   public String getFilePath() {
     if (filePath == null) {
-      // TODO 转换
-      filePath = file.getPath();
+      filePath = file.toPath().normalize().toString();
     }
     return filePath;
   }
+
 }
