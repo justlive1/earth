@@ -44,7 +44,7 @@ public class PathMatcher {
       if (p == null) {
         p = parsePattern(pattern);
         patterns.put(pattern, p);
-        return p.matcher(pattern).matches();
+        return p.matcher(path).matches();
       }
       return p.matcher(path).matches();
     }

@@ -99,7 +99,7 @@ public class PropertiesLoader {
       } else if (location.startsWith(CLASSPATH_PREFIX)) {
         list.addAll(this.resolveClassPathResource(location.substring(CLASSPATH_PREFIX.length())));
       } else if (location.startsWith(FILE_PREFIX)) {
-        list.addAll(this.resolveFileSystemResource(location.substring(FILE_PREFIX.length())));
+        list.addAll(this.resolveFileSystemResource(location));
       } else {
         list.addAll(this.resolveClassPathResource(location));
       }
@@ -119,7 +119,7 @@ public class PropertiesLoader {
         list.addAll(this.findMatchPath(location));
       } catch (IOException e) {
         if (log.isWarnEnabled()) {
-          log.warn("location [{}] 找不到资源", location, e);
+          log.warn("location [{}] cannot find resources", location, e);
         }
       }
     } else {
@@ -131,7 +131,7 @@ public class PropertiesLoader {
         resources = loader.getResources(location);
       } catch (IOException e) {
         if (log.isWarnEnabled()) {
-          log.warn("location [{}] 找不到资源", location, e);
+          log.warn("location [{}] cannot find resources", location, e);
         }
       }
       if (resources == null) {
@@ -157,7 +157,7 @@ public class PropertiesLoader {
         list.addAll(this.findMatchPath(location));
       } catch (IOException e) {
         if (log.isWarnEnabled()) {
-          log.warn("location [{}] 找不到资源", location, e);
+          log.warn("location [{}] cannot find resources", location, e);
         }
       }
     } else {
@@ -178,11 +178,11 @@ public class PropertiesLoader {
         list.addAll(this.findMatchPath(location));
       } catch (IOException e) {
         if (log.isWarnEnabled()) {
-          log.warn("location [{}] 找不到资源", location, e);
+          log.warn("location [{}] cannot find resources", location, e);
         }
       }
     } else {
-      list.add(new FileSystemResource(location));
+      list.add(new FileSystemResource(location.substring(FILE_PREFIX.length())));
     }
     return list;
   }
@@ -197,7 +197,7 @@ public class PropertiesLoader {
         props.load(resource.getInputStream());
       } catch (IOException e) {
         if (log.isWarnEnabled()) {
-          log.warn("resource [{}] 读取错误", resource.path(), e);
+          log.warn("resource [{}] read error", resource.path(), e);
         }
       }
     }
@@ -240,14 +240,13 @@ public class PropertiesLoader {
       rootDir = resource.getFile().getAbsoluteFile();
     } catch (IOException e) {
       if (log.isWarnEnabled()) {
-        log.warn("resource [{}] 不能转换成 File", resource.path(), e);
+        log.warn("resource [{}] cannot converter to File", resource.path(), e);
       }
       return list;
     }
     Set<File> matchedFiles = findMatchedFiles(rootDir, subPattern);
-    Set<SourceResource> result = new LinkedHashSet<>(matchedFiles.size());
     for (File file : matchedFiles) {
-      result.add(new FileSystemResource(file));
+      list.add(new FileSystemResource(file));
     }
     return list;
   }
@@ -263,13 +262,16 @@ public class PropertiesLoader {
     Set<File> files = new LinkedHashSet<>();
     if (!rootDir.exists() || !rootDir.isDirectory() || !rootDir.canRead()) {
       if (log.isWarnEnabled()) {
-        log.warn("目录 [{}] 不能执行查找操作", rootDir.getPath());
+        log.warn("dir [{}] cannot execute search operation", rootDir.getPath());
       }
       return files;
     }
     String fullPattern =
-        rootDir.getAbsolutePath().replace(File.pathSeparator, BaseConstants.PATH_SEPARATOR)
-            .concat(subPattern.replace(File.pathSeparator, BaseConstants.PATH_SEPARATOR));
+        rootDir.getAbsolutePath().replace(File.pathSeparator, BaseConstants.PATH_SEPARATOR);
+    if (!subPattern.startsWith(BaseConstants.PATH_SEPARATOR)) {
+      fullPattern += BaseConstants.PATH_SEPARATOR;
+    }
+    fullPattern += subPattern.replace(File.pathSeparator, BaseConstants.PATH_SEPARATOR);
     this.searchMatchedFiles(fullPattern, rootDir, files);
     return files;
   }
@@ -283,7 +285,7 @@ public class PropertiesLoader {
    */
   void searchMatchedFiles(String fullPattern, File dir, Set<File> files) {
     if (log.isDebugEnabled()) {
-      log.debug("开始查找目录 [{}] 下文件", dir);
+      log.debug("search files under dir [{}]", dir);
     }
     File[] dirContents = dir.listFiles();
     for (File content : dirContents) {
@@ -291,7 +293,7 @@ public class PropertiesLoader {
           content.getAbsolutePath().replace(File.pathSeparator, BaseConstants.PATH_SEPARATOR);
       if (content.isDirectory()) {
         if (!content.canRead() && log.isDebugEnabled()) {
-          log.debug("目录 [{}] 没有读取权限，跳过");
+          log.debug("dir [{}] has no read permission, skip");
         } else {
           this.searchMatchedFiles(fullPattern, content, files);
         }
