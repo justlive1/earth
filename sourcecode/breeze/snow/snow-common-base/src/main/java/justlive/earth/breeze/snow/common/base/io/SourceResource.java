@@ -3,6 +3,7 @@ package justlive.earth.breeze.snow.common.base.io;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 
 /**
  * 各种类型的资源公共接口，包括文件系统的文件或者是classpath下的资源
@@ -11,6 +12,13 @@ import java.io.InputStream;
  *
  */
 public interface SourceResource extends SourceStream {
+
+  /**
+   * 返回资源路径
+   * 
+   * @return
+   */
+  String path();
 
   /**
    * 是否存在
@@ -44,4 +52,12 @@ public interface SourceResource extends SourceStream {
    * @return
    */
   File getFile() throws IOException;
+
+  /**
+   * 获取资源的URL
+   * 
+   * @return
+   * @throws IOException
+   */
+  URL getURL() throws IOException;
 }

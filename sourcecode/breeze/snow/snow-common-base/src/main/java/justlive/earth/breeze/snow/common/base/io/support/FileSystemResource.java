@@ -3,6 +3,7 @@ package justlive.earth.breeze.snow.common.base.io.support;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import justlive.earth.breeze.snow.common.base.io.SourceResource;
@@ -53,6 +54,14 @@ public class FileSystemResource implements SourceResource {
   }
 
   @Override
+  public String path() {
+    if (filePath == null) {
+      filePath = file.toPath().normalize().toString();
+    }
+    return filePath;
+  }
+
+  @Override
   public InputStream getInputStream() throws IOException {
     if (path == null) {
       path = file.toPath();
@@ -70,6 +79,11 @@ public class FileSystemResource implements SourceResource {
     return file;
   }
 
+  @Override
+  public URL getURL() throws IOException {
+    return file.toURI().toURL();
+  }
+
   /**
    * 获取文件Path
    * 
@@ -80,18 +94,6 @@ public class FileSystemResource implements SourceResource {
       path = file.toPath();
     }
     return path;
-  }
-
-  /**
-   * 获取文件路径
-   * 
-   * @return
-   */
-  public String getFilePath() {
-    if (filePath == null) {
-      filePath = file.toPath().normalize().toString();
-    }
-    return filePath;
   }
 
 }

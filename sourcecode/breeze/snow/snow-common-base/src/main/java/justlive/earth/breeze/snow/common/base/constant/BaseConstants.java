@@ -54,6 +54,16 @@ public class BaseConstants {
    */
   public static final String URL_PROTOCOL_WAR = "war";
 
+  /**
+   * path分隔符
+   */
+  public static final String PATH_SEPARATOR = ROOT_PATH;
+
+  /**
+   * 协议分隔符
+   */
+  public static final String PROTOCOL_SEPARATOR = ":";
+
   // 正则
 
   /**

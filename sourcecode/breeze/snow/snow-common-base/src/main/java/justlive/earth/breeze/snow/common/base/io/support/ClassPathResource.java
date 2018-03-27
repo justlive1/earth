@@ -40,7 +40,7 @@ public class ClassPathResource implements SourceResource {
    * @param classLoader
    */
   public ClassPathResource(String path, ClassLoader classLoader) {
-    this.path = Checks.notNull(path);
+    this.path = this.cutRootPath(Checks.notNull(path));;
     this.classLoader = classLoader;
   }
 
@@ -51,8 +51,27 @@ public class ClassPathResource implements SourceResource {
    * @param clazz
    */
   public ClassPathResource(String path, Class<?> clazz) {
-    this.path = Checks.notNull(path);
+    this.path = this.cutRootPath(Checks.notNull(path));
     this.clazz = clazz;
+  }
+
+  /**
+   * 去除路径起始的/
+   * 
+   * @param path
+   * @return
+   */
+  String cutRootPath(String path) {
+    String usePath = path;
+    if (usePath.startsWith(BaseConstants.ROOT_PATH)) {
+      usePath = usePath.substring(BaseConstants.ROOT_PATH.length());
+    }
+    return usePath;
+  }
+
+  @Override
+  public String path() {
+    return this.path;
   }
 
   @Override
@@ -93,15 +112,6 @@ public class ClassPathResource implements SourceResource {
   }
 
   /**
-   * 获取资源路径
-   * 
-   * @return
-   */
-  public String getPath() {
-    return this.path;
-  }
-
-  /**
    * 获取类加载器
    * 
    * @return
@@ -112,7 +122,6 @@ public class ClassPathResource implements SourceResource {
     }
     return this.classLoader;
   }
-
 
   private URL getURL0() {
     if (this.clazz != null) {
@@ -130,6 +139,7 @@ public class ClassPathResource implements SourceResource {
    * @return
    *
    */
+  @Override
   public URL getURL() throws IOException {
     URL url = this.getURL0();
     if (url == null) {
