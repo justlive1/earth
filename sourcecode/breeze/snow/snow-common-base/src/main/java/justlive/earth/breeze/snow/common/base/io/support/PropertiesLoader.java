@@ -2,6 +2,7 @@ package justlive.earth.breeze.snow.common.base.io.support;
 
 import java.io.IOException;
 import java.util.Properties;
+import justlive.earth.breeze.snow.common.base.exception.Exceptions;
 import justlive.earth.breeze.snow.common.base.io.SourceResource;
 import lombok.extern.slf4j.Slf4j;
 
@@ -41,7 +42,6 @@ public class PropertiesLoader extends AbstractResourceLoader {
   public PropertiesLoader(ClassLoader loader, String... locations) {
     this.locations = locations;
     this.loader = loader;
-    this.init();
   }
 
   /**
@@ -54,15 +54,18 @@ public class PropertiesLoader extends AbstractResourceLoader {
   }
 
   @Override
-  protected void init() {
+  public void init() {
     this.resources.addAll(this.parse(this.locations));
     for (SourceResource resource : this.resources) {
       try {
         // TODO 设置编码
         props.load(resource.getInputStream());
       } catch (IOException e) {
-        if (log.isWarnEnabled()) {
-          log.warn("resource [{}] read error", resource.path(), e);
+        if (log.isDebugEnabled()) {
+          log.debug("resource [{}] read error", resource.path(), e);
+        }
+        if (!ignoreNotFound) {
+          throw Exceptions.wrap(e);
         }
       }
     }

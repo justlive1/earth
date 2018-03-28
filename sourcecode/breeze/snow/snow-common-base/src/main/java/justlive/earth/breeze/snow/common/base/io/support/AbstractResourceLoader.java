@@ -15,6 +15,7 @@ import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import justlive.earth.breeze.snow.common.base.constant.BaseConstants;
+import justlive.earth.breeze.snow.common.base.exception.Exceptions;
 import justlive.earth.breeze.snow.common.base.io.SourceResource;
 import justlive.earth.breeze.snow.common.base.util.PathMatcher;
 import justlive.earth.breeze.snow.common.base.util.ResourceUtils;
@@ -51,9 +52,22 @@ public abstract class AbstractResourceLoader {
   protected List<SourceResource> resources = new ArrayList<>();
 
   /**
+   * 未找到是否忽略，启用则跳过，否则抛出异常
+   */
+  public boolean ignoreNotFound;
+
+  /**
    * 初始化
    */
-  protected abstract void init();
+  public abstract void init();
+
+  public void setIgnoreNotFound(boolean ignoreNotFound) {
+    this.ignoreNotFound = ignoreNotFound;
+  }
+
+  public boolean isIgnoreNotFound() {
+    return ignoreNotFound;
+  }
 
   /**
    * 获取资源列表
@@ -70,15 +84,24 @@ public abstract class AbstractResourceLoader {
   protected List<SourceResource> parse(String... locations) {
     List<SourceResource> list = new LinkedList<>();
     for (String location : locations) {
-      if (location.startsWith(ALL_CLASSPATH_PREFIX)) {
-        list.addAll(
-            this.resolveAllClassPathResource(location.substring(ALL_CLASSPATH_PREFIX.length())));
-      } else if (location.startsWith(CLASSPATH_PREFIX)) {
-        list.addAll(this.resolveClassPathResource(location.substring(CLASSPATH_PREFIX.length())));
-      } else if (location.startsWith(FILE_PREFIX)) {
-        list.addAll(this.resolveFileSystemResource(location));
-      } else {
-        list.addAll(this.resolveClassPathResource(location));
+      try {
+        if (location.startsWith(ALL_CLASSPATH_PREFIX)) {
+          list.addAll(
+              this.resolveAllClassPathResource(location.substring(ALL_CLASSPATH_PREFIX.length())));
+        } else if (location.startsWith(CLASSPATH_PREFIX)) {
+          list.addAll(this.resolveClassPathResource(location.substring(CLASSPATH_PREFIX.length())));
+        } else if (location.startsWith(FILE_PREFIX)) {
+          list.addAll(this.resolveFileSystemResource(location));
+        } else {
+          list.addAll(this.resolveClassPathResource(location));
+        }
+      } catch (IOException e) {
+        if (log.isDebugEnabled()) {
+          log.debug("location [{}] cannot find resource", location, e);
+        }
+        if (!ignoreNotFound) {
+          throw Exceptions.wrap(e);
+        }
       }
     }
     return list;
@@ -89,28 +112,16 @@ public abstract class AbstractResourceLoader {
    * 
    * @param location
    */
-  protected List<SourceResource> resolveAllClassPathResource(String location) {
+  protected List<SourceResource> resolveAllClassPathResource(String location) throws IOException {
     List<SourceResource> list = new LinkedList<>();
     if (matcher.isPattern(location)) {
-      try {
-        list.addAll(this.findMatchPath(location));
-      } catch (IOException e) {
-        if (log.isWarnEnabled()) {
-          log.warn("location [{}] cannot find resources", location, e);
-        }
-      }
+      list.addAll(this.findMatchPath(location));
     } else {
       if (location.startsWith(BaseConstants.ROOT_PATH)) {
         location = location.substring(BaseConstants.ROOT_PATH.length());
       }
       Enumeration<URL> resources = null;
-      try {
-        resources = loader.getResources(location);
-      } catch (IOException e) {
-        if (log.isWarnEnabled()) {
-          log.warn("location [{}] cannot find resources", location, e);
-        }
-      }
+      resources = loader.getResources(location);
       if (resources == null) {
         return list;
       }
@@ -127,16 +138,10 @@ public abstract class AbstractResourceLoader {
    * 
    * @param location
    */
-  protected List<SourceResource> resolveClassPathResource(String location) {
+  protected List<SourceResource> resolveClassPathResource(String location) throws IOException {
     List<SourceResource> list = new LinkedList<>();
     if (matcher.isPattern(location)) {
-      try {
-        list.addAll(this.findMatchPath(location));
-      } catch (IOException e) {
-        if (log.isWarnEnabled()) {
-          log.warn("location [{}] cannot find resources", location, e);
-        }
-      }
+      list.addAll(this.findMatchPath(location));
     } else {
       list.add(new ClassPathResource(location, loader));
     }
@@ -148,16 +153,10 @@ public abstract class AbstractResourceLoader {
    * 
    * @param location
    */
-  protected List<SourceResource> resolveFileSystemResource(String location) {
+  protected List<SourceResource> resolveFileSystemResource(String location) throws IOException {
     List<SourceResource> list = new LinkedList<>();
     if (matcher.isPattern(location)) {
-      try {
-        list.addAll(this.findMatchPath(location));
-      } catch (IOException e) {
-        if (log.isWarnEnabled()) {
-          log.warn("location [{}] cannot find resources", location, e);
-        }
-      }
+      list.addAll(this.findMatchPath(location));
     } else {
       list.add(new FileSystemResource(location.substring(FILE_PREFIX.length())));
     }
@@ -282,17 +281,10 @@ public abstract class AbstractResourceLoader {
    * @param subPattern
    * @return
    */
-  protected List<SourceResource> findFileMatchPath(SourceResource resource, String subPattern) {
+  protected List<SourceResource> findFileMatchPath(SourceResource resource, String subPattern)
+      throws IOException {
     List<SourceResource> list = new LinkedList<>();
-    File rootDir;
-    try {
-      rootDir = resource.getFile().getAbsoluteFile();
-    } catch (IOException e) {
-      if (log.isWarnEnabled()) {
-        log.warn("resource [{}] cannot converter to File", resource.path(), e);
-      }
-      return list;
-    }
+    File rootDir = resource.getFile().getAbsoluteFile();
     Set<File> matchedFiles = findMatchedFiles(rootDir, subPattern);
     for (File file : matchedFiles) {
       list.add(new FileSystemResource(file));

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Properties;
 import org.junit.Test;
+import justlive.earth.breeze.snow.common.base.exception.CodedException;
 
 public class PropertiesLoaderTest {
 
@@ -20,6 +21,7 @@ public class PropertiesLoaderTest {
   public void testDefault() {
 
     PropertiesLoader loader = new PropertiesLoader(defaultPath);
+    loader.init();
 
     Properties props = loader.props();
 
@@ -32,6 +34,7 @@ public class PropertiesLoaderTest {
   public void testClasspath() {
 
     PropertiesLoader loader = new PropertiesLoader(classpath);
+    loader.init();
 
     Properties props = loader.props();
 
@@ -47,12 +50,26 @@ public class PropertiesLoaderTest {
     makeFile();
 
     PropertiesLoader loader = new PropertiesLoader(filePath);
+    loader.init();
 
     Properties props = loader.props();
 
     assertEquals("k001", props.getProperty("k1"));
     assertEquals("k002", props.getProperty("k2"));
 
+  }
+
+  @Test(expected = CodedException.class)
+  public void testNotFound() {
+    PropertiesLoader loader = new PropertiesLoader("classpath:/xxx.properties");
+    loader.init();
+  }
+
+  @Test
+  public void testIgnoreNotFound() {
+    PropertiesLoader loader = new PropertiesLoader("classpath:/xxx.properties");
+    loader.ignoreNotFound = true;
+    loader.init();
   }
 
   void makeFile() {
