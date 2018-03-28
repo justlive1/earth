@@ -60,4 +60,12 @@ public interface SourceResource extends SourceStream {
    * @throws IOException
    */
   URL getURL() throws IOException;
+
+  /**
+   * 使用{@value path}创建相对路径的{@code SourceResource}
+   * 
+   * @param path
+   * @return
+   */
+  SourceResource createRelative(String path) throws IOException;
 }

@@ -9,7 +9,7 @@ import org.junit.Test;
 
 public class PropertiesLoaderTest {
 
-  String classpath = "classpath:/config/config.properties";
+  String classpath = "classpath:/config/*.properties";
   String defaultPath = "/config/config.properties";
   String dir = "/tmp";
   String path = dir + "/config.properties";
@@ -37,6 +37,7 @@ public class PropertiesLoaderTest {
 
     assertEquals("k001", props.getProperty("k1"));
     assertEquals("k002", props.getProperty("k2"));
+    assertEquals("k003", props.getProperty("k3"));
 
   }
 

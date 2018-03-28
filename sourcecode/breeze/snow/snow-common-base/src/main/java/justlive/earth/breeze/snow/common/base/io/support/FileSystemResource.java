@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import justlive.earth.breeze.snow.common.base.io.SourceResource;
 import justlive.earth.breeze.snow.common.base.util.Checks;
+import justlive.earth.breeze.snow.common.base.util.ResourceUtils;
 
 /**
  * 文件系统资源，包括File，Path
@@ -94,6 +95,11 @@ public class FileSystemResource implements SourceResource {
       path = file.toPath();
     }
     return path;
+  }
+
+  @Override
+  public SourceResource createRelative(String path) {
+    return new FileSystemResource(ResourceUtils.relativePath(this.path(), path));
   }
 
 }

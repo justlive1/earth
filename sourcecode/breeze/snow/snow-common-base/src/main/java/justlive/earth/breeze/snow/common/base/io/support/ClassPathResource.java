@@ -4,12 +4,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import justlive.earth.breeze.snow.common.base.constant.BaseConstants;
 import justlive.earth.breeze.snow.common.base.io.SourceResource;
 import justlive.earth.breeze.snow.common.base.util.Checks;
+import justlive.earth.breeze.snow.common.base.util.ResourceUtils;
 
 /**
  * classpath路径下的资源
@@ -103,7 +103,7 @@ public class ClassPathResource implements SourceResource {
   public File getFile() throws IOException {
     if (isFile()) {
       try {
-        return new File(new URI(this.path.replace(" ", "%20")).getSchemeSpecificPart());
+        return new File(ResourceUtils.toURI(getURL()).getSchemeSpecificPart());
       } catch (URISyntaxException e) {
         return new File(getURL0().getFile());
       }
@@ -146,6 +146,14 @@ public class ClassPathResource implements SourceResource {
       throw new FileNotFoundException(this.path + " cannot be found");
     }
     return url;
+  }
+
+  @Override
+  public SourceResource createRelative(String path) {
+    ClassPathResource resource = new ClassPathResource(ResourceUtils.relativePath(this.path, path));
+    resource.classLoader = this.classLoader;
+    resource.clazz = this.clazz;
+    return resource;
   }
 
 }

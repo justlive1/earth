@@ -55,6 +55,21 @@ public class BaseConstants {
   public static final String URL_PROTOCOL_WAR = "war";
 
   /**
+   * URL协议-zip
+   */
+  public static final String URL_PROTOCOL_ZIP = "zip";
+
+  /**
+   * URL协议-WebSphere jar
+   */
+  public static final String URL_PROTOCOL_WSJAR = "wsjar";
+
+  /**
+   * URL协议-JBoss jar
+   */
+  public static final String URL_PROTOCOL_VFSZIP = "vfszip";
+
+  /**
    * path分隔符
    */
   public static final String PATH_SEPARATOR = ROOT_PATH;
@@ -63,6 +78,16 @@ public class BaseConstants {
    * 协议分隔符
    */
   public static final String PROTOCOL_SEPARATOR = ":";
+
+  /**
+   * war路径分隔符
+   */
+  public static final String WAR_URL_SEPARATOR = "*/";
+
+  /**
+   * jar路径分隔符
+   */
+  public static final String JAR_URL_SEPARATOR = "!/";
 
   // 正则
 
