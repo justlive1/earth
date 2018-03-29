@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Properties;
 import org.junit.Test;
 import justlive.earth.breeze.snow.common.base.exception.CodedException;
 
@@ -23,10 +22,8 @@ public class PropertiesLoaderTest {
     PropertiesLoader loader = new PropertiesLoader(defaultPath);
     loader.init();
 
-    Properties props = loader.props();
-
-    assertEquals("k001", props.getProperty("k1"));
-    assertEquals("k002", props.getProperty("k2"));
+    assertEquals("k001", loader.getProperty("k1"));
+    assertEquals("k002", loader.getProperty("k2"));
 
   }
 
@@ -36,11 +33,14 @@ public class PropertiesLoaderTest {
     PropertiesLoader loader = new PropertiesLoader(classpath);
     loader.init();
 
-    Properties props = loader.props();
+    assertEquals("k001", loader.getProperty("k1"));
+    assertEquals("k002", loader.getProperty("k2"));
+    assertEquals("k003", loader.getProperty("k3"));
+    assertEquals("k003", loader.getProperty("k4"));
+    assertEquals("k003", loader.getProperty("k5"));
+    assertEquals("k006", loader.getProperty("k6"));
+    assertEquals("k006", loader.getProperty("k7"));
 
-    assertEquals("k001", props.getProperty("k1"));
-    assertEquals("k002", props.getProperty("k2"));
-    assertEquals("k003", props.getProperty("k3"));
 
   }
 
@@ -52,10 +52,8 @@ public class PropertiesLoaderTest {
     PropertiesLoader loader = new PropertiesLoader(filePath);
     loader.init();
 
-    Properties props = loader.props();
-
-    assertEquals("k001", props.getProperty("k1"));
-    assertEquals("k002", props.getProperty("k2"));
+    assertEquals("k001", loader.getProperty("k1"));
+    assertEquals("k002", loader.getProperty("k2"));
 
   }
 
