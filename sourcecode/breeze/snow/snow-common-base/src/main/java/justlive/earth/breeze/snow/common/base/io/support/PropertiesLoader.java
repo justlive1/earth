@@ -58,8 +58,7 @@ public class PropertiesLoader extends AbstractResourceLoader {
     this.resources.addAll(this.parse(this.locations));
     for (SourceResource resource : this.resources) {
       try {
-        // TODO 设置编码
-        props.load(resource.getInputStream());
+        props.load(this.getReader(resource));
       } catch (IOException e) {
         if (log.isDebugEnabled()) {
           log.debug("resource [{}] read error", resource.path(), e);

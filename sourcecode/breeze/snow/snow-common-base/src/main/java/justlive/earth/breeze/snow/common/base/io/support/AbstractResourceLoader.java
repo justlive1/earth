@@ -2,10 +2,13 @@ package justlive.earth.breeze.snow.common.base.io.support;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.net.JarURLConnection;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
@@ -54,7 +57,17 @@ public abstract class AbstractResourceLoader {
   /**
    * 未找到是否忽略，启用则跳过，否则抛出异常
    */
-  public boolean ignoreNotFound;
+  protected boolean ignoreNotFound;
+
+  /**
+   * 文件编码
+   */
+  protected String encoding;
+
+  /**
+   * 字符集
+   */
+  protected Charset charset;
 
   /**
    * 初始化
@@ -69,6 +82,22 @@ public abstract class AbstractResourceLoader {
     return ignoreNotFound;
   }
 
+  public void setEncoding(String encoding) {
+    this.encoding = encoding;
+  }
+
+  public String getEncoding() {
+    return encoding;
+  }
+
+  public void setCharset(Charset charset) {
+    this.charset = charset;
+  }
+
+  public Charset getCharset() {
+    return charset;
+  }
+
   /**
    * 获取资源列表
    * 
@@ -76,6 +105,23 @@ public abstract class AbstractResourceLoader {
    */
   public List<SourceResource> resources() {
     return this.resources;
+  }
+
+  /**
+   * 获取资源Reader
+   * 
+   * @param resource
+   * @return
+   * @throws IOException
+   */
+  protected Reader getReader(SourceResource resource) throws IOException {
+    if (this.charset != null) {
+      return new InputStreamReader(resource.getInputStream(), this.charset);
+    } else if (this.encoding != null) {
+      return new InputStreamReader(resource.getInputStream(), this.encoding);
+    } else {
+      return new InputStreamReader(resource.getInputStream());
+    }
   }
 
   /**
